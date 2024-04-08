@@ -18,7 +18,7 @@ int main(int argc, char** argv){
         return 1;
     }
 
-    for(int i = 0; i < (int)initial.length(); i++){
+    for(int i = 0; i < initial.length(); i++){
         if (!isspace(initial[i])) {
             word += initial[i];
         } else {
@@ -33,8 +33,8 @@ int main(int argc, char** argv){
         vect.push_back(word);
     }
     
-    for(int i = 0; i < (int)vect.size(); i++){
-        if((int)vect.at(i).length() != (int)atoi(argv[1]) && (int)vect.at(i).length() != 0){
+    for(int i = 0; i < vect.size(); i++){
+        if(vect.at(i).length() != atoi(argv[1]) && vect.at(i).length() != 0){
             cout << vect.at(i) << " ";
         }
     }
