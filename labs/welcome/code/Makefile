@@ -1,10 +1,8 @@
-OBJS := S(SRCS:.cpp=.o)
+censor: censor.o
+	g++ censor.cpp -o censor
 
-EXEC := censor
-
-
-censor: censor.cpp
+censor.o: censor.cpp
 	g++ -c censor.cpp
 
 clean:
-       	rm -f $(OBJS) $(EXEC)
+       	rm -f *.o censor
