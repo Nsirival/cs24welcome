@@ -1,5 +1,5 @@
 censor: censor.o
-	g++ censor.cpp -o censor
+	g++ censor.o -o censor
 
 censor.o: censor.cpp
 	g++ -c censor.cpp
