@@ -38,10 +38,10 @@ int main(int argc, char** argv){
             fin = fin + vect.at(i) + " ";
         }
     }
-    if (!fin.empty())
+    if((int)fin.length() > 0){
         fin.pop_back();
-  
-    cout << fin;
+    }
+    cout << fin << endl;
 
     return 0;
 }
