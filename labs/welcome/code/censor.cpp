@@ -38,9 +38,7 @@ int main(int argc, char** argv){
             fin = fin + vect.at(i) + " ";
         }
     }
-    if((int)fin.length() > 0){
-        fin.pop_back();
-    }
+
     cout << fin;
 
     return 0;
