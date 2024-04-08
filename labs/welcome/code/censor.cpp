@@ -10,7 +10,7 @@ int main(int argc, char** argv){
     string initial;
     getline(cin, initial); 
     string word;
-    
+    string fin;
     vector <string> vect;
 
     if (argc != 2) {
@@ -35,9 +35,11 @@ int main(int argc, char** argv){
     
     for(int i = 0; i < (int)vect.size(); i++){
         if((int)vect.at(i).length() != (int)atoi(argv[1]) && (int)vect.at(i).length() != 0){
-            cout << vect.at(i) << " ";
+            fin = fin + vect.at(i) + " ";
         }
     }
+    fin.pop_back();
+    cout << fin;
 
     return 0;
 }
