@@ -1,5 +1,5 @@
 #include "FibVec.h"
-#include <vector>
+
 // This provides exception types:
 #include <stdexcept>
 
