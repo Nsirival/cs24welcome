@@ -22,7 +22,7 @@ size_t FibVec::count() const{
     return cnt;
 }
 void FibVec::insert(int value, size_t index){
-    if(index > (int)cnt){
+    if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
 
@@ -45,7 +45,7 @@ void FibVec::insert(int value, size_t index){
         cap = fib;
     }
     
-    for(int i = cnt; i > index; i--){
+    for(size_t i = cnt; i > index; i--){
         f[i+1] = f[i];
     }
     f[index] = value;
@@ -53,7 +53,7 @@ void FibVec::insert(int value, size_t index){
     cnt ++;
 }
 size_t FibVec::lookup(size_t index) const{
-    if(index > (int)cnt){
+    if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
     return f[index];
@@ -94,7 +94,7 @@ void FibVec::push(int value){
     cnt ++;
 }
 size_t FibVec::remove(size_t index){
-    if(index > (int)cnt){
+    if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
     int ret = f[index];
