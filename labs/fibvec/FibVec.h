@@ -20,11 +20,11 @@ public:
   // Member Functions
   size_t capacity()const;
   size_t count() const;
-  void insert(size_t value, int index);
-  size_t lookup(int index) const;
+  void insert(int value, size_t index);
+  size_t lookup(size_t index) const;
   size_t pop();
-  void push(size_t value);
-  size_t remove(int index);
+  void push(int value);
+  size_t remove(size_t index);
 };
 
 #endif

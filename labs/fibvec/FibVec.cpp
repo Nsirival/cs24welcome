@@ -4,9 +4,7 @@
 #include <stdexcept>
 
 // FibVec Function Implementations
-int main(){
-    return 0;
-}
+
 
 FibVec::FibVec(){
     cap = 1;
@@ -23,7 +21,7 @@ size_t FibVec::capacity() const{
 size_t FibVec::count() const{
     return cnt;
 }
-void FibVec::insert(size_t value, int index){
+void FibVec::insert(int value, size_t index){
     if(index > (int)cnt){
         throw std::out_of_range("Index out of range");
     }
@@ -54,7 +52,7 @@ void FibVec::insert(size_t value, int index){
 
     cnt ++;
 }
-size_t FibVec::lookup(int index) const{
+size_t FibVec::lookup(size_t index) const{
     if(index > (int)cnt){
         throw std::out_of_range("Index out of range");
     }
@@ -71,7 +69,7 @@ size_t FibVec::pop(){
     }
 
 }
-void FibVec::push(size_t value){
+void FibVec::push(int value){
     if(cnt == cap){
         int a = 0;
         int b = 1;
@@ -95,7 +93,7 @@ void FibVec::push(size_t value){
 
     cnt ++;
 }
-size_t FibVec::remove(int index){
+size_t FibVec::remove(size_t index){
     if(index > (int)cnt){
         throw std::out_of_range("Index out of range");
     }
