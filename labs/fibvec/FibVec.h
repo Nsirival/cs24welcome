@@ -11,7 +11,7 @@ class FibVec {
   size_t cnt;
   size_t cap;
   // Helper Functions
-  
+  void resize(int newcap);
 public:
   // Constructor and Destructor
   FibVec();
@@ -20,11 +20,11 @@ public:
   // Member Functions
   size_t capacity()const;
   size_t count() const;
-  void insert(size_t value, size_t index);
-  size_t lookup(size_t index) const;
-  void pop();
+  void insert(size_t value, int index);
+  size_t lookup(int index) const;
+  size_t pop();
   void push(size_t value);
-  void remove(size_t index);
+  size_t remove(int index);
 };
 
 #endif
