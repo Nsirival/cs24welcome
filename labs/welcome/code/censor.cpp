@@ -41,7 +41,11 @@ int main(int argc, char** argv){
     if((int)fin.length() > 0){
         fin.pop_back();
     }
+<<<<<<< HEAD
     cout << fin;
+=======
+    cout << fin << endl;
+>>>>>>> 8c258e6b5d1c17901687db2dcec14f87a1229c2c
 
     return 0;
 }
