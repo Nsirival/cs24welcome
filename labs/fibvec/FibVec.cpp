@@ -32,7 +32,7 @@ void FibVec::insert(int value, size_t index){
         int fib = a + b;
         while(fib <= (int)cnt){
             a = b;
-            b = temp;
+            b = fib;
             fib = a + b;
         }
         int *newf = new int[fib];
