@@ -42,7 +42,7 @@ void FibVec::insert(int value, size_t index){
         delete [] f;
     
         f = newf;
-        cap = a+b;
+        cap ++;
     }
     
     for(size_t i = cnt; i > index-1; i--){
