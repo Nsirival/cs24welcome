@@ -45,7 +45,7 @@ void FibVec::insert(int value, size_t index){
     if(cnt == cap){
         FibVec::fibnum(cnt);
     }
-    for(size_t i = cnt; i > index-1; i--){
+    for(size_t i = cnt - 1; i > index; i--){
         f[i] = f[i-1];
     }
     f[index] = value;
