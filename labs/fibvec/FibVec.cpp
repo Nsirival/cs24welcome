@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 // FibVec Function Implementations
-int FibVec::fibnum(int newcap){
+FibVec::fibnum(int newcap){
     int a = 0;
     int b = 1;
     int fib = a + b;
@@ -20,7 +20,6 @@ int FibVec::fibnum(int newcap){
     delete[] f;
     f = newf;
     cap = fib;
-    return b;
 }
 
 
@@ -64,7 +63,7 @@ size_t FibVec::pop(){
     }
     
     if(cnt < cap){
-        cap = cap +(size_t)FibVec::fibnum(cnt);
+        FibVec::fibnum(cnt);
     }
     
     int temp = f[cnt-1];
@@ -81,7 +80,7 @@ size_t FibVec::remove(size_t index){
         throw std::out_of_range("Index out of range");
     }
     if(cnt < cap){
-        cap = cap +(size_t)FibVec::fibnum(cnt);
+        FibVec::fibnum(cnt);
     }
     int ret = f[index];
     for(int i = index; i < (int)cnt -1; i++){
