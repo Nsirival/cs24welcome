@@ -30,22 +30,23 @@ void FibVec::insert(int value, size_t index){
         int a = 0;
         int b = 1;
         int fib = a + b;
-        while(fib < (int)cnt){
-            a = b;
-            b = fib;
+        while(fib <= (int)cnt){
+            size_t temp = fib;
             fib = a + b;
+            a = b;
+            b = temp;;
         }
         int *newf = new int[fib];
         for(size_t i = 0; i < cnt; i++){
             newf[i] = f[i];
         }
-    
+        delete[] f
         f = newf;
-        cap ++;
+        cap =fib;
     }
     
     for(size_t i = cnt; i > index-1; i--){
-        f[i+1] = f[i];
+        f[i] = f[i-1];
     }
     f[index] = value;
 
