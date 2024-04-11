@@ -30,7 +30,7 @@ void FibVec::insert(int value, size_t index){
         int a = 0;
         int b = 1;
         int fib = a + b;
-        while(fib < cnt){
+        while((size_t)fib < cnt){
             a = b;
             b = fib;
             fib = a + b;
