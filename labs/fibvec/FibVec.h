@@ -12,6 +12,7 @@ class FibVec {
   size_t cap;
   // Helper Functions
   void fibnum(int newcap);
+  void fibnum2(int newcap);
 public:
   // Constructor and Destructor
   FibVec();
