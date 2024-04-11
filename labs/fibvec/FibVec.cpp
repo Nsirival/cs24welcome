@@ -8,7 +8,7 @@ void FibVec::fibnum(int newcap){
     int a = 0;
     int b = 1;
     int fib = a + b;
-    while(fib <= newcap-1){
+    while(fib <= newcap){
         a = b;
         b = fib;
         fib = a + b;
