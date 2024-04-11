@@ -34,14 +34,13 @@ void FibVec::insert(int value, size_t index){
             a = b;
             b = fib;
             fib = a + b;
-            cap = fib;
         }
         int *newf = new int[fib];
         for(size_t i = 0; i < cnt; i++){
             newf[i] = f[i];
         }
         delete [] f;
-    
+        cap = fib;
         f = newf;
     }
     
@@ -79,14 +78,13 @@ void FibVec::push(int value){
             a = b;
             b = fib;
             fib = a + b;
-            cap = fib;
         }
         int *newf = new int[fib];
         for(size_t i = 0; i <= cnt; i++){
             newf[i] = f[i];
         }
         delete [] f;
-    
+        cap = fib;
         f = newf;
 
     }
