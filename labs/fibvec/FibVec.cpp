@@ -69,28 +69,7 @@ size_t FibVec::pop(){
 
 }
 void FibVec::push(int value){
-    if(cnt == cap){
-        int a = 0;
-        int b = 1;
-        int fib = a + b;
-        while(fib < (int)cnt){
-            a = b;
-            b = fib;
-            fib = a + b;
-        }
-        int *newf = new int(fib);
-        for(size_t i = 0; i <= cnt; i++){
-            newf[i] = f[i];
-        }
-        delete [] f;
-    
-        f = newf;
-        cap ++;
-    }
-
-    f[cnt] = value;
-
-    cnt ++;
+    FibVec::insert(value, count);
 }
 size_t FibVec::remove(size_t index){
     if(index > cnt){
