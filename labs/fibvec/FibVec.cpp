@@ -58,19 +58,21 @@ size_t FibVec::pop(){
     }
     int a = 0;
     int b = 1;
+    int c = 0;
     int fib = a + b;
     while(fib <= (int)cnt){
+        c = a;
         a = b;
         b = fib;
         fib = a + b;
     }
-    int *newf = new int[fib-a];
+    int *newf = new int[fib-c];
     for(size_t i = 0; i < cnt; i++){
         newf[i] = f[i];
     }
     delete[] f;
     f = newf;
-    cap = fib-a;
+    cap = fib-c;
 
     int temp = f[cnt-1];
     f[cnt-1] = 0;
