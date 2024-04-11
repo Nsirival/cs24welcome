@@ -39,7 +39,6 @@ void FibVec::insert(int value, size_t index){
         for(size_t i = 0; i < cnt; i++){
             newf[i] = f[i];
         }
-        delete [] f;
     
         f = newf;
         cap = fib;
