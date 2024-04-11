@@ -38,14 +38,14 @@ size_t FibVec::count() const{
     return cnt;
 }
 void FibVec::insert(int value, size_t index){
-    if(index >= cnt){
+    if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
 
     if(cnt == cap){
         FibVec::fibnum(cnt);
     }
-    for(size_t i = cnt - 1; i > index; i--){
+    for(size_t i = cnt ; i > index; i--){
         f[i] = f[i-1];
     }
     f[index] = value;
