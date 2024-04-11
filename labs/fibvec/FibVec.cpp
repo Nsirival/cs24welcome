@@ -57,22 +57,7 @@ size_t FibVec::pop(){
         throw std::underflow_error("Underflow error");
     }
     
-    int a = 0;
-        int b = 1;
-        int fib = a + b;
-        while(fib <= (int)cnt){
-            a = b;
-            b = fib;
-            fib = a + b;
-        }
-        int *newf = new int[fib-a];
-        for(size_t i = 0; i < cnt; i++){
-            newf[i] = f[i];
-        }
-        delete[] f;
-        f = newf;
-        cap =fib-a;
-    }
+
     int temp = f[cnt-1];
     f[cnt-1] = 0;
     cnt --;
