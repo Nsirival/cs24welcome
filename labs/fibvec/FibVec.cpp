@@ -4,6 +4,25 @@
 #include <stdexcept>
 
 // FibVec Function Implementations
+void FibVec::fibnum(int newcap){
+    int a = 0;
+    int b = 1;
+    int fib = a + b;
+    while(fib <= newcap){
+        a = b;
+        b = fib;
+        fib = a + b;
+    }
+    int *newf = new int[fib];
+    for(size_t i = 0; i < cnt; i++){
+        newf[i] = f[i];
+    }
+    delete[] f;
+    f = newf;
+    cap =fib;
+}
+
+
 FibVec::FibVec(){
     cap = 1;
     cnt = 0;
@@ -24,21 +43,7 @@ void FibVec::insert(int value, size_t index){
     }
 
     if(cnt == cap){
-        int a = 0;
-        int b = 1;
-        int fib = a + b;
-        while(fib <= (int)cnt){
-            a = b;
-            b = fib;
-            fib = a + b;
-        }
-        int *newf = new int[fib];
-        for(size_t i = 0; i < cnt; i++){
-            newf[i] = f[i];
-        }
-        delete[] f;
-        f = newf;
-        cap =fib;
+        FibVec::fibnum(cnt);
     }
     for(size_t i = cnt; i > index-1; i--){
         f[i] = f[i-1];
@@ -56,21 +61,10 @@ size_t FibVec::pop(){
     if (cnt <= 0){
         throw std::underflow_error("Underflow error");
     }
-    int a = 0;
-    int b = 1;
-    int fib = a + b;
-    while(fib <= (int)cnt){
-        a = b;
-        b = fib;
-        fib = a + b;
+    
+    if(cnt < cap){
+        FibVec::fibnum(cnt);
     }
-    int *newf = new int[fib-a];
-    for(size_t i = 0; i < cnt; i++){
-        newf[i] = f[i];
-    }
-    delete[] f;
-    f = newf;
-    cap = fib-a;
     int temp = f[cnt-1];
     f[cnt-1] = 0;
     cnt --;
