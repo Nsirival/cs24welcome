@@ -1,3 +1,5 @@
+#include "FibVec.h"
+
 // This provides exception types:
 #include <stdexcept>
 
@@ -40,10 +42,10 @@ void FibVec::insert(int value, size_t index){
         delete [] f;
     
         f = newf;
-        cap = fib;
+        cap ++;
     }
     
-    for(size_t i = cnt; i > index; i--){
+    for(size_t i = cnt; i >=index-1; i--){
         f[i+1] = f[i];
     }
     f[index] = value;
@@ -51,17 +53,17 @@ void FibVec::insert(int value, size_t index){
     cnt ++;
 }
 size_t FibVec::lookup(size_t index) const{
-    if(index > cnt){
+    if(index >= cnt){
         throw std::out_of_range("Index out of range");
     }
     return f[index];
 }
 size_t FibVec::pop(){
-    if (cnt == 0){
+    if (cnt <= 0){
         throw std::underflow_error("Underflow error");
     } else {
-        int temp = f[cnt];
-        f[cnt] = 0;
+        int temp = f[cnt-1];
+        f[cnt-1] = 0;
         cnt --;
         return temp;
     }
@@ -78,13 +80,13 @@ void FibVec::push(int value){
             fib = a + b;
         }
         int *newf = new int(fib);
-        for(size_t i = 0; i < cnt; i++){
+        for(size_t i = 0; i <= cnt; i++){
             newf[i] = f[i];
         }
         delete [] f;
     
         f = newf;
-        cap = fib;
+        cap ++;
     }
 
     f[cnt] = value;
@@ -92,14 +94,13 @@ void FibVec::push(int value){
     cnt ++;
 }
 size_t FibVec::remove(size_t index){
-    if(index > (int)cnt){
+    if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
     int ret = f[index];
-    for(int i = index; i < (int)cnt ; i++){
+    for(int i = index; i < (int)cnt -1; i++){
         f[i] = f[i+1];
     }
     cnt --;
     return ret;
 }
-
