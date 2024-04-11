@@ -64,9 +64,9 @@ size_t FibVec::pop(){
     }
     
     if(cnt < cap){
-        FibVec::fibnum(cnt);
+        cap = cap +(size_t)FibVec::fibnum(cnt);
     }
-    cap = cap + (size_t)b;
+    
     int temp = f[cnt-1];
     f[cnt-1] = 0;
     cnt --;
@@ -81,13 +81,13 @@ size_t FibVec::remove(size_t index){
         throw std::out_of_range("Index out of range");
     }
     if(cnt < cap){
-        FibVec::fibnum(cnt);
+        cap = cap +(size_t)FibVec::fibnum(cnt);
     }
     int ret = f[index];
     for(int i = index; i < (int)cnt -1; i++){
         f[i] = f[i+1];
     }
-    cap = cap + (size_t)b;
+   
     cnt --;
     return ret;
 }
