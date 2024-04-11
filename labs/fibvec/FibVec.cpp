@@ -7,7 +7,7 @@
 
 
 FibVec::FibVec(){
-    cap = 2;
+    cap = 1;
     cnt = 0;
     f = new int[cap];
 }
