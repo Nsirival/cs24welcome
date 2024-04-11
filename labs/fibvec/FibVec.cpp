@@ -64,7 +64,6 @@ size_t FibVec::pop(){
     } else {
         int temp = f[cnt-1];
         f[cnt-1] = 0;
-        cnt --;
         return temp;
     }
 
