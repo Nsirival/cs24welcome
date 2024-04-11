@@ -69,7 +69,7 @@ size_t FibVec::pop(){
 
 }
 void FibVec::push(int value){
-    FibVec::insert(value, count);
+    FibVec::insert(value, cnt);
 }
 size_t FibVec::remove(size_t index){
     if(index > cnt){
