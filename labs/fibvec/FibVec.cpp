@@ -59,7 +59,7 @@ size_t FibVec::pop(){
     int a = 0;
     int b = 1;
     int fib = a + b;
-    while(fib < (int)cnt){
+    while(fib <= (int)cnt){
         a = b;
         b = fib;
         fib = a + b;
