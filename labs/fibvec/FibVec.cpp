@@ -29,11 +29,12 @@ void FibVec::insert(int value, size_t index){
     if(cnt == cap){
         int a = 0;
         int b = 1;
-        int fib = a + b;
+        int fib = 1;
         while((size_t)fib < cnt){
+            fib = a + b;
             a = b;
             b = fib;
-            fib = a + b;
+            
         }
         int *newf = new int[fib];
         for(size_t i = 0; i < cnt; i++){
