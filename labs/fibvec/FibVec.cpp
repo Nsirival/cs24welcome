@@ -56,7 +56,8 @@ size_t FibVec::lookup(size_t index) const{
     if(index >= cnt){
         throw std::out_of_range("Index out of range");
     }
-    return f[index];
+    size_t ret = ret[index]
+    return ret;
 }
 size_t FibVec::pop(){
     if (cnt <= 0){
@@ -64,6 +65,7 @@ size_t FibVec::pop(){
     } else {
         int temp = f[cnt-1];
         f[cnt-1] = 0;
+        cnt--;
         return temp;
     }
 
