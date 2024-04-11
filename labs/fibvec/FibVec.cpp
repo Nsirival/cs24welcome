@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 // FibVec Function Implementations
-void FibVec::fibnum(int newcap){
+int FibVec::fibnum(int newcap){
     int a = 0;
     int b = 1;
     int fib = a + b;
@@ -19,7 +19,8 @@ void FibVec::fibnum(int newcap){
     }
     delete[] f;
     f = newf;
-    cap =fib;
+    cap = fib;
+    return b;
 }
 
 
