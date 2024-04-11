@@ -4,8 +4,6 @@
 #include <stdexcept>
 
 // FibVec Function Implementations
-
-
 FibVec::FibVec(){
     cap = 1;
     cnt = 0;
@@ -14,7 +12,6 @@ FibVec::FibVec(){
 FibVec::~FibVec(){
     delete[] f;
 }
-
 size_t FibVec::capacity() const{
     return cap;
 }
@@ -43,12 +40,10 @@ void FibVec::insert(int value, size_t index){
         f = newf;
         cap =fib;
     }
-    
     for(size_t i = cnt; i > index-1; i--){
         f[i] = f[i-1];
     }
     f[index] = value;
-
     cnt ++;
 }
 size_t FibVec::lookup(size_t index) const{
@@ -60,13 +55,29 @@ size_t FibVec::lookup(size_t index) const{
 size_t FibVec::pop(){
     if (cnt <= 0){
         throw std::underflow_error("Underflow error");
-    } else {
-        int temp = f[cnt-1];
-        f[cnt-1] = 0;
-        cnt --;
-        return temp;
     }
-
+    
+    int a = 0;
+        int b = 1;
+        int fib = a + b;
+        while(fib <= (int)cnt){
+            a = b;
+            b = fib;
+            fib = a + b;
+        }
+        int *newf = new int[fib-a];
+        for(size_t i = 0; i < cnt; i++){
+            newf[i] = f[i];
+        }
+        delete[] f;
+        f = newf;
+        cap =fib-a;
+    }
+    int temp = f[cnt-1];
+    f[cnt-1] = 0;
+    cnt --;
+    return temp;
+    
 }
 void FibVec::push(int value){
     FibVec::insert(value, cnt);
