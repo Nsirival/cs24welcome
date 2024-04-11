@@ -44,7 +44,7 @@ void FibVec::insert(int value, size_t index){
         f = newf;
     }
     
-    for(size_t i = cnt; i >index; i--){
+    for(size_t i = cnt-1; i >index-1; i--){
         f[i+1] = f[i];
     }
     f[index] = value;
