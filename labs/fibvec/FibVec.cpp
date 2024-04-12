@@ -9,9 +9,9 @@ void FibVec::fibnum(int newcap){
     int b = 1;
     int fib = a + b;
     while(fib <= newcap){
+        fib = a + b;
         a = b;
         b = fib;
-        fib = a + b;
     }
     int *newf = new int[fib];
     for(size_t i = 0; i < cnt; i++){
