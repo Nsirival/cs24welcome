@@ -98,7 +98,7 @@ size_t FibVec::remove(size_t index){
     int a = 0;
     int b = 1;
     int fib = a + b;
-    while(fib <= cnt){
+    while(fib <= (int)cnt){
         fib = a + b;
         a = b;
         b = fib;
