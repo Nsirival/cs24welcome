@@ -22,6 +22,18 @@ void FibVec::fibnum(int newcap){
     cap = fib;
 }
 
+size_t FibVec::fibnum1(int newcap){
+    int a = 0;
+    int b = 1;
+    int fib = a + b;
+    while(fib +b<= 30){
+        a = b;
+        b = fib;
+        fib = a + b;
+    }
+    return (size_t)fib;
+}
+
 FibVec::FibVec(){
     cap = 1;
     cnt = 0;
@@ -60,14 +72,14 @@ size_t FibVec::pop(){
     if (cnt <= 0){
         throw std::underflow_error("Underflow error");
     }
-    cnt --;
+    
     if(cnt < cap){
         FibVec::fibnum(cnt);
     }
     
     int temp = f[cnt-1];
     f[cnt-1] = 0;
-    
+    cnt --;
     return temp;
     
 }
@@ -78,14 +90,25 @@ size_t FibVec::remove(size_t index){
     if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
-    cnt --;
+    
     if(cnt < cap){
         FibVec::fibnum(cnt);
+    }
+    if (cnt < fibnum1(cnt)){
+    int a = 0;
+    int b = 1;
+    int fib = a + b;
+    while(fib <= cnt){
+        fib = a + b;
+        a = b;
+        b = fib;
+    }
+    cap = fib;
     }
     int ret = f[index];
     for(int i = index; i < (int)cnt -1; i++){
         f[i] = f[i+1];
     }
-   
+    cnt --;
     return ret;
 }
