@@ -60,14 +60,14 @@ size_t FibVec::pop(){
     if (cnt <= 0){
         throw std::underflow_error("Underflow error");
     }
-    
+    cnt --;
     if(cnt < cap){
         FibVec::fibnum(cnt);
     }
     
     int temp = f[cnt-1];
     f[cnt-1] = 0;
-    cnt --;
+    
     return temp;
     
 }
@@ -78,6 +78,7 @@ size_t FibVec::remove(size_t index){
     if(index > cnt){
         throw std::out_of_range("Index out of range");
     }
+    cnt --;
     if(cnt < cap){
         FibVec::fibnum(cnt);
     }
@@ -86,6 +87,5 @@ size_t FibVec::remove(size_t index){
         f[i] = f[i+1];
     }
    
-    cnt --;
     return ret;
 }
