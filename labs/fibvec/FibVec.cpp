@@ -97,18 +97,19 @@ size_t FibVec::remove(size_t index){
     }
     if(index > cnt || (int)cnt == 0){
         throw std::out_of_range("Index out of range");
-    }
+    } else {
     
-    if(cnt < FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1)){
-        cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 2);
-    } else if (cnt < fibnum1((int)(FibVec::number1(cnt)))){
-        cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1);
-    }
+        if(cnt < FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1)){
+            cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 2);
+        } else if (cnt < fibnum1((int)(FibVec::number1(cnt)))){
+            cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1);
+        }
     
-    size_t ret = (size_t)f[index];
-    for(int i = index; i < (int)cnt -1; i++){
-        f[i] = f[i+1];
+
+        for(int i = index; i < (int)cnt -1; i++){
+            f[i] = f[i+1];
+        }
+        cnt --;
+        return ret;
     }
-    cnt --;
-    return ret;
 }
