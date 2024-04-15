@@ -100,7 +100,7 @@ size_t FibVec::remove(size_t index){
     } else {
     
         if(cnt < FibVec::fibnum1((int)(FibVec::number1(cnt+2)) - (int)(FibVec::number1(cnt)))){
-            cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 2);
+            cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 3);
         } else {
             cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1);
         }
