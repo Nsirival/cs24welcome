@@ -92,10 +92,10 @@ void FibVec::push(int value){
     FibVec::insert(value, cnt);
 }
 size_t FibVec::remove(size_t index){
-    if(index < 0){
+    if((int)index < 0){
         throw std::underflow_error("Underflow error");
     }
-    if(index > cnt || cnt == 0){
+    if(index > cnt || (int)cnt == 0){
         throw std::out_of_range("Index out of range");
     }
     
