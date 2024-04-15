@@ -27,7 +27,7 @@ size_t FibVec::fibnum1(int newcap){
     int b = 1;
     int fib = a + b;
     int n = 1;
-    while (n < val){
+    while (n < newcap){
         a = b;
         b = fib;
         fib = a + b;
@@ -40,14 +40,14 @@ size_t FibVec::number1(int x){
     int a = 0;
     int b = 1;
     int fib = a + b;
-    int count = 0;
-    while(fib < 20){
-        count ++;
+    int n = 0;
+    while(fib < x){
+        n ++;
         a = b;
         b = fib;
         fib = a + b;
     }
-    return (size_t)count;
+    return (size_t)n;
 }
 
 FibVec::FibVec(){
@@ -99,21 +99,13 @@ size_t FibVec::remove(size_t index){
         throw std::out_of_range("Index out of range");
     }
     
-    if(cnt < cap){
-        FibVec::fibnum(cnt);
+    if(cnt < FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1)){
+        cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 2);
+    } else if (cnt < fibnum((int)(FibVec::number1(cnt)))){
+        cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1);
     }
-    if (cnt < fibnum1(cnt)){
-    int a = 0;
-    int b = 1;
-    int fib = a + b;
-    while(fib <= (int)cnt){
-        fib = a + b;
-        a = b;
-        b = fib;
-    }
-    cap = fib;
-    }
-    int ret = f[index];
+    
+
     for(int i = index; i < (int)cnt -1; i++){
         f[i] = f[i+1];
     }
