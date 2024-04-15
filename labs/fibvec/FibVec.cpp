@@ -69,18 +69,7 @@ size_t FibVec::lookup(size_t index) const{
     return f[index];
 }
 size_t FibVec::pop(){
-    if (cnt <= 0){
-        throw std::underflow_error("Underflow error");
-    }
-    
-    if(cnt < cap){
-        FibVec::fibnum(cnt);
-    }
-    
-    int temp = f[cnt-1];
-    f[cnt-1] = 0;
-    cnt --;
-    return temp;
+    return FibVec::remove(cnt-1);
     
 }
 void FibVec::push(int value){
