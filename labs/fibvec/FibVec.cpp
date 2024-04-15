@@ -96,7 +96,7 @@ size_t FibVec::remove(size_t index){
      if((int)index < 0){
         throw std::underflow_error("Underflow.");
     }
-    if(index > cnt || (int)cnt == 0 || f[index] == 0){
+    if(index > cnt -1 || (int)cnt == 0){
         throw std::out_of_range("Index out of range");
     } else {
         size_t ret = (size_t)f[index];
