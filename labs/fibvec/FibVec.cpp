@@ -76,7 +76,7 @@ void FibVec::push(int value){
     FibVec::insert(value, cnt);
 }
 size_t FibVec::remove(size_t index){
-    if(index > cnt){
+    if(index > cnt || cnt == 0){
         throw std::out_of_range("Index out of range");
     }
     
