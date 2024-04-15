@@ -99,10 +99,10 @@ size_t FibVec::remove(size_t index){
         throw std::out_of_range("Index out of range");
     } else {
     
-        if(cnt < FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1)){
+        if(cnt < FibVec::fibnum1((int)(FibVec::number1(cnt+2)) - (int)(FibVec::number1(cnt)))){
             cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 2);
-        } else if (cnt < fibnum1((int)(FibVec::number1(cnt)))){
-            cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1);
+        } else {
+            cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 3);
         }
     
 
