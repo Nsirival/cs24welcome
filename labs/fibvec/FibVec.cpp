@@ -91,7 +91,7 @@ size_t FibVec::pop(){
     }
     
     if(cnt < FibVec::fibnum1((int)FibVec::number1(cap)-1)){
-            cap = FibVec::fibnum1((int)(FibVec::number1(cap)));
+            cap = FibVec::fibnum1((int)(FibVec::number1(cap)-1));
         }
     
     int temp = f[cnt-1];
@@ -112,7 +112,7 @@ size_t FibVec::remove(size_t index){
     } else {
     
         if(cnt < FibVec::fibnum1((int)FibVec::number1(cap)-1)){
-            cap = FibVec::fibnum1((int)(FibVec::number1(cap)));
+            cap = FibVec::fibnum1((int)(FibVec::number1(cap)-1));
         }
     
         size_t ret = (size_t)f[index];
