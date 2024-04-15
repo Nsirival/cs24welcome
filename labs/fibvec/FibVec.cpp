@@ -85,10 +85,6 @@ size_t FibVec::lookup(size_t index) const{
     return f[index];
 }
 size_t FibVec::pop(){
-    return FibVec::remove(cnt-1);
-    
-}
-void FibVec::push(int value){
     if((int)index < 0){
         throw std::underflow_error("Underflow error");
     }
@@ -107,6 +103,10 @@ void FibVec::push(int value){
         cnt --;
         return ret;
     }
+    
+}
+void FibVec::push(int value){
+    FibVec::insert(value, cnt);
 }
 size_t FibVec::remove(size_t index){
     if((int)index < 0){
@@ -118,7 +118,7 @@ size_t FibVec::remove(size_t index){
     
         if(cnt < FibVec::fibnum1((int)FibVec::number1(cap)-2)){
             cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+1);
-        } 
+        }
     
         size_t ret = (size_t)f[index];
         for(int i = index; i < (int)cnt -1; i++){
