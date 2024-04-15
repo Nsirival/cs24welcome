@@ -105,7 +105,7 @@ size_t FibVec::remove(size_t index){
         cap = FibVec::fibnum1((int)(FibVec::number1(cnt))+ 1);
     }
     
-
+    size_t = (size_t)f[index];
     for(int i = index; i < (int)cnt -1; i++){
         f[i] = f[i+1];
     }
