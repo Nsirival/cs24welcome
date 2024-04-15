@@ -26,12 +26,28 @@ size_t FibVec::fibnum1(int newcap){
     int a = 0;
     int b = 1;
     int fib = a + b;
-    while(fib +b<= 30){
+    int n = 1;
+    while (n < val){
+        a = b;
+        b = fib;
+        fib = a + b;
+        n++;
+    }
+    return (size_t)fib;
+}
+
+size_t FibVec::number1(int x){
+    int a = 0;
+    int b = 1;
+    int fib = a + b;
+    int count = 0;
+    while(fib < 20){
+        count ++;
         a = b;
         b = fib;
         fib = a + b;
     }
-    return (size_t)fib;
+    return (size_t)count;
 }
 
 FibVec::FibVec(){
