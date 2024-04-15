@@ -90,8 +90,8 @@ size_t FibVec::pop(){
         throw std::underflow_error("Underflow error");
     }
     
-    if(cnt < FibVec::fibnum1((int)FibVec::number1(cap)+1)){
-            cap = FibVec::fibnum1((int)(FibVec::number1(cap))-1);
+    if(cnt < FibVec::fibnum1((int)FibVec::number1(cap)+2)){
+            cap = FibVec::fibnum1((int)(FibVec::number1(cap)));
         }
     
     int temp = f[cnt-1];
@@ -112,7 +112,7 @@ size_t FibVec::remove(size_t index){
     } else {
     
         if(cnt < FibVec::fibnum1((int)FibVec::number1(cap)+2)){
-            cap = FibVec::fibnum1((int)(FibVec::number1(cap))+1);
+            cap = FibVec::fibnum1((int)(FibVec::number1(cap)));
         }
     
         size_t ret = (size_t)f[index];
