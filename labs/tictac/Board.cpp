@@ -59,17 +59,22 @@ char Board::checkWin()
 }
 
 void Board::add_move(int movenum, char player, int row, int column)
-{  
-    
-    Board::checkWin();
+{
+
     movecount++;
+    if (Board::checkWin() != '0')
+    {
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
+    }
     if (movenum != movecount || lastplayed == player || gameover == true)
     {
         InvalidMove hi("Invalid move.");
         throw hi;
         exit(2);
     }
-    int index = column - 1 + (row-1) * 3;
+    int index = column - 1 + (row - 1) * 3;
     if (brd[index] == 'X' || brd[index] == 'O')
     {
         InvalidMove hi("Invalid move.");
@@ -78,9 +83,8 @@ void Board::add_move(int movenum, char player, int row, int column)
     }
 
     brd[index] = (char)player;
-    
+
     lastplayed = player;
-    
 }
 
 std::string Board::getstatus()
@@ -89,29 +93,32 @@ std::string Board::getstatus()
     if (h == 'X')
     {
         std::cout << "Game over: X wins." << std::endl;
-        exit(2);
+        exit(0);
     }
     if (h == 'O')
     {
-        std::cout << "Game over: O wins." << std::endl;exit(2);
+        std::cout << "Game over: O wins." << std::endl;
+        exit(0);
     }
     if ((h == '0') && movecount == 9)
     {
-        std::cout << "Game over: Draw." << std::endl;exit(0);
+        std::cout << "Game over: Draw." << std::endl;
+        exit(0);
     }
     if (movecount == 0)
     {
-        std::cout <<"Game in progress: New game." << std::endl;exit(0);
+        std::cout << "Game in progress: New game." << std::endl;
+        exit(0);
     }
-    
-    
+
     if (lastplayed == 'O')
     {
-       std::cout <<"Game in progress: X's turn." << std::endl;exit(0);
+        std::cout << "Game in progress: X's turn." << std::endl;
+        exit(0);
     }
     else
     {
-        std::cout << "Game in progress: O's turn." << std::endl;exit(0);
+        std::cout << "Game in progress: O's turn." << std::endl;
+        exit(0);
     }
 }
-
