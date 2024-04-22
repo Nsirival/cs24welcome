@@ -26,7 +26,7 @@ int main(int argc, char **argv)
         board.checkWin();
         Move move (line);
             try{
-            board.add_move(move.number, move.player, move.row, move.column);   
+            board.add_move(move.number, (char)move.player, move.row, move.column);   
             } catch (const ParseError & w){
                 if(verbose) {
                     std::cout << "Parse error: " << w.what() << '\n';
@@ -48,5 +48,5 @@ int main(int argc, char **argv)
     }
     
     board.getstatus();
-        exit(0);
+    exit(0);
 }

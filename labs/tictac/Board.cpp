@@ -15,42 +15,42 @@ Board::Board()
 
 char Board::checkWin()
 {
-    if (((brd[0] == brd[1]) && (brd[1] == brd[2])) && brd[1] != '0')
+    if (((brd[0] == brd[1]) && (brd[1] == brd[2])) (brd[1] == 'X' || brd[1] == 'O') )
     {
         gameover = true;
         return (char)brd[1];
     }
-    if (((brd[3] == brd[4]) && (brd[4] == brd[5])) && brd[4] != '0')
+    if (((brd[3] == brd[4]) && (brd[4] == brd[5])) (brd[4] == 'X' || brd[4] == 'O') )
     {
         gameover = true;
         return (char)brd[4];
     }
-    if (((brd[6] == brd[7]) && (brd[7] == brd[8])) && brd[7] != '0')
+    if (((brd[6] == brd[7]) && (brd[7] == brd[8])) (brd[7] == 'X' || brd[7] == 'O') )
     {
         gameover = true;
         return (char)brd[7];
     }
-    if (((brd[0] == brd[3]) && (brd[3] == brd[6])) && brd[3] != '0')
+    if (((brd[0] == brd[3]) && (brd[3] == brd[6])) &&(brd[3] == 'X' || brd[3] == 'O') )
     {
         gameover = true;
         return (char)brd[3];
     }
-    if (((brd[1] == brd[4]) && (brd[4] == brd[7])) && brd[4] != '0')
+    if (((brd[1] == brd[4]) && (brd[4] == brd[7])) && (brd[4] == 'X' || brd[4] == 'O') )
     {
         gameover = true;
         return (char)brd[4];
     }
-    if (((brd[2] == brd[5]) && (brd[5] == brd[8])) && brd[5] != '0')
+    if (((brd[2] == brd[5]) && (brd[5] == brd[8])) && (brd[8] == 'X' || brd[8] == 'O') )
     {
         gameover = true;
         return (char)brd[5];
     }
-    if (((brd[0] == brd[4]) && (brd[4] == brd[8])) && brd[4] != '0')
+    if (((brd[0] == brd[4]) && (brd[4] == brd[8])) && (brd[14] == 'X' || brd[4] == 'O') )
     {
         gameover = true;
         return (char)brd[4];
     }
-    if (((brd[2] == brd[4]) && (brd[4] == brd[6])) && brd[4] != '0')
+    if (((brd[2] == brd[4]) && (brd[4] == brd[6])) && (brd[4] == 'X' || brd[4] == 'O') )
     {
         gameover = true;
         return (char)brd[4];
@@ -112,7 +112,3 @@ std::string Board::getstatus()
     }
 }
 
-bool Board::getgame()
-{
-    return gameover;
-}
