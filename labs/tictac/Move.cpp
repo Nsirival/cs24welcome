@@ -27,10 +27,22 @@ Move::Move(const std::string &input)
     {
         i++;
     }
-    if (((input[i] == 'X' || input[i] == 'O') || (input[i] == 'x' || input[i] == 'o'))&& isspace(input[i+1]))
+    if ((input[i] == 'X' || input[i] == 'x') && isspace(input[i+1]))
     {
         i++;
-        player = (int)input[i];
+        player = 'X';
+    } else if ((input[i] == 'O' || input[i] == 'o') && isspace(input[i+1])){
+        i++;
+        player = 'O';
+    }
+    else
+    {
+        std::cout << "Parse error." << std::endl;
+        exit(1);
+    }
+    if (i < (int)input.length()-1)
+    {
+        i++;
     }
     else
     {
@@ -96,11 +108,7 @@ Move::Move(const std::string &input)
             }
         }
     }
-    else
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
+    
 };
 
 std::string Move::to_string() const
