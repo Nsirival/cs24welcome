@@ -10,11 +10,11 @@ Move::Move(const std::string &input)
     {
         if (isalnum(input[i]))
         {
-            if (i == 0)
+            if (num == 0)
             {
-                if ((int)input[i] -48> 0 && (int)input[i] -48 < 10)
+                if ((int)input[i] -48> 0 && (int)input[i] -48< 10 && i ==0)
                 {
-                    number = (int)input[i]-48 ;
+                    number = (int)input[i]-48;
                 }
                 else
                 {
@@ -60,7 +60,7 @@ Move::Move(const std::string &input)
             }
             if (num == 3)
             {
-                if ((input[i] == '1') || (input[i] == '2') || (input[i] == '3'))
+                if (((input[i] == '1') || (input[i] == '2') || (input[i] == '3')) && isalnum(input[i - 1]))
                 {
 
                     column = (int)input[i] - 48;
