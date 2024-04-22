@@ -16,13 +16,12 @@
 //1 X B2
 // Space for implementing Move functions.
 Move::Move(const std::string& input){
-    std::string ipt= Move::to_string();
     int i = 1;
     if(input.length() >= 6){
         
         if(isdigit(input[0]) && isspace(input[1])){
-            if(((int)input[0] <= 9) &&((int)input[0] >= 0)){
-                number = (int)input[0];
+            if(((int)input[0] -48<= 9) &&((int)input[0] -48>= 0)){
+                number = (int)input[0] -48;
             }
         } else {
             std::cout << "Parse error." << std::endl;
@@ -63,8 +62,8 @@ Move::Move(const std::string& input){
             std::cout << "Parse error." << std::endl;
             exit(1);
         }
-        if(((int)input[i] == 1) || ((int)input[i] == 2) || ((int)input[i] == 3)){
-            column = input[i];
+        if(((int)input[i] == '1') || ((int)input[i] == '2') || ((int)input[i] == '3')){
+            column = input[i]-48;
         }else {
             std::cout << "Parse error." << std::endl;
             exit(1);
