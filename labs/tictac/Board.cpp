@@ -15,17 +15,17 @@ Board::Board()
 
 char Board::checkWin()
 {
-    if (((brd[0] == brd[1]) && (brd[1] == brd[2])) (brd[1] == 'X' || brd[1] == 'O') )
+    if (((brd[0] == brd[1]) && (brd[1] == brd[2])) && (brd[1] == 'X' || brd[1] == 'O') )
     {
         gameover = true;
         return (char)brd[1];
     }
-    if (((brd[3] == brd[4]) && (brd[4] == brd[5])) (brd[4] == 'X' || brd[4] == 'O') )
+    if (((brd[3] == brd[4]) && (brd[4] == brd[5])) && (brd[4] == 'X' || brd[4] == 'O') )
     {
         gameover = true;
         return (char)brd[4];
     }
-    if (((brd[6] == brd[7]) && (brd[7] == brd[8])) (brd[7] == 'X' || brd[7] == 'O') )
+    if (((brd[6] == brd[7]) && (brd[7] == brd[8])) && (brd[7] == 'X' || brd[7] == 'O') )
     {
         gameover = true;
         return (char)brd[7];
