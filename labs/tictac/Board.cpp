@@ -104,11 +104,11 @@ std::string Board::getstatus()
     }
     if (movecount % 2 == 0)
     {
-       std::cout <<"Game in progress: X's turn." << std::endl;exit(0);
+       std::cout <<"Game in progress: " << lastplayed <<"'s turn." << std::endl;exit(0);
     }
     else
     {
-        std::cout << "Game in progress: O's turn." << std::endl;exit(0);
+        std::cout << "Game in progress: " <<lastplayed << "'s turn." << std::endl;exit(0);
     }
 }
 
