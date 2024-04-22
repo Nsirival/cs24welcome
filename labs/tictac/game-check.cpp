@@ -29,7 +29,7 @@ int main(int argc, char **argv)
         {
             try{
             board.add_move(move.number, move.player, move.row, move.column);   
-            } catch (const ParseError & w)){
+            } catch (const ParseError & w){
                 if(verbose) {
                     std::cout << "Parse error: " << w.what() << '\n';
                 }
