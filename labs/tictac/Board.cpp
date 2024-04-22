@@ -17,43 +17,43 @@ char Board::checkWin()
 {
     if (((brd[0] == brd[1]) && (brd[1] == brd[2])) && brd[1] != '0')
     {
-        return (char)brd[1];
         gameover = true;
+        return (char)brd[1];
     }
     if (((brd[3] == brd[4]) && (brd[4] == brd[5])) && brd[4] != '0')
     {
-        return (char)brd[4];
         gameover = true;
+        return (char)brd[4];
     }
     if (((brd[6] == brd[7]) && (brd[7] == brd[8])) && brd[7] != '0')
     {
-        return (char)brd[7];
         gameover = true;
+        return (char)brd[7];
     }
     if (((brd[0] == brd[3]) && (brd[3] == brd[6])) && brd[3] != '0')
     {
-        return (char)brd[3];
         gameover = true;
+        return (char)brd[3];
     }
     if (((brd[1] == brd[4]) && (brd[4] == brd[7])) && brd[4] != '0')
     {
-        return (char)brd[4];
         gameover = true;
+        return (char)brd[4];
     }
     if (((brd[2] == brd[5]) && (brd[5] == brd[8])) && brd[5] != '0')
     {
-        return (char)brd[5];
         gameover = true;
+        return (char)brd[5];
     }
     if (((brd[0] == brd[4]) && (brd[4] == brd[8])) && brd[4] != '0')
     {
-        return (char)brd[4];
         gameover = true;
+        return (char)brd[4];
     }
-    if (((brd[2] == brd[4]) && (brd[4] == brd[6])) && brd[4] != '0') 
+    if (((brd[2] == brd[4]) && (brd[4] == brd[6])) && brd[4] != '0')
     {
-        return (char)brd[4];
         gameover = true;
+        return (char)brd[4];
     }
     return '0';
 }
