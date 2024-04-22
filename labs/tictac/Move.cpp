@@ -29,6 +29,7 @@ Move::Move(const std::string &input)
     }
     if (((input[i] == 'X' || input[i] == 'O') || (input[i] == 'x' || input[i] == 'o'))&& isspace(input[i+1]))
     {
+        i++;
         player = (int)input[i];
     }
     else
