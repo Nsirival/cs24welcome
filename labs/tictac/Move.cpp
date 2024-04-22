@@ -78,7 +78,7 @@ Move::Move(const std::string &input)
             }
             if (num == 4)
             {
-                if ((input[i] == '#') && !(isspace(input[i - 1])))
+                if (!(input[i] == '#') || !(isspace(input[i - 1])))
                 {
                     ParseError hi("Parse error.");
                     throw hi;
@@ -112,5 +112,5 @@ std::string Move::to_string() const
     {
         d = "C";
     }
-    return std::to_string(number) + " " + std::to_string(player) + " " + d + std::to_string(column);
+    return std::to_string(number) + " " + (char)player + " " + d + std::to_string(column);
 }
