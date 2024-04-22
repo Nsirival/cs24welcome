@@ -60,6 +60,7 @@ char Board::checkWin()
 
 void Board::add_move(int movenum, char player, int row, int column)
 {
+    Board::checkWin();
     movecount++;
     if (movenum != movecount || lastplayed == (char)player || gameover == true)
     {
@@ -78,7 +79,7 @@ void Board::add_move(int movenum, char player, int row, int column)
         exit(2);
     }
     lastplayed = (char)player;
-    Board::checkWin();
+    
 }
 
 std::string Board::getstatus()
