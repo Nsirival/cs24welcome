@@ -5,7 +5,8 @@
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
-
+    column = 0;
+    row = 0;
     int num = 0;
     for (int i = 0; i < (int)input.length(); i++)
     {
@@ -89,12 +90,13 @@ Move::Move(const std::string &input)
             num++;
         }
     }
-    if (num < 3)
+    if (num < 4)
     {
         ParseError hi("Parse error.");
         throw hi;
         exit(1);
     }
+
 };
 
 std::string Move::to_string() const
@@ -112,5 +114,6 @@ std::string Move::to_string() const
     {
         d = "C";
     }
+    
     return std::to_string(number) + " " + (char)player + " " + d + std::to_string(column);
 }
