@@ -5,6 +5,7 @@
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
+
     int num = 0;
     for (int i = 0; i < (int)input.length(); i++)
     {
@@ -12,13 +13,14 @@ Move::Move(const std::string &input)
         {
             if (num == 0)
             {
-                if ((int)input[i] -48> 0 && (int)input[i] -48< 10 && i ==0)
+                if ((int)input[i] - 48 > 0 && (int)input[i] - 48 < 10 && i == 0)
                 {
-                    number = (int)input[i]-48;
+                    number = (int)input[i] - 48;
                 }
                 else
                 {
-                    std::cout << "Parse error." << std::endl;
+                    ParseError hi("Parse error.");
+                    throw hi;
                     exit(1);
                 }
             }
@@ -34,7 +36,8 @@ Move::Move(const std::string &input)
                 }
                 else
                 {
-                    std::cout << "Parse error." << std::endl;
+                    ParseError hi("Parse error.");
+                    throw hi;
                     exit(1);
                 }
             }
@@ -54,7 +57,8 @@ Move::Move(const std::string &input)
                 }
                 else
                 {
-                    std::cout << "Parse error." << std::endl;
+                    ParseError hi("Parse error.");
+                    throw hi;
                     exit(1);
                 }
             }
@@ -67,7 +71,8 @@ Move::Move(const std::string &input)
                 }
                 else
                 {
-                    std::cout << "Parse error." << std::endl;
+                    ParseError hi("Parse error.");
+                    throw hi;
                     exit(1);
                 }
             }
@@ -75,7 +80,8 @@ Move::Move(const std::string &input)
             {
                 if ((input[i] == '#') && !(isspace(input[i - 1])))
                 {
-                    std::cout << "Parse error." << std::endl;
+                    ParseError hi("Parse error.");
+                    throw hi;
                     exit(1);
                 }
             }
@@ -83,9 +89,11 @@ Move::Move(const std::string &input)
             num++;
         }
     }
-    if(num < 3){
-        std::cout << "Parse error." << std::endl;
-                    exit(1);
+    if (num < 3)
+    {
+        ParseError hi("Parse error.");
+        throw hi;
+        exit(1);
     }
 };
 
