@@ -64,7 +64,7 @@ void Board::add_move(int movenum, char player, int row, int column)
     Board::checkWin();
     if(gameover == true){
         Board::getstatus();
-        exit(0);
+        exit(2);
     }
     movecount++;
     if (movenum != movecount || lastplayed == player || gameover == true)
