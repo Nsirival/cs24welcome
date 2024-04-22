@@ -5,44 +5,48 @@
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
-    int i = 1;
-    if ((isdigit(input[0]) && !isspace(input[0])) && isspace(input[1]))
+    int count = 0;
+    for (int i = 0; i < (int)input.length(); i++)
     {
-        if (((int)input[0] - 48 <= 9) && ((int)input[0] - 48 >= 1))
+        if (isalnum(input[i]))
         {
-            number = (int)input[0] - 48;
-        }
-        else
-        {
-            std::cout << "Parse error." << std::endl;
-            exit(1);
+            count++;
         }
     }
-    else
+    if (count < 4)
     {
         std::cout << "Parse error." << std::endl;
         exit(1);
     }
-    while ((isspace(input[i])) && (i < (int)input.length() - 1))
+
+    int i = 1;
+
+    if (!isdigit(input[0]) && !isspace(input[1]))
+    {
+        std::cout << "Parse error." << std::endl;
+        exit(1);
+    }
+    if (((int)input[0] - 48 > 9) || ((int)input[0] - 48 < 1))
+    {
+        std::cout << "Parse error." << std::endl;
+        exit(1);
+    }
+    number = (int)input[0] - 48;
+
+    while (isspace(input[i]) && i < (int)input.length() - 1)
     {
         i++;
     }
-    if ((input[i] == 'X' || input[i] == 'x') && isspace(input[i+1]))
+
+    if ((input[i] == 'X' || input[i] == 'x') && isspace(input[i + 1]))
     {
         i++;
         player = 'X';
-    } else if ((input[i] == 'O' || input[i] == 'o') && isspace(input[i+1])){
+    }
+    else if ((input[i] == 'O' || input[i] == 'o') && isspace(input[i + 1]))
+    {
         i++;
         player = 'O';
-    }
-    else
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-    if (i < (int)input.length()-1)
-    {
-        i++;
     }
     else
     {
@@ -56,24 +60,18 @@ Move::Move(const std::string &input)
 
     if (input[i] == 'A' || input[i] == 'a')
     {
+        i++;
         row = 1;
     }
     else if (input[i] == 'B' || input[i] == 'b')
     {
+        i++;
         row = 2;
     }
     else if (input[i] == 'C' || input[i] == 'c')
     {
-        row = 3;
-    }
-    else
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-    if (i < (int)input.length()-1)
-    {
         i++;
+        row = 3;
     }
     else
     {
@@ -82,6 +80,7 @@ Move::Move(const std::string &input)
     }
     if ((input[i] == '1') || (input[i] == '2') || (input[i] == '3'))
     {
+        i++;
         column = (int)input[i] - 48;
     }
     else
@@ -91,16 +90,17 @@ Move::Move(const std::string &input)
     }
     if (i < (int)input.length() - 1)
     {
-        i++;
         if (!isspace(input[i]))
         {
             std::cout << "Parse error." << std::endl;
             exit(1);
-            
         }
         else
         {
-            i++;
+            while ((isspace(input[i])) && (i < (int)input.length() - 1))
+            {
+                i++;
+            }
             if (input[i] != '#')
             {
                 std::cout << "Parse error." << std::endl;
@@ -108,7 +108,6 @@ Move::Move(const std::string &input)
             }
         }
     }
-    
 };
 
 std::string Move::to_string() const
