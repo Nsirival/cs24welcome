@@ -12,9 +12,9 @@ Move::Move(const std::string &input)
         {
             if (i == 0)
             {
-                if ((int)input[i] > 0 && (int)input[i] < 10)
+                if ((int)input[i] -48> 0 && (int)input[i] -48 < 10)
                 {
-                    number = (int)input[i];
+                    number = (int)input[i]-48 ;
                 }
                 else
                 {
