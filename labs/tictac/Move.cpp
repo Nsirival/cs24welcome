@@ -5,88 +5,83 @@
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
-
-    int i = 0;
-    if (!isalnum(input[0]))
+    int num = 0;
+    for (int i = 0; i < (int)input.length(); i++)
     {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-    if (((int)input[0] - 48 > 9) || ((int)input[0] - 48 < 1))
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-    number = (int)input[0] - 48;
-    i++;
-
-    while (isspace(input[i]) && i < (int)input.length() - 1)
-    {
-        i++;
-    }
-
-    if ((input[i] == 'X' || input[i] == 'x') && isspace(input[i + 1]))
-    {
-        i++;
-        player = 'X';
-    }
-    else if ((input[i] == 'O' || input[i] == 'o') && isspace(input[i + 1]))
-    {
-        i++;
-        player = 'O';
-    }
-    else
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-
-    while ((isspace(input[i])) && (i < (int)input.length() - 1))
-    {
-        i++;
-    }
-
-    if (input[i] == 'A' || input[i] == 'a')
-    {
-        i++;
-        row = 1;
-    }
-    else if (input[i] == 'B' || input[i] == 'b')
-    {
-        i++;
-        row = 2;
-    }
-    else if (input[i] == 'C' || input[i] == 'c')
-    {
-        i++;
-        row = 3;
-    }
-    else
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-
-    if (!(input[i] == '1') && !(input[i] == '2') && !(input[i] == '3'))
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
-    column = (int)input[i] - 48;
-    i++;
-
-    if (i < (int)input.length() - 1)
-    {
-        while ((isspace(input[i])) && (i < (int)input.length() - 1))
+        if (isalnum(input[i]))
         {
-            i++;
+            if (i == 0)
+            {
+                if ((int)input[i] > 0 && (int)input[i] < 10)
+                {
+                    number = (int)input[i];
+                }
+                else
+                {
+                    std::cout << "Parse error." << std::endl;
+                    exit(1);
+                }
+            }
+            if (num == 1)
+            {
+                if ((input[i] == 'X' || input[i] == 'x') && isspace(input[i - 1]))
+                {
+                    player = 'X';
+                }
+                else if ((input[i] == 'O' || input[i] == 'o') && isspace(input[i - 1]))
+                {
+                    player = 'O';
+                }
+                else
+                {
+                    std::cout << "Parse error." << std::endl;
+                    exit(1);
+                }
+            }
+            if (num == 2)
+            {
+                if ((input[i] == 'A' || input[i] == 'a') && isspace(input[i - 1]))
+                {
+                    row = 1;
+                }
+                else if ((input[i] == 'B' || input[i] == 'b') && isspace(input[i - 1]))
+                {
+                    row = 2;
+                }
+                else if ((input[i] == 'C' || input[i] == 'c') && isspace(input[i - 1]))
+                {
+                    row = 3;
+                }
+                else
+                {
+                    std::cout << "Parse error." << std::endl;
+                    exit(1);
+                }
+            }
+            if (num == 3)
+            {
+                if ((input[i] == '1') || (input[i] == '2') || (input[i] == '3'))
+                {
+
+                    column = (int)input[i] - 48;
+                }
+                else
+                {
+                    std::cout << "Parse error." << std::endl;
+                    exit(1);
+                }
+            }
+            if (num == 4)
+            {
+                if ((input[i] == '#') && !(isspace(input[i - 1])))
+                {
+                    std::cout << "Parse error." << std::endl;
+                    exit(1);
+                }
+            }
+
+            num++;
         }
-        if (i < (int)input.length() - 1){
-        if (input[i] != '#')
-        {
-            std::cout << "Parse error." << std::endl;
-            exit(1);
-        }}
     }
 };
 
