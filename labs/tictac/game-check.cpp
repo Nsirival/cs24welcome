@@ -6,17 +6,7 @@
 
 int main(int argc, char **argv)
 {
-    bool verbose = false;
-
-    if (argc == 2 && std::string(argv[1]) == "-v")
-    {
-        verbose = true;
-    }
-
-    if (verbose)
-    {
-        std::cout << "> ";
-    }
+    
 
     Board board;
     
