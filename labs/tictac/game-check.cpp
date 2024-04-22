@@ -44,7 +44,7 @@ int main(int argc, char **argv)
                 else {
                     std::cout << "Invalid Move.\n";
                 }
-                exit(2)
+                exit(2);
             }
         }
     }
