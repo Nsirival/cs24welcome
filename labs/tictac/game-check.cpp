@@ -29,20 +29,10 @@ int main(int argc, char **argv)
             Move move (line);    
             board.add_move(move.number, (char)move.player, move.row, move.column);   
             } catch (const ParseError & w){
-                if(verbose) {
-                    std::cout << "Parse error: " << w.what() << '\n';
-                }
-                else {
-                    std::cout << "Parse error.\n";
-                }
+                std::cout << "Parse error.\n";
                 exit(1);
             } catch (const InvalidMove & f){
-                if(verbose) {
-                    std::cout << "Invalid Move." << f.what() << '\n';
-                }
-                else {
-                    std::cout << "Invalid Move.\n";
-                }
+                std::cout << "Invalid Move.\n";
                 exit(2);
             }
         
