@@ -67,20 +67,10 @@ void Board::add_move(int movenum, char player, int row, int column)
         throw hi;
         exit(2);
     }
-    if (brd[column - 1 + (row - 1) * 3] != 'X' && brd[column - 1 + (row - 1) * 3] != 'O')
+    if (brd[column - 1 + (row - 1) * 3] == '0')
     {
-        if (row == 1)
-        {
-            brd[column - 1] = player;
-        }
-        else if (row == 2)
-        {
-            brd[column - 1 + 3] = player;
-        }
-        else if (row == 3)
-        {
-            brd[column - 1 + 6] = player;
-        }
+
+        brd[column - 1 + (row - 1) * 3] = player;
     }
     else
     {
@@ -97,17 +87,14 @@ std::string Board::getstatus()
     if (h == 'X')
     {
         std::cout << "Game over: X wins." << std::endl;
-        gameover = true;
     }
     if (h == 'O')
     {
         std::cout << "Game over: O wins." << std::endl;
-        gameover = true;
     }
     if ((h == '0') && movecount == 9)
     {
         std::cout << "Game over: Draw." << std::endl;
-        gameover = true;
     }
     if (movecount == 0)
     {
