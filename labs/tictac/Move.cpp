@@ -1,10 +1,17 @@
 #include "Errors.h"
 #include "Move.h"
 #include <iostream>
-
+Move::Move(){
+    number = 0;
+    player = '0';
+    column = 0;
+    row = 0;
+}
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
+    number = 0;
+    player = '0';
     column = 0;
     row = 0;
     int num = 0;
@@ -117,3 +124,35 @@ std::string Move::to_string() const
     
     return std::to_string(number) + " " + (char)player + " " + d + std::to_string(column);
 }
+
+int Move::getmovenum(){
+    return number;
+}
+
+char Move::getplayer(){
+    return player;
+}
+int Move::getrow(){
+    return row;
+}
+int Move::getcolumn(){
+    return column;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

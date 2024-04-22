@@ -16,10 +16,15 @@ struct Move {
   int  column;
 
   // The constructor parses a string.
+  Move();
   Move(const std::string& input);
 
   // Helper to render a Move as text.
   std::string to_string() const;
+  char getplayer();
+  int getrow();
+  int getcolumn();
+  int getmovenum();
 };
 
 #endif

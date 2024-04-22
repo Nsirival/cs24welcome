@@ -9,10 +9,13 @@ class Board {
     private:
         char brd[9];
         char movecount = 0;
+        bool gameover;
+        char lastplayed;
+        int movenumber;
     public:
         Board();
         char checkWin();
-        void add_move(char player, int row, int column);
+        void add_move(int movenum, char player, int row, int column);
         std::string getstatus();
 
 };

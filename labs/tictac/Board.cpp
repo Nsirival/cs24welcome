@@ -1,11 +1,14 @@
 #include "Errors.h"
 #include "Board.h"
-
+#include <iostream>
 // Space for implementing Board functions.
 Board::Board(){
     for(int i = 0; i < (int)(sizeof(brd)/(int)sizeof(brd[0])); i++){
         brd[i] = '0';
     }
+    movecount = 0;
+    gameover = false;
+    lastplayed = '0';
 }
 
 char Board::checkWin(){
@@ -36,7 +39,23 @@ char Board::checkWin(){
     return '0';
 }
 
-void Board::add_move(char player, int row, int column){
+void Board::add_move(int movenum,char player, int row, int column){
+    movecount ++;
+    if(movenum != movecount){
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
+    }
+    if(lastplayed == player){
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
+    }
+    if(gameover == true){
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
+    }
     if(brd[column-1+(row-1)*3] != 'X' && brd[column-1+(row-1)*3] != 'O'){
         if(row == 1){
             brd[column-1] = player;
@@ -45,23 +64,38 @@ void Board::add_move(char player, int row, int column){
         } else if(row == 3){
             brd[column-1 + 6] = player;
         }
+        
+    } else {
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
     }
-    movecount ++;
+    lastplayed = player;
+    movenumber = movenum;
+    
 }
 
 std::string Board::getstatus(){
+    char h = static_cast<char>(Board::checkWin());
+    if( h == 'X'){
+        std::cout << "Game over: X wins." << std::endl;
+        gameover = true;
+    } 
+    if(h == 'O'){
+        std::cout << "Game over: O wins." << std::endl;
+        gameover = true;
+    } 
+    if((h == '0') && movecount == 9){
+        std::cout << "Game over: Draw." << std::endl;
+        gameover = true;
+    }
     if(movecount == 0){
         return "Game in progress: New game.";
     } 
-    if(movecount == 9){
-        return "someone won";
-    }
-    if(movecount %2 == 1){
-        
+    if(movecount %2 == 0){
         return "Game in progress: X's turn.";
     } else {
         return "Game in progress: O's turn.";
     }
-    return "you fucked up";
 }
 
