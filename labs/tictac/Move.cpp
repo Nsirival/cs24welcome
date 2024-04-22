@@ -81,12 +81,12 @@ Move::Move(const std::string &input)
         {
             i++;
         }
-
+        if (i < (int)input.length() - 1){
         if (input[i] != '#')
         {
             std::cout << "Parse error." << std::endl;
             exit(1);
-        }
+        }}
     }
 };
 
