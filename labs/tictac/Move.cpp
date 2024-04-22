@@ -21,7 +21,9 @@ Move::Move(const std::string& input){
     if(input.length() >= 6){
         
         if(isdigit(input[0]) && isspace(input[1])){
-            number = (int)input[0];
+            if(((int)input[0] <= 9) &&((int)input[0] >= 0)){
+                number = (int)input[0];
+            }
         } else {
             std::cout << "Parse error." << std::endl;
             exit(1);
@@ -29,7 +31,7 @@ Move::Move(const std::string& input){
         while((isspace(input[i])) && (i < (int)input.length()-1)){
             i++;
         }
-        if((input[i] == 'X' || input[i] == 'O')){
+        if((input[i] == 'X' || input[i] == 'O') || (input[i] == 'x' || input[i] == 'o')){
             player = (int)input[i];
         } else {
             std::cout << "Parse error." << std::endl;
@@ -45,11 +47,11 @@ Move::Move(const std::string& input){
             i++;
         }
 
-        if(input[i] == 'A'){
+        if(input[i] == 'A' || input[i] == 'a'){
             row = 1;
-        } else if(input[i] == 'B'){
+        } else if(input[i] == 'B' || input[i] == 'b'){
             row = 2;
-        } else if(input[i] == 'C'){
+        } else if(input[i] == 'C' || input[i] == 'c'){
             row = 3;
         } else {
             std::cout << "Parse error." << std::endl;
