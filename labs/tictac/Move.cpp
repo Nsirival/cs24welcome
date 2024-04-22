@@ -83,6 +83,10 @@ Move::Move(const std::string &input)
             num++;
         }
     }
+    if(num < 3){
+        std::cout << "Parse error." << std::endl;
+                    exit(1);
+    }
 };
 
 std::string Move::to_string() const
