@@ -59,7 +59,7 @@ char Board::checkWin()
 }
 
 void Board::add_move(int movenum, char player, int row, int column)
-{
+{  
     Board::checkWin();
     movecount++;
     if (movenum != movecount || lastplayed == (char)player || gameover == true)
@@ -102,13 +102,15 @@ std::string Board::getstatus()
     {
         std::cout <<"Game in progress: New game." << std::endl;exit(0);
     }
-    if (movecount % 2 == 0)
+    
+    
+    if (lastplayed == 'O')
     {
-       std::cout <<"Game in progress: " << lastplayed <<"'s turn." << std::endl;exit(0);
+       std::cout <<"Game in progress: X's turn." << std::endl;exit(0);
     }
     else
     {
-        std::cout << "Game in progress: " <<lastplayed << "'s turn." << std::endl;exit(0);
+        std::cout << "Game in progress: O's turn." << std::endl;exit(0);
     }
 }
 
