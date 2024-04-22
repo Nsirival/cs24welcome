@@ -123,5 +123,18 @@ Move::Move(const std::string &input)
 
 std::string Move::to_string() const
 {
-    return std::to_string(number) + " " + std::to_string(player) + " " + std::to_string(row) + std::to_string(column);
+    std::string d;
+    if (row == 1)
+    {
+        d = "A";
+    }
+    else if (row == 2)
+    {
+        d = "B";
+    }
+    else if (row ==3)
+    {
+        d = "C";
+    }
+    return std::to_string(number) + " " + std::to_string(player) + " " + d + std::to_string(column);
 }
