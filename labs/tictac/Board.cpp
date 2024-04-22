@@ -87,26 +87,27 @@ std::string Board::getstatus()
     if (h == 'X')
     {
         std::cout << "Game over: X wins." << std::endl;
+        exit(0);
     }
     if (h == 'O')
     {
-        std::cout << "Game over: O wins." << std::endl;
+        std::cout << "Game over: O wins." << std::endl;exit(0);
     }
     if ((h == '0') && movecount == 9)
     {
-        std::cout << "Game over: Draw." << std::endl;
+        std::cout << "Game over: Draw." << std::endl;exit(0);
     }
     if (movecount == 0)
     {
-        return "Game in progress: New game.";
+        return "Game in progress: New game.";exit(0);
     }
     if (movecount % 2 == 0)
     {
-        return "Game in progress: X's turn.";
+        return "Game in progress: X's turn.";exit(0);
     }
     else
     {
-        return "Game in progress: O's turn.";
+        return "Game in progress: O's turn.";exit(0);
     }
 }
 
