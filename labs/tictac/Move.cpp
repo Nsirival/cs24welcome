@@ -10,7 +10,7 @@ Move::Move(){
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
-    number = 0;
+    number = 1;
     player = '0';
     column = 0;
     row = 0;
