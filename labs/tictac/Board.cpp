@@ -61,7 +61,7 @@ char Board::checkWin()
 void Board::add_move(int movenum, char player, int row, int column)
 {
     movecount++;
-    if (movenum != movecount || lastplayed == player || gameover == true)
+    if (movenum != movecount || lastplayed == (char)player || gameover == true)
     {
         InvalidMove hi("Invalid move.");
         throw hi;
@@ -70,7 +70,7 @@ void Board::add_move(int movenum, char player, int row, int column)
     if (brd[column - 1 + (row - 1) * 3] != 'X' && brd[column - 1 + (row - 1) * 3] != 'O')
     {
 
-        brd[column - 1 + (row - 1) * 3] = player;
+        brd[column - 1 + (row - 1) * 3] = (char)player;
     }
     else
     {
@@ -78,7 +78,7 @@ void Board::add_move(int movenum, char player, int row, int column)
         throw hi;
         exit(2);
     }
-    lastplayed = player;
+    lastplayed = (char)player;
 }
 
 std::string Board::getstatus()
