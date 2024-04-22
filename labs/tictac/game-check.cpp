@@ -24,8 +24,9 @@ int main(int argc, char **argv)
     while (getline(std::cin, line))
     {
         board.checkWin();
-        Move move (line);
+        
             try{
+            Move move (line);    
             board.add_move(move.number, (char)move.player, move.row, move.column);   
             } catch (const ParseError & w){
                 if(verbose) {
