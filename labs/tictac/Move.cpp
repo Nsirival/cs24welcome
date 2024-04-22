@@ -20,9 +20,12 @@ Move::Move(const std::string& input){
     if(input.length() >= 6){
         
         if(isdigit(input[0]) && isspace(input[1])){
-            if(((int)input[0] -48<= 9) &&((int)input[0] -48>= 0)){
+            if(((int)input[0] -48<= 9) &&((int)input[0] -48>= 1)){
                 number = (int)input[0] -48;
-            }
+            } else {
+            std::cout << "Parse error." << std::endl;
+            exit(1);
+            } 
         } else {
             std::cout << "Parse error." << std::endl;
             exit(1);
@@ -71,6 +74,7 @@ Move::Move(const std::string& input){
 
     }else {
         exit(1);
+        std::cout << "Parse error." << std::endl;
     }
 
     
