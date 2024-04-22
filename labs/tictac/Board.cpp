@@ -69,7 +69,6 @@ void Board::add_move(int movenum, char player, int row, int column)
     }
     if (brd[column - 1 + (row - 1) * 3] != 'X' && brd[column - 1 + (row - 1) * 3] != 'O')
     {
-
         brd[column - 1 + (row - 1) * 3] = (char)player;
     }
     else
@@ -99,15 +98,15 @@ std::string Board::getstatus()
     }
     if (movecount == 0)
     {
-        return "Game in progress: New game.";exit(0);
+        std::cout <<"Game in progress: New game." << std::endl;exit(0);
     }
     if (movecount % 2 == 0)
     {
-        return "Game in progress: X's turn.";exit(0);
+       std::cout <<"Game in progress: X's turn." << std::endl;exit(0);
     }
     else
     {
-        return "Game in progress: O's turn.";exit(0);
+        std::cout << "Game in progress: O's turn." << std::endl;exit(0);
     }
 }
 

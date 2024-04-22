@@ -27,14 +27,28 @@ int main(int argc, char **argv)
         Move move (line);
         if (board.getgame() == false)
         {
-
-            board.add_move(move.getmovenum(), move.getplayer(), move.getrow(), move.getcolumn());   
-            
-        }
-        else
-        {
-            board.getstatus();
-            exit(0);
+            try{
+            board.add_move(move.number, move.player, move.row, move.column);   
+            } catch (const ParseError & w)){
+                if(verbose) {
+                    std::cout << "Parse error: " << w.what() << '\n';
+                }
+                else {
+                    std::cout << "Parse error.\n";
+                }
+                exit(1);
+            } catch (const InvalidMove & f){
+                if(verbose) {
+                    std::cout << "Invalid Move." << f.what() << '\n';
+                }
+                else {
+                    std::cout << "Invalid Move.\n";
+                }
+                exit(2)
+            }
         }
     }
+    
+    board.getstatus();
+        exit(0);
 }
