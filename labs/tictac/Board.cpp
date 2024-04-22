@@ -4,7 +4,7 @@
 // Space for implementing Board functions.
 Board::Board()
 {
-    for (int i = 0; i < (int)(sizeof(brd) / (int)sizeof(brd[0])); i++)
+    for (int i = 0; i < 9; i++)
     {
         brd[i] = '0';
     }
@@ -67,7 +67,7 @@ void Board::add_move(int movenum, char player, int row, int column)
         throw hi;
         exit(2);
     }
-    if (brd[column - 1 + (row - 1) * 3] == '0')
+    if (brd[column - 1 + (row - 1) * 3] != 'X' && brd[column - 1 + (row - 1) * 3] != 'O')
     {
 
         brd[column - 1 + (row - 1) * 3] = player;

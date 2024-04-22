@@ -19,18 +19,16 @@ int main(int argc, char **argv)
     }
 
     Board board;
-    Move move;
-    std::string line;
     
+    std::string line;
     while (getline(std::cin, line))
     {
         board.checkWin();
         Move move (line);
         if (board.getgame() == false)
         {
-            
-                board.add_move(move.getmovenum(), move.getplayer(), move.getrow(), move.getcolumn());
-            
+
+            board.add_move(move.getmovenum(), move.getplayer(), move.getrow(), move.getcolumn());   
             
         }
         else
