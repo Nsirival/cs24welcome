@@ -17,7 +17,6 @@
 // Space for implementing Move functions.
 Move::Move(const std::string& input){
     std::string ipt= Move::to_string();
-    int i = 1;
     if(input.length() >= 6){
         
         if(isdigit(input[0]) && isspace(input[1])){
