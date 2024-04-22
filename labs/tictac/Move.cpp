@@ -62,8 +62,8 @@ Move::Move(const std::string& input){
             std::cout << "Parse error." << std::endl;
             exit(1);
         }
-        if(((int)input[i] == '1') || ((int)input[i] == '2') || ((int)input[i] == '3')){
-            column = input[i]-48;
+        if((input[i] == '1') || (input[i] == '2') || (input[i] == '3')){
+            column = (int)input[i]-48;
         }else {
             std::cout << "Parse error." << std::endl;
             exit(1);
