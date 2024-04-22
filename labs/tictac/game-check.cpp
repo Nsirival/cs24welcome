@@ -25,8 +25,6 @@ int main(int argc, char **argv)
     {
         board.checkWin();
         Move move (line);
-        if (board.getgame() == false)
-        {
             try{
             board.add_move(move.number, move.player, move.row, move.column);   
             } catch (const ParseError & w){
@@ -46,7 +44,7 @@ int main(int argc, char **argv)
                 }
                 exit(2);
             }
-        }
+        
     }
     
     board.getstatus();
