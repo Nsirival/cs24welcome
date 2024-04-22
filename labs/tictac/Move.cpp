@@ -5,23 +5,9 @@
 // Space for implementing Move functions.
 Move::Move(const std::string &input)
 {
-    int count = 0;
-    for (int i = 0; i < (int)input.length(); i++)
-    {
-        if (isalnum(input[i]))
-        {
-            count++;
-        }
-    }
-    if (count < 4)
-    {
-        std::cout << "Parse error." << std::endl;
-        exit(1);
-    }
 
-    int i = 1;
-
-    if (!isdigit(input[0]) && !isspace(input[1]))
+    int i = 0;
+    if (!isalnum(input[0]))
     {
         std::cout << "Parse error." << std::endl;
         exit(1);
@@ -32,6 +18,7 @@ Move::Move(const std::string &input)
         exit(1);
     }
     number = (int)input[0] - 48;
+    i++;
 
     while (isspace(input[i]) && i < (int)input.length() - 1)
     {
@@ -53,6 +40,7 @@ Move::Move(const std::string &input)
         std::cout << "Parse error." << std::endl;
         exit(1);
     }
+
     while ((isspace(input[i])) && (i < (int)input.length() - 1))
     {
         i++;
@@ -78,35 +66,26 @@ Move::Move(const std::string &input)
         std::cout << "Parse error." << std::endl;
         exit(1);
     }
-    if ((input[i] == '1') || (input[i] == '2') || (input[i] == '3'))
-    {
-        
-        column = (int)input[i] - 48;
-        i++;
-    }
-    else
+
+    if (!(input[i] == '1') && !(input[i] == '2') && !(input[i] == '3'))
     {
         std::cout << "Parse error." << std::endl;
         exit(1);
     }
+    column = (int)input[i] - 48;
+    i++;
+
     if (i < (int)input.length() - 1)
     {
-        if (!isspace(input[i]))
+        while ((isspace(input[i])) && (i < (int)input.length() - 1))
+        {
+            i++;
+        }
+
+        if (input[i] != '#')
         {
             std::cout << "Parse error." << std::endl;
             exit(1);
-        }
-        else
-        {
-            while ((isspace(input[i])) && (i < (int)input.length() - 1))
-            {
-                i++;
-            }
-            if (input[i] != '#')
-            {
-                std::cout << "Parse error." << std::endl;
-                exit(1);
-            }
         }
     }
 };
