@@ -32,7 +32,7 @@ int main(int argc, char **argv)
                 std::cout << "Parse error.\n";
                 exit(1);
             } catch (const InvalidMove & f){
-                std::cout << "Invalid Move.\n";
+                std::cout << "Invalid move.\n";
                 exit(2);
             }
         
