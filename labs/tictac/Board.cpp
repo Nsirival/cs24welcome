@@ -62,10 +62,6 @@ void Board::add_move(int movenum, char player, int row, int column)
 {  
     
     Board::checkWin();
-    if(gameover == true){
-        Board::getstatus();
-        exit(2);
-    }
     movecount++;
     if (movenum != movecount || lastplayed == player || gameover == true)
     {
@@ -93,11 +89,11 @@ std::string Board::getstatus()
     if (h == 'X')
     {
         std::cout << "Game over: X wins." << std::endl;
-        exit(0);
+        exit(2);
     }
     if (h == 'O')
     {
-        std::cout << "Game over: O wins." << std::endl;exit(0);
+        std::cout << "Game over: O wins." << std::endl;exit(2);
     }
     if ((h == '0') && movecount == 9)
     {
