@@ -61,19 +61,7 @@ char Board::checkWin()
 void Board::add_move(int movenum, char player, int row, int column)
 {
     movecount++;
-    if (movenum != movecount)
-    {
-        InvalidMove hi("Invalid move.");
-        throw hi;
-        exit(2);
-    }
-    if (lastplayed == player)
-    {
-        InvalidMove hi("Invalid move.");
-        throw hi;
-        exit(2);
-    }
-    if (gameover == true)
+    if (movenum != movecount || lastplayed == player || gameover == true)
     {
         InvalidMove hi("Invalid move.");
         throw hi;
@@ -101,7 +89,6 @@ void Board::add_move(int movenum, char player, int row, int column)
         exit(2);
     }
     lastplayed = player;
-    movenumber = movenum;
 }
 
 std::string Board::getstatus()

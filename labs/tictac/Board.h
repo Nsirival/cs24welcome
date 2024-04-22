@@ -11,7 +11,6 @@ class Board {
         char movecount = 0;
         bool gameover;
         char lastplayed;
-        int movenumber;
     public:
         Board();
         char checkWin();
