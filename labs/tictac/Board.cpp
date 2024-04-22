@@ -61,9 +61,19 @@ char Board::checkWin()
 void Board::add_move(int movenum, char player, int row, int column)
 {  
     Board::checkWin();
+    if(gameover == true){
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
+    }
     movecount++;
-    if (movenum != movecount || lastplayed == player || gameover == true)
+    if (movenum != movecount)
     {
+        InvalidMove hi("Invalid move.");
+        throw hi;
+        exit(2);
+    }
+    if ((char)lastplayed == (char)player){
         InvalidMove hi("Invalid move.");
         throw hi;
         exit(2);
