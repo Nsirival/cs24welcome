@@ -17,6 +17,7 @@ class Board {
         char checkWin();
         void add_move(int movenum, char player, int row, int column);
         std::string getstatus();
+        bool getgame();
 
 };
 
