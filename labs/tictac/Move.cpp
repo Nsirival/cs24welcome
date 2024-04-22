@@ -9,7 +9,7 @@ Move::Move(const std::string &input)
     int num = 0;
     for (int i = 0; i < (int)input.length(); i++)
     {
-        if (isalnum(input[i]))
+        if (!isspace(input[i]))
         {
             if (num == 0)
             {
