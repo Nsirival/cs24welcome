@@ -3,7 +3,7 @@
 
 // Space for implementing Board functions.
 Board::Board(){
-    for(int i = 0; i < sizeof(brd)/(int)sizeof(brd[0]); i++){
+    for(int i = 0; i < (int)(sizeof(brd)/(int)sizeof(brd[0])); i++){
         brd[i] = '0';
     }
 }

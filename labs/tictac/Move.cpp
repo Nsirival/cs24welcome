@@ -26,7 +26,7 @@ Move::Move(const std::string& input){
             std::cout << "Parse error." << std::endl;
             exit(1);
         } 
-        while((isspace(input[i])) && (i < input.length()-1)){
+        while((isspace(input[i])) && (i < (int)input.length()-1)){
             i++;
         }
         if((input[i] == 'X' || input[i] == 'O')){
@@ -35,13 +35,13 @@ Move::Move(const std::string& input){
             std::cout << "Parse error." << std::endl;
             exit(1);
         } 
-        if(i < input.length()){
+        if(i < (int)input.length()){
             i++;
         } else {
             std::cout << "Parse error." << std::endl;
             exit(1);
         }
-        while((isspace(input[i])) && (i < input.length()-1)){
+        while((isspace(input[i])) && (i < (int)input.length()-1)){
             i++;
         }
 
@@ -55,7 +55,7 @@ Move::Move(const std::string& input){
             std::cout << "Parse error." << std::endl;
             exit(1);
         }
-        if(i < input.length()){
+        if(i < (int)input.length()){
             i++;
         } else {
             std::cout << "Parse error." << std::endl;
