@@ -13,6 +13,9 @@ class Tree
   size_t recursivecount(Node *start);
   void recursiveclear(Node *start);
   size_t recursivefind(Node *start, std::string value);
+  std::string recursiveindex(Node*start, size_t index){
+
+  }
 
 public:
   Tree();
@@ -24,7 +27,7 @@ public:
   bool contains(const std::string &s);
   size_t find(const std::string &s);
   void insert(const std::string &s);
-  std::string lookup(size_t index) const;
+  std::string lookup(size_t index);
   void print() const;
   void remove(size_t index);
 };

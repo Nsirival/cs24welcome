@@ -4,7 +4,16 @@
 #include <string>
 
 struct Node {
-  // TODO!
+  size_t index;
+  std::string data;
+  Node* up;
+  Node* downleft;
+  Node* downright;
+
+
+  Node(std::string val);
+  Node();
+  
 };
 
 #endif

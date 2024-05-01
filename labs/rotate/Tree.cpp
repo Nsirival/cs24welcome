@@ -91,17 +91,18 @@ size_t Tree::find(const std::string &s)
     {
         return Tree::recursivefind(hi, s);
     }
-    return 18446744073709551615;
+    return (size_t)18446744073709551615;
 }
 
 
 
-std::string Tree::lookup(size_t index) const
+std::string Tree::lookup(size_t index)
 {
     if (index > nodecount)
     {
         throw std::out_of_range("Index out of range");
     }
+    return Tree::recursiveindex(hi, index);
 }
 
 void Tree::print() const
@@ -120,7 +121,5 @@ void Tree::remove(size_t index)
 
 void Tree::insert(const std::string &s)
 {
-    Node *newnode = new Node(s);
-    num += 1;
-    newnode->index = num;
+
 }
