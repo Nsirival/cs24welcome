@@ -19,9 +19,8 @@ size_t Tree::recursivecount(Node *start)
     // {
     //     return 1 + recursivecount(start->downleft);
     // }
-    
-        return 1 + recursivecount(start->downleft) + recursivecount(start->downright);
-    
+
+    return (size_t)(1 + recursivecount(start->downleft) + recursivecount(start->downright));
 }
 
 void Tree::recursiveclear(Node *start)
@@ -93,8 +92,6 @@ size_t Tree::find(const std::string &s)
     return (size_t)1;
 }
 
-
-
 std::string Tree::lookup(size_t index)
 {
     if (index > nodecount)
@@ -106,19 +103,13 @@ std::string Tree::lookup(size_t index)
 
 void Tree::print() const
 {
-//((a b c) d (- e f))
-    
-
+    //((a b c) d (- e f))
 }
 
 void Tree::remove(size_t index)
 {
-    
-
-
 }
 
 void Tree::insert(const std::string &s)
 {
-
 }
