@@ -1,27 +1,27 @@
 #include "Tree.h"
 #include "stdexcept"
 
-size_t Tree::recursivecount(Node *start)
-{
-    if (start == nullptr)
-    {
-        return 0;
-    }
-    // if (start->downleft == nullptr && start->downright == nullptr)
-    // {
-    //     return 1;
-    // }
-    // else if (start->downleft == nullptr)
-    // {
-    //     return 1 + recursivecount(start->downright);
-    // }
-    // else if (start->downright == nullptr)
-    // {
-    //     return 1 + recursivecount(start->downleft);
-    // }
+// size_t Tree::recursivecount(Node *start)
+// {
+//     if (start == nullptr)
+//     {
+//         return 0;
+//     }
+//     // if (start->downleft == nullptr && start->downright == nullptr)
+//     // {
+//     //     return 1;
+//     // }
+//     // else if (start->downleft == nullptr)
+//     // {
+//     //     return 1 + recursivecount(start->downright);
+//     // }
+//     // else if (start->downright == nullptr)
+//     // {
+//     //     return 1 + recursivecount(start->downleft);
+//     // }
 
-    return (size_t)(1 + recursivecount(start->downleft) + recursivecount(start->downright));
-}
+//     return (size_t)(1 + recursivecount(start->downleft) + recursivecount(start->downright));
+// }
 
 void Tree::recursiveclear(Node *start)
 {

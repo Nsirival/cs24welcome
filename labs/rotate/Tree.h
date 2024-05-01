@@ -10,7 +10,7 @@ class Tree
   size_t nodecount = 0;
   size_t randomnum = -1;
   // Private Helper Functions
-  size_t recursivecount(Node *start);
+  // size_t recursivecount(Node *start);
   void recursiveclear(Node *start);
   size_t recursivefind(Node *start, std::string value);
   std::string recursiveindex(Node*start, size_t index){
