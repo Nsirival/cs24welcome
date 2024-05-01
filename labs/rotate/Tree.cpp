@@ -98,7 +98,7 @@ std::string Tree::lookup(size_t index)
     {
         throw std::out_of_range("Index out of range");
     }
-    return Tree::recursiveindex(hi, index);
+    return "hi";
 }
 
 void Tree::print() const
