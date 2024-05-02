@@ -25,7 +25,7 @@ size_t Tree::recursivefind(Node *rooot, std::string s)const
 {
     if (rooot == nullptr)
     {
-        return -1;
+        retusrn -1;
     }
     if (s == rooot->data)
     {//find index
@@ -147,7 +147,7 @@ size_t Tree::count()const
 {
     return recursivecount(root);
 };
-bool Tree::contains(const std::string &s)
+bool Tree::contains(const std::string &s)const
 {
     if (root == nullptr)
     {
