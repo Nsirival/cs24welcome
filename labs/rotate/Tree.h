@@ -13,9 +13,9 @@ class Tree
   std::string printstatment = "";
   // Private Helper Functions
   void recursivedelete(Node *rooot);
-  size_t recursivecount(Node *rooot);
-  size_t recursivefind(Node* rooot, const std::string &s);
-  void recursiveprint(Node* rooot);
+  size_t recursivecount(Node *rooot)const;
+  size_t recursivefind(Node* rooot, const std::string &s)const;
+  void recursiveprint(Node* rooot)const;
   void recursiveinsert(Node* rooot, Node* newnode);
   Node* promotion(Node* rooot); int nodecount(Node*rooot);
   std::string recursiveindex(Node*rooot, int idx);
@@ -25,12 +25,12 @@ public:
 
   // Public Member Functions
   void clear();
-  size_t count();
+  size_t count() const;
   bool contains(const std::string &s);
-  size_t find(const std::string &s);
+  size_t find(const std::string &s)const;
   void insert(const std::string &s);
-  std::string lookup(size_t index);
-  void print();
+  std::string lookup(size_t index)const;
+  void print()const;
   void remove(size_t index);
 };
 
