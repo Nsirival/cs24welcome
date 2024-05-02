@@ -19,8 +19,6 @@ class Tree
   void recursiveinsert(Node* rooot, Node* newnode);
   Node* promotion(Node* rooot); int nodecount(Node*rooot);
   std::string recursiveindex(Node*rooot, int idx);
-  void recursiveprint(Node*rooot);
-
 public:
   Tree();
   ~Tree();
