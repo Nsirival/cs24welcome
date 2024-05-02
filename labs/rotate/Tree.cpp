@@ -28,8 +28,8 @@ size_t recursivefind(Node *rooot, const std::string &s)
         return -1;
     }
     if (s == rooot->data)
-    {
-        return rooot->index;
+    {//find index
+        return 0;
     }
 
     if (s < rooot->data)
@@ -170,9 +170,9 @@ void Tree::insert(const std::string &s)
     Node *hi = new Node(s);
     recursiveinsert(root, hi);
 };
-// std::string Tree::lookup(size_t index)const{
-
-// };
+std::string Tree::lookup(size_t index)const{
+ return "hi";
+};
 void Tree::print()const
 {
     if (root != nullptr)
