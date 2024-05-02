@@ -9,11 +9,8 @@ struct Node {
   Node* up;
   Node* downleft;
   Node* downright;
-
-
-  Node(std::string val);
   Node();
-  
+  Node(std::string value);
 };
 
 #endif

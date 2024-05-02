@@ -1,115 +1,187 @@
 #include "Tree.h"
-#include "stdexcept"
+#include "Node.h"
+#include "iostream"
 
-// size_t Tree::recursivecount(Node *start)
-// {
-//     if (start == nullptr)
-//     {
-//         return 0;
+void Tree::recursivedelete(Node *rooot)
+{
+    if (rooot != nullptr)
+    {
+        recursivedelete(rooot->downleft);
+        recursivedelete(rooot->downright);
+    }
+    delete rooot;
+}
+
+size_t Tree::recursivecount(Node *rooot)
+{
+    if (rooot != nullptr)
+    {
+        return 1 + recursivecount(rooot->downleft) + recursivecount(rooot->downright);
+    }
+    return 0;
+}
+
+size_t recursivefind(Node *rooot, const std::string &s)
+{
+
+    if (s == rooot->data)
+    {
+        return rooot->index;
+    }
+
+    if (s < rooot->data)
+    {
+        recursivefind(rooot->downleft, s);
+    }
+    if (s > rooot->data)
+    {
+        recursivefind(rooot->downright, s);
+    }
+    if (rooot == nullptr)
+    {
+        return -1;
+    }
+}
+
+void Tree::recursiveinsert(Node *rooot, Node *newnode)
+{
+    if (newnode->data <= rooot->data && rooot->downleft != nullptr)
+    {
+        recursiveinsert(rooot->downleft, newnode);
+    }
+    else if (newnode->data > rooot->data && rooot->downright != nullptr)
+    {
+        recursiveinsert(rooot->downright, newnode);
+    }
+    else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
+    {
+        newnode->up = rooot;
+        rooot->downleft = newnode;
+    }
+    else if (newnode->data > rooot->data && rooot->downright == nullptr)
+    {
+        newnode->up = rooot;
+        rooot->downright = newnode;
+    }
+}
+
+// std::string Tree::recursiveindex(Node*rooot, int idx){
+//     if (rooot!= nullptr){
+//         index += 1;
+//         recursiveindex(rooot->downleft, idx);
+//         recursiveindex(rooot->downright, idx);
+
 //     }
-//     // if (start->downleft == nullptr && start->downright == nullptr)
-//     // {
-//     //     return 1;
-//     // }
-//     // else if (start->downleft == nullptr)
-//     // {
-//     //     return 1 + recursivecount(start->downright);
-//     // }
-//     // else if (start->downright == nullptr)
-//     // {
-//     //     return 1 + recursivecount(start->downleft);
-//     // }
-
-//     return (size_t)(1 + recursivecount(start->downleft) + recursivecount(start->downright));
 // }
 
-void Tree::recursiveclear(Node *start)
+Node *Tree::promotion(Node *rooot)
 {
-    if (start != nullptr)
+    if (rooot != nullptr)
     {
-        recursiveclear(start->downright);
-        recursiveclear(start->downleft);
-        delete start;
-        start = nullptr;
+        leftweight = nodecount(rooot->downleft);
+        leftweight = nodecount(rooot->downright);
     }
 }
 
-size_t Tree::recursivefind(Node *start, std::string value)
+int Tree::nodecount(Node *rooot)
 {
-    if (start != nullptr)
-    {
-        if (start->data == value)
-        {
-            randomnum = start->index;
-            int s = randomnum;
-            randomnum = -1;
-            return s;
-        }
-        else
-        {
-            recursivefind(start->downleft, value);
-            recursivefind(start->downright, value);
-        }
-    }
-    return randomnum;
 }
 
+void Tree::recursiveprint(Node *rooot)
+{
+
+    if (rooot->downleft != nullptr || rooot->downright != nullptr)
+    {
+        std::cout << "(";
+    }
+    if (root->downleft == nullptr && root->downright == nullptr)
+    {
+        std::cout << root->data;
+    }
+    else if (root->downleft == nullptr && root->downright != nullptr)
+    {
+        std::cout << "- " << root->data << " ";
+        recursiveprint(rooot->downright);
+    }
+    else if (root->downleft != nullptr && root->downright == nullptr)
+    {
+        recursiveprint(rooot->downleft);
+
+        std::cout << " " << root->data << " -";
+    }
+    else
+    {
+        recursiveprint(rooot->downleft);
+        std::cout << " " << root->data << " ";
+        recursiveprint(rooot->downright);
+    }
+
+    if (rooot->downleft != nullptr || rooot->downright != nullptr)
+    {
+        std::cout << ")";
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 Tree::Tree()
 {
-    hi = nullptr;
+    root = nullptr;
 }
-
 Tree::~Tree()
 {
-    delete hi;
+    Tree::clear();
 }
-
 void Tree::clear()
 {
-    recursiveclear(hi);
-}
-
-size_t Tree::count() const
+    recursivedelete(root);
+    root = nullptr;
+};
+size_t Tree::count()
 {
-    return nodecount;
-}
-
+    recursivecount(root);
+};
 bool Tree::contains(const std::string &s)
 {
-    if ((int)Tree::recursivefind(hi, s) == -1)
+    if (root == nullptr)
     {
         return false;
     }
-    return true;
-}
-
+    if (recursivefind(root, s) != (size_t)(-1))
+    {
+        return true;
+    }
+    return false;
+};
 size_t Tree::find(const std::string &s)
 {
-    if (Tree::contains(s) == true)
+    if (recursivefind(root, s) == (size_t)(-1))
     {
-        return Tree::recursivefind(hi, s);
+        return -1;
     }
-    return (size_t)1;
-}
-
-std::string Tree::lookup(size_t index)
-{
-    if (index > nodecount)
-    {
-        throw std::out_of_range("Index out of range");
-    }
-    return "hi";
-}
-
-void Tree::print() const
-{
-    //((a b c) d (- e f))
-}
-
-void Tree::remove(size_t index)
-{
-}
-
+    return recursivefind(root, s);
+};
 void Tree::insert(const std::string &s)
 {
-}
+    Node *hi = new Node(s);
+    recursiveinsert(root, hi);
+};
+std::string Tree::lookup(size_t index){
+
+};
+void Tree::print()
+{
+    if (root != nullptr)
+    {
+        recursiveprint(root);
+    }
+
+    std::cout << std::endl;
+};
+void Tree::remove(size_t index){
+
+};
