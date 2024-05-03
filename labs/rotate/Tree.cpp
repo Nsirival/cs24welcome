@@ -228,6 +228,7 @@ size_t Tree::find(const std::string &s) const
 };
 void Tree::insert(const std::string &s)
 {
+    num ++;
     Node *hi = new Node(s);
     if (root == nullptr)
     {
