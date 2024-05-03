@@ -39,7 +39,9 @@ size_t Tree::recursivefind(Node *rooot, std::string s) const
             {
                 return rooot->index;
             }
-        } else {
+        }
+        else
+        {
             return rooot->index;
         }
     }
@@ -156,17 +158,35 @@ void Tree::incrementing(Node *rooot)
 
 Node *Tree::finder(Node *rooot, size_t index)
 {
+    if (rooot == nullptr)
+    {
+        return rooot;
+    }
     if (index == rooot->index)
     { // find index
         return rooot;
     }
     if (index < rooot->index)
     {
-        return finder(rooot->downleft, index);
+        if (rooot->downleft != nullptr)
+        {
+            return finder(rooot->downleft, index);
+        }
+        else
+        {
+            throw std::out_of_range("Out of range");
+        }
     }
     else
     {
-        return finder(rooot->downright, index);
+        if (rooot->downright != nullptr)
+        {
+            return finder(rooot->downright, index);
+        }
+        else
+        {
+            throw std::out_of_range("Out of range");
+        }
     }
 }
 // Node *Tree::rebalance(Node *rooot)
@@ -285,7 +305,6 @@ void Tree::remove(size_t index)
     {
         return;
     }
-
     if (hi->downright == nullptr && hi->downleft == nullptr)
     {
         if (hi == root)
@@ -306,7 +325,6 @@ void Tree::remove(size_t index)
             delete hi;
         }
     }
-
     else if (hi->downleft == nullptr && hi->downright != nullptr)
     {
         if (hi == root)
