@@ -7,6 +7,7 @@ class Tree
 {
   // Member Variables
   Node *root;
+  int troot = 0;
   int index = 0;
   int leftweight;
   int rightweight;
