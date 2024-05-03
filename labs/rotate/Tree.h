@@ -19,7 +19,7 @@ class Tree
   void recursiveinsert(Node* rooot, Node* newnode);
   std::string recursivelookup(Node* rooot, size_t index) const;
   void incrementing (Node*rooot);
-  // Node* finder (Node* rooot, size_t index);
+  Node* finder (Node* rooot, size_t index);
   // Node* rebalance(Node* rooot);
   size_t imbalance(Node* rooot);
 public:

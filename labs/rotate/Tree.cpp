@@ -96,8 +96,8 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
-        size_t temp =rooot->index;
-        newnode->index = temp + 1; 
+        size_t temp = rooot->index;
+        newnode->index = temp + 1;
         newnode->up = rooot;
         rooot->downright = newnode;
     }
@@ -109,7 +109,8 @@ std::string Tree::recursivelookup(Node *rooot, size_t x) const
     {
         throw std::out_of_range("Out of range");
     }
-    if(x == rooot->index){
+    if (x == rooot->index)
+    {
         return rooot->data;
     }
     if (x < rooot->index)
@@ -119,7 +120,9 @@ std::string Tree::recursivelookup(Node *rooot, size_t x) const
     else if (x > rooot->index)
     {
         return recursivelookup(rooot->downright, x);
-    } else {
+    }
+    else
+    {
         throw std::out_of_range("Out of range");
     }
 }
@@ -139,21 +142,21 @@ void Tree::incrementing(Node *rooot)
     }
 }
 
-//  Node* Tree::finder (Node* rooot, size_t index)
-// {
-//     if (index == rooot->index)
-//     { // find index
-//         return rooot;
-//     }
-//     if (index < rooot->index)
-//     {
-//         return finder(rooot->downleft, index);
-//     }
-//     else
-//     {
-//         return finder(rooot->downright, index);
-//     }
-// }
+Node *Tree::finder(Node *rooot, size_t index)
+{
+    if (index == rooot->index)
+    { // find index
+        return rooot;
+    }
+    if (index < rooot->index)
+    {
+        return finder(rooot->downleft, index);
+    }
+    else
+    {
+        return finder(rooot->downright, index);
+    }
+}
 // Node *Tree::rebalance(Node *rooot)
 // {
 //     if (rooot != nullptr)
@@ -234,7 +237,7 @@ size_t Tree::find(const std::string &s) const
 };
 void Tree::insert(const std::string &s)
 {
-    num ++;
+    num++;
     Node *hi = new Node(s);
     if (root == nullptr)
     {
@@ -260,19 +263,32 @@ void Tree::print() const
     else
     {
         recursiveprint(root);
-        
     }
     std::cout << std::endl;
 };
-void Tree::remove(size_t index){
-    // Node* hi = finder (root, index);
-    // if(hi->downright == nullptr && hi->downleft == nullptr){
-    //     delete hi;
-    // } else if (hi->downleft == nullptr && hi->downright != nullptr){
-
-    //     delete hi;
-    // }else if (hi->downleft != nullptr && hi->downright == nullptr){
-
-    //     delete hi;
-    // }
+void Tree::remove(size_t index)
+{
+    Node *hi = finder(root, index);
+    if(hi == root){
+        delete root;
+        root = nullptr;
+    }
+    if (hi->downright == nullptr && hi->downleft == nullptr)
+    {
+        delete hi;
+    }
+    else if (hi->downleft == nullptr && hi->downright != nullptr)
+    {
+        hi->downright->up = hi->up;
+        hi->up->downright = hi->downright;
+        delete hi;
+    }
+    else if (hi->downleft != nullptr && hi->downright == nullptr)
+    {
+        hi->downleft->up = hi->up;
+        hi->up->downleft = hi->downleft;
+        delete hi;
+    } else {
+        
+    }
 };
