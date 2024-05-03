@@ -114,10 +114,6 @@ void Tree::recursiveprint(Node *rooot) const
         std::cout << ")";
     }
 
-    if (rooot->downleft != nullptr || rooot->downright != nullptr)
-    {
-        std::cout << ")";
-    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
