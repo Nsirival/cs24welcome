@@ -269,26 +269,63 @@ void Tree::print() const
 void Tree::remove(size_t index)
 {
     Node *hi = finder(root, index);
-    if(hi == root){
-        delete root;
-        root = nullptr;
+    if (hi == nullptr)
+    {
+        return;
     }
+
     if (hi->downright == nullptr && hi->downleft == nullptr)
     {
-        delete hi;
+        if (hi == root)
+        {
+            delete root;
+            root = nullptr;
+        }
+        else
+        {
+            if (hi->up->downleft == hi)
+            {
+                hi->up->downleft = nullptr;
+            }
+            else
+            {
+                hi->up->downright = nullptr;
+            }
+            delete hi;
+        }
     }
+
     else if (hi->downleft == nullptr && hi->downright != nullptr)
     {
-        hi->downright->up = hi->up;
-        hi->up->downright = hi->downright;
+        if (hi == root) {
+            root = hi->downright;
+            hi->downright->up = nullptr;
+        } else {
+            hi->downright->up = hi->up;
+            if (hi->up->downleft == hi) {
+                hi->up->downleft = hi->downright;
+            } else {
+                hi->up->downright = hi->downright;
+            }
+        }
         delete hi;
     }
     else if (hi->downleft != nullptr && hi->downright == nullptr)
     {
-        hi->downleft->up = hi->up;
-        hi->up->downleft = hi->downleft;
+        if (hi == root) {
+            root = hi->downleft;
+            hi->downleft->up = nullptr;
+        } else {
+            hi->downleft->up = hi->up;
+            if (hi->up->downleft == hi) {
+                hi->up->downleft = hi->downleft;
+            } else {
+                hi->up->downright = hi->downleft;
+            }
+        }
         delete hi;
-    } else {
-        
+    }
+    else
+    {
     }
 };
