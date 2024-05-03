@@ -129,7 +129,7 @@ void Tree::indexassign(Node*rooot){
 }
 
 std::string Tree::recursivelookup(Node*rooot, size_t index) const{
-    if(rooot = nullptr){
+    if(rooot == nullptr){
         throw std::out_of_range("Out of range");
     }
     std::string result = recursivelookup(rooot->downleft, index);
