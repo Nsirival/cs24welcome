@@ -255,14 +255,14 @@ void Tree::print() const
 {
     if (root == nullptr)
     {
-        std::cout << " ";
+        std::cout << "";
     }
     else
     {
         recursiveprint(root);
-        std::cout << std::endl;
+        
     }
-    
+    std::cout << std::endl;
 };
 void Tree::remove(size_t index){
     // Node* hi = finder (root, index);
