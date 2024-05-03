@@ -7,7 +7,7 @@ class Tree
 {
   // Member Variables
   Node *root;
-
+  
   size_t num = 0;
   int leftweight;
   int rightweight;
@@ -19,8 +19,10 @@ class Tree
   void recursiveinsert(Node* rooot, Node* newnode);
   // Node* promotion(Node* rooot); int nodecount(Node*rooot);
   // std::string recursiveindex(Node*rooot, int idx);
-  void indexassign(Node*rooot) ;
+  // void indexassign(Node*rooot) ;
   std::string recursivelookup(Node* rooot, size_t index) const;
+  void incrementing (Node*rooot);
+  
 public:
   Tree();
   ~Tree();
