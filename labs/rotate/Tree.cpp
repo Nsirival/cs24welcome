@@ -1,6 +1,7 @@
 #include "Tree.h"
 #include "Node.h"
 #include "iostream"
+#include "cmath"
 
 void Tree::recursivedelete(Node *rooot)
 {
@@ -134,6 +135,60 @@ void Tree::incrementing(Node *rooot)
         }
     }
 }
+
+//  Node* Tree::finder (Node* rooot, size_t index)
+// {
+//     if (index == rooot->index)
+//     { // find index
+//         return rooot;
+//     }
+//     if (index < rooot->index)
+//     {
+//         return finder(rooot->downleft, index);
+//     }
+//     else
+//     {
+//         return finder(rooot->downright, index);
+//     }
+// }
+// Node *Tree::rebalance(Node *rooot)
+// {
+//     if (rooot != nullptr)
+//     {
+//         if (rooot->downleft != nullptr)
+//         {
+//             leftweight = 1 + imbalance(rooot->downleft);
+//         }
+//         if (rooot->downright != nullptr)
+//         {
+//             rightweight = 1 + imbalance(rooot->downright);
+//         }
+//     }
+//     if(abs(leftweight-rightweight)< minsum){
+//         minsum = leftweight-rightweight;
+//     } 
+//     if()
+    
+// }
+size_t Tree::imbalance(Node *rooot)
+{
+    if (rooot->downleft != nullptr && rooot->downright != nullptr)
+    {
+        return 2 + imbalance(rooot->downleft) + imbalance(rooot->downright);
+    }
+    else if (rooot->downleft == nullptr && rooot->downright != nullptr)
+    {
+        return 1 + imbalance(rooot->downright);
+    }
+    else if (rooot->downleft != nullptr && rooot->downright == nullptr)
+    {
+        return 1 + imbalance(rooot->downleft);
+    }
+    else
+    {
+        return 0;
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -181,7 +236,7 @@ void Tree::insert(const std::string &s)
     if (root == nullptr)
     {
         root = hi;
-        root->index = 1;
+        root->index = 0;
     }
     else if (root != nullptr)
     {
@@ -200,7 +255,7 @@ void Tree::print() const
 {
     if (root == nullptr)
     {
-        std::cout << "-";
+        
     }
     else
     {
@@ -209,5 +264,14 @@ void Tree::print() const
     }
 };
 void Tree::remove(size_t index){
+    // Node* hi = finder (root, index);
+    // if(hi->downright == nullptr && hi->downleft == nullptr){
+    //     delete hi;
+    // } else if (hi->downleft == nullptr && hi->downright != nullptr){
 
+    //     delete hi;
+    // }else if (hi->downleft != nullptr && hi->downright == nullptr){
+
+    //     delete hi;
+    // }
 };

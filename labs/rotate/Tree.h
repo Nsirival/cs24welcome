@@ -9,20 +9,20 @@ class Tree
   Node *root;
   
   size_t num = 0;
-  int leftweight;
-  int rightweight;
+  size_t leftweight = 0;
+  size_t rightweight = 0;
+  size_t minsum = -1;
   // Private Helper Functions
   void recursivedelete(Node *rooot);
   size_t recursivecount(Node *rooot)const;
   size_t recursivefind(Node* rooot, std::string s)const;
   void recursiveprint(Node* rooot)const;
   void recursiveinsert(Node* rooot, Node* newnode);
-  // Node* promotion(Node* rooot); int nodecount(Node*rooot);
-  // std::string recursiveindex(Node*rooot, int idx);
-  // void indexassign(Node*rooot) ;
   std::string recursivelookup(Node* rooot, size_t index) const;
   void incrementing (Node*rooot);
-  
+  // Node* finder (Node* rooot, size_t index);
+  // Node* rebalance(Node* rooot);
+  size_t imbalance(Node* rooot);
 public:
   Tree();
   ~Tree();
