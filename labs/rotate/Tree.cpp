@@ -143,10 +143,6 @@ std::string Tree::recursivelookup(Node*rooot, size_t index) const{
     return recursivelookup(rooot->downright, index);    
 }
 
-// int Tree::nodecount(Node *rooot)
-// {
-// }
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,9 +213,11 @@ std::string Tree::lookup(size_t index) const
 };
 void Tree::print() const
 {
-    if (root != nullptr)
+    if (root == nullptr)
     {
         std::cout << std::endl;
+        
+    } else{
         recursiveprint(root);
     }
 
