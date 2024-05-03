@@ -94,25 +94,25 @@ void Tree::recursiveprint(Node *rooot) const
     {
         std::cout << "(";
     }
-    if (root->downleft == nullptr && root->downright == nullptr)
+    if (rooot->downleft == nullptr && rooot->downright == nullptr)
     {
-        std::cout << root->data;
+        std::cout << rooot->data;
     }
-    else if (root->downleft == nullptr && root->downright != nullptr)
+    else if (rooot->downleft == nullptr && rooot->downright != nullptr)
     {
-        std::cout << "- " << root->data << " ";
+        std::cout << "- " << rooot->data << " ";
         recursiveprint(rooot->downright);
     }
-    else if (root->downleft != nullptr && root->downright == nullptr)
+    else if (rooot->downleft != nullptr && rooot->downright == nullptr)
     {
         recursiveprint(rooot->downleft);
 
-        std::cout << " " << root->data << " -";
+        std::cout << " " << rooot->data << " -";
     }
-    else if (root->downleft != nullptr && root->downright != nullptr)
+    else if (rooot->downleft != nullptr && rooot->downright != nullptr)
     {
         recursiveprint(rooot->downleft);
-        std::cout << " " << root->data << " ";
+        std::cout << " " << rooot->data << " ";
         recursiveprint(rooot->downright);
     }
 
