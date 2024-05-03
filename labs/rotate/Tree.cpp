@@ -255,7 +255,7 @@ void Tree::print() const
 {
     if (root == nullptr)
     {
-        std::cout << "";
+        std::cout << "-";
     }
     else
     {
