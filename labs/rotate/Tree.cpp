@@ -29,12 +29,17 @@ size_t Tree::recursivefind(Node *rooot, std::string s) const
     }
     if (s == rooot->data)
     { // find index
-        if (rooot->downleft != nullptr){
-            if (rooot->downleft->data == s){
+        if (rooot->downleft != nullptr)
+        {
+            if (rooot->downleft->data == s)
+            {
                 return recursivefind(rooot->downleft, s);
-            } 
+            }
+            else
+            {
+                return rooot->index;
+            }
         }
-        return rooot->index;
     }
     if (s < rooot->data)
     {
@@ -302,14 +307,20 @@ void Tree::remove(size_t index)
 
     else if (hi->downleft == nullptr && hi->downright != nullptr)
     {
-        if (hi == root) {
+        if (hi == root)
+        {
             root = hi->downright;
             hi->downright->up = nullptr;
-        } else {
+        }
+        else
+        {
             hi->downright->up = hi->up;
-            if (hi->up->downleft == hi) {
+            if (hi->up->downleft == hi)
+            {
                 hi->up->downleft = hi->downright;
-            } else {
+            }
+            else
+            {
                 hi->up->downright = hi->downright;
             }
         }
@@ -317,14 +328,20 @@ void Tree::remove(size_t index)
     }
     else if (hi->downleft != nullptr && hi->downright == nullptr)
     {
-        if (hi == root) {
+        if (hi == root)
+        {
             root = hi->downleft;
             hi->downleft->up = nullptr;
-        } else {
+        }
+        else
+        {
             hi->downleft->up = hi->up;
-            if (hi->up->downleft == hi) {
+            if (hi->up->downleft == hi)
+            {
                 hi->up->downleft = hi->downleft;
-            } else {
+            }
+            else
+            {
                 hi->up->downright = hi->downleft;
             }
         }
