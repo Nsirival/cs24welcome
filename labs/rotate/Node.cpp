@@ -7,11 +7,14 @@ Node::Node(std::string value){
     up = nullptr;
     downleft = nullptr;
     downright = nullptr;
+    index = 0;
 }
 Node::Node(){
     up = nullptr;
     downleft = nullptr;
     downright = nullptr;
+    index = 0;
+    data = nullptr;
 }
 
 
