@@ -168,16 +168,16 @@ size_t Tree::find(const std::string &s) const
 };
 void Tree::insert(const std::string &s)
 {
-    if (troot != 0)
+    Node *hi = new Node(s);
+    if (root == nullptr)
     {
-        Node *hi = new Node(s);
-        recursiveinsert(root, hi);
+        root = hi;
+        
     }
     else
     {
 
-        troot += 1;
-        root->data = s;
+        recursiveinsert(root, hi);
     }
 };
 std::string Tree::lookup(size_t index) const
