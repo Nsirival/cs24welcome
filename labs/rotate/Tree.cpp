@@ -103,7 +103,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
 
 std::string Tree::recursivelookup(Node *rooot, size_t x) const
 {
-    if (rooot == nullptr)
+    if (rooot == nullptr || x < 0)
     {
         throw std::out_of_range("Out of range");
     }
@@ -231,7 +231,6 @@ size_t Tree::find(const std::string &s) const
 };
 void Tree::insert(const std::string &s)
 {
-    num += 1;
     Node *hi = new Node(s);
     if (root == nullptr)
     {
@@ -245,10 +244,6 @@ void Tree::insert(const std::string &s)
 };
 std::string Tree::lookup(size_t index) const
 {
-    if (index > num)
-    {
-        throw std::out_of_range("Out of range.");
-    }
     return recursivelookup(root, index);
 };
 void Tree::print() const

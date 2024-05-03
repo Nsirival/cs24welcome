@@ -8,7 +8,6 @@ class Tree
   // Member Variables
   Node *root;
   
-  size_t num = 0;
   size_t leftweight = 0;
   size_t rightweight = 0;
   size_t minsum = -1;
