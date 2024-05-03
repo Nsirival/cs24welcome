@@ -8,7 +8,7 @@ class Tree
   // Member Variables
   Node *root;
 
-  int num = 0;
+  size_t num = 0;
   int leftweight;
   int rightweight;
   // Private Helper Functions
