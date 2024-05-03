@@ -103,7 +103,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
 
 std::string Tree::recursivelookup(Node *rooot, size_t x) const
 {
-    if (rooot == nullptr || x < 0)
+    if (rooot == nullptr)
     {
         throw std::out_of_range("Out of range");
     }
