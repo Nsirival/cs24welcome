@@ -241,7 +241,7 @@ void Tree::insert(const std::string &s)
 };
 std::string Tree::lookup(size_t index) const
 {
-    if (root == nullptr || index > num)
+    if (root == nullptr || index -1 > num)
     {
         throw std::out_of_range("Out of range");
     }
