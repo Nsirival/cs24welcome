@@ -89,31 +89,29 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
 
 void Tree::recursiveprint(Node *rooot) const
 {
-    
-    if (rooot->downleft != nullptr || rooot->downright != nullptr)
-    {
-        std::cout << "(";
-    }
     if (rooot->downleft == nullptr && rooot->downright == nullptr)
     {
         std::cout << rooot->data;
     }
     else if (rooot->downleft == nullptr && rooot->downright != nullptr)
     {
-        std::cout << "- " << rooot->data << " ";
+        std::cout << "(- " << rooot->data << " ";
         recursiveprint(rooot->downright);
+        std::cout << ")";
     }
     else if (rooot->downleft != nullptr && rooot->downright == nullptr)
     {
+        std::cout << "(";
         recursiveprint(rooot->downleft);
-
-        std::cout << " " << rooot->data << " -";
+        std::cout << " " << rooot->data << " -)";
     }
     else if (rooot->downleft != nullptr && rooot->downright != nullptr)
     {
+        std::cout << "(";
         recursiveprint(rooot->downleft);
         std::cout << " " << rooot->data << " ";
         recursiveprint(rooot->downright);
+        std::cout << ")";
     }
 
     if (rooot->downleft != nullptr || rooot->downright != nullptr)
