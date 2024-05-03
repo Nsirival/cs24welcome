@@ -10,9 +10,7 @@ void Tree::recursivedelete(Node *rooot)
         recursivedelete(rooot->downright);
         delete rooot;
     }
-    
 }
-
 size_t Tree::recursivecount(Node *rooot) const
 {
     if (rooot != nullptr)
@@ -42,7 +40,39 @@ size_t Tree::recursivefind(Node *rooot, std::string s) const
     }
 
 }
+void Tree::recursiveprint(Node *rooot) const
+{
+    
+    if (rooot->downleft != nullptr || rooot->downright != nullptr)
+    {
+        std::cout << "(";
+    }
+    if (rooot->downleft == nullptr && rooot->downright == nullptr)
+    {
+        std::cout << rooot->data;
+    }
+    else if (rooot->downleft == nullptr && rooot->downright != nullptr)
+    {
+        std::cout << "- " << rooot->data << " ";
+        recursiveprint(rooot->downright);
+    }
+    else if (rooot->downleft != nullptr && rooot->downright == nullptr)
+    {
+        recursiveprint(rooot->downleft);
 
+        std::cout << " " << rooot->data << " -";
+    }
+    else if (rooot->downleft != nullptr && rooot->downright != nullptr)
+    {
+        recursiveprint(rooot->downleft);
+        std::cout << " " << rooot->data << " ";
+        recursiveprint(rooot->downright);
+    }
+    if (rooot->downleft != nullptr || rooot->downright != nullptr)
+    {
+        std::cout << ")";
+    }
+}
 void Tree::recursiveinsert(Node *rooot, Node *newnode)
 {
     if (newnode->data <= rooot->data && rooot->downleft != nullptr)
@@ -65,14 +95,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     }
 }
 
-// std::string Tree::recursiveindex(Node*rooot, int idx){
-//     if (rooot!= nullptr){
-//         index += 1;
-//         recursiveindex(rooot->downleft, idx);
-//         recursiveindex(rooot->downright, idx);
 
-//     }
-// }
 
 // Node *Tree::promotion(Node *rooot)
 // {
@@ -83,38 +106,48 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
 //     }
 // }
 
+// std::string Tree::recursiveindex(Node*rooot, int idx){
+//     if (rooot!= nullptr){
+//         index += 1;
+//         recursiveindex(rooot->downleft, idx);
+//         recursiveindex(rooot->downright, idx);
+
+//     }
+// }
+
+void Tree::indexassign(Node*rooot){
+    
+    if(rooot->downleft != nullptr){
+        num += 1;
+        rooot->downleft->index = num;
+    } 
+    if(rooot->downright != nullptr){
+        num += 1;
+        rooot->downright->index = num;
+    }
+    indexassign(rooot->downleft);
+}
+
+std::string Tree::recursivelookup(Node*rooot, size_t index) const{
+    if(rooot = nullptr){
+        throw std::out_of_range("Out of range");
+    }
+    std::string result = recursivelookup(rooot->downleft, index);
+    if(!result.empty()){
+        return result;
+    }
+    if (index == 0){
+        return rooot->data;
+    }
+    index -=1;
+    return recursivelookup(rooot->downright, index);    
+}
+
 // int Tree::nodecount(Node *rooot)
 // {
 // }
 
-void Tree::recursiveprint(Node *rooot) const
-{
-    if (rooot->downleft == nullptr && rooot->downright == nullptr)
-    {
-        std::cout << rooot->data;
-    }
-    else if (rooot->downleft == nullptr && rooot->downright != nullptr)
-    {
-        std::cout << "(- " << rooot->data << " ";
-        recursiveprint(rooot->downright);
-        std::cout << ")";
-    }
-    else if (rooot->downleft != nullptr && rooot->downright == nullptr)
-    {
-        std::cout << "(";
-        recursiveprint(rooot->downleft);
-        std::cout << " " << rooot->data << " -)";
-    }
-    else if (rooot->downleft != nullptr && rooot->downright != nullptr)
-    {
-        std::cout << "(";
-        recursiveprint(rooot->downleft);
-        std::cout << " " << rooot->data << " ";
-        recursiveprint(rooot->downright);
-        std::cout << ")";
-    }
 
-}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,19 +195,25 @@ size_t Tree::find(const std::string &s) const
 };
 void Tree::insert(const std::string &s)
 {
+    num += 1;
     Node *hi = new Node(s);
     if (root == nullptr)
     {
         root = hi;
+        root->index = 1;
     }
     else if(root != nullptr)
     {
         recursiveinsert(root, hi);
+
     }
 };
 std::string Tree::lookup(size_t index) const
 {
-    return "hi";
+    if (index > num){
+        throw std::out_of_range("Out of range.");
+    }
+    return recursivelookup(root, index);
 };
 void Tree::print() const
 {
