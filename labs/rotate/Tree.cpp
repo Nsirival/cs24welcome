@@ -89,7 +89,6 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
 
 void Tree::recursiveprint(Node *rooot)const
 {
-
     if (rooot->downleft != nullptr || rooot->downright != nullptr)
     {
         std::cout << "(";
@@ -109,7 +108,7 @@ void Tree::recursiveprint(Node *rooot)const
 
         std::cout << " " << root->data << " -";
     }
-    else
+    else if(root->downleft != nullptr && root->downright != nullptr)
     {
         recursiveprint(rooot->downleft);
         std::cout << " " << root->data << " ";
