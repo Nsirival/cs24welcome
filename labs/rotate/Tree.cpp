@@ -96,6 +96,8 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
+        size_t temp =rooot->index;
+        newnode->index = temp + 1; 
         newnode->up = rooot;
         rooot->downright = newnode;
     }
