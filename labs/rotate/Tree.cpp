@@ -198,11 +198,15 @@ std::string Tree::lookup(size_t index) const
 };
 void Tree::print() const
 {
-    if (root != nullptr)
+    if (root == nullptr)
+    {
+        std::cout << "-";
+    }
+    else
     {
         recursiveprint(root);
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
 };
 void Tree::remove(size_t index){
 
