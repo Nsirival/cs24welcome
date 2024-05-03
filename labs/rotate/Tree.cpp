@@ -200,7 +200,7 @@ void Tree::insert(const std::string &s)
     if (root == nullptr)
     {
         root = hi;
-        root->index = 1;
+        root->index = 0;
     }
     else if(root != nullptr)
     {
@@ -219,6 +219,7 @@ void Tree::print() const
 {
     if (root != nullptr)
     {
+        std::cout << std::endl;
         recursiveprint(root);
     }
 
