@@ -21,9 +21,7 @@ size_t Tree::recursivecount(Node *rooot) const
     }
     return 0;
 }
-
-size_t Tree::recursivefind(Node *rooot, std::string s) const
-{
+size_t Tree::finding(Node *rooot, std::string s) const{
     if (rooot == nullptr)
     {
         return -1;
@@ -32,13 +30,37 @@ size_t Tree::recursivefind(Node *rooot, std::string s) const
     int x = 0;
     while (x == 0)
     {
-        if (recursivelookup(rooot, index) == s)
+        if (recursivefind(rooot, index) == s)
         {
             x += 1;
         }
         index += 1;
     }
     return index-1;
+}
+
+std::string Tree::recursivefind(Node *rooot, size_t x) const
+{
+    if (rooot == nullptr)
+    {
+        return;
+    }
+    if (x == rooot->index)
+    {
+        return rooot->data;
+    }
+    if (x < rooot->index)
+    {
+        return recursivefind(rooot->downleft, x);
+    }
+    else if (x > rooot->index)
+    {
+        return recursivefind(rooot->downright, x);
+    }
+    else
+    {
+        return;
+    }
 }
 void Tree::recursiveprint(Node *rooot) const
 {
@@ -335,7 +357,7 @@ size_t Tree::count() const
 };
 bool Tree::contains(const std::string &s) const
 {
-    if (recursivefind(root, s) == (size_t)(-1))
+    if (finding(root, s) == (size_t)(-1))
     {
         return false;
     }
@@ -343,11 +365,11 @@ bool Tree::contains(const std::string &s) const
 };
 size_t Tree::find(const std::string &s) const
 {
-    if (recursivefind(root, s) == (size_t)(-1))
+    if (finding(root, s) == (size_t)(-1))
     {
         return -1;
     }
-    return recursivefind(root, s);
+    return finding(root, s);
 };
 void Tree::insert(const std::string &s)
 {

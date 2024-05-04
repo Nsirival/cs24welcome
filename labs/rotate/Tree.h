@@ -15,7 +15,7 @@ class Tree
   // Private Helper Functions
   void recursivedelete(Node *rooot);
   size_t recursivecount(Node *rooot)const;
-  size_t recursivefind(Node* rooot, std::string s)const;
+  std::string recursivefind(Node* rooot, size_t s)const;
   void recursiveprint(Node* rooot)const;
   void recursiveinsert(Node* rooot, Node* newnode);
   std::string recursivelookup(Node* rooot, size_t index) const;
@@ -25,6 +25,7 @@ class Tree
   size_t imbalance(Node* rooot);
   Node* balance (Node*rooot, int rotation);
   void rotate(Node* rooot, int LR); // 1 = right 0 = left
+  size_t finding(Node *rooot, std::string s) const;
 public:
   Tree();
   ~Tree();
