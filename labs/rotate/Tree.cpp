@@ -214,7 +214,7 @@ Node *Tree::finder(Node *rooot, size_t index)
 }
 void Tree::findmin(Node *rooot, int side)
 {
-    size_t temp;
+    size_t temp = -1;
     if (rooot != nullptr)
     {
         if (side == 1)
@@ -341,9 +341,9 @@ void Tree::insert(const std::string &s)
     {
         recursiveinsert(root, hi);
     }
-    // findmin(root, 0);
-    // findmin(root, 1);
-    // rotate();
+    findmin(root, 0);
+    findmin(root, 1);
+    rotate();
 };
 std::string Tree::lookup(size_t index) const
 {
