@@ -120,7 +120,6 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         rooot->downright = newnode;
         rotate(rooot, 0);
     }
-    
 }
 
 std::string Tree::recursivelookup(Node *rooot, size_t x) const
@@ -260,57 +259,69 @@ void Tree::rotate(Node *rooot, int x)
         {
             if (rooot->downleft != nullptr)
             {
-                if(rooot->downleft->downright != nullptr){
+                if (rooot->downleft->downright != nullptr)
+                {
                     rooot->downleft->downright->up = rooot;
-                } 
-                
-            }
-            rooot->downleft = rooot->downleft->downright;
-
-            if(rooot == root){
-                rooot->downleft->up = nullptr;
-                rooot->up = rooot->downleft;
-                root = rooot->downleft;
-            } else {
-                if(rooot->up->downleft == rooot){
-                    rooot->up->downleft = rooot->downleft;
-                } 
-                if(rooot->up->downright == rooot){
-                    rooot->up->downright = rooot->downleft;
                 }
-                rooot->downleft->up = rooot->up;
-                rooot->up = rooot->downleft;
+
+                rooot->downleft = rooot->downleft->downright;
+
+                if (rooot == root)
+                {
+                    rooot->downleft->up = nullptr;
+                    rooot->up = rooot->downleft;
+                    root = rooot->downleft;
+                }
+                else
+                {
+                    if (rooot->up->downleft == rooot)
+                    {
+                        rooot->up->downleft = rooot->downleft;
+                    }
+                    if (rooot->up->downright == rooot)
+                    {
+                        rooot->up->downright = rooot->downleft;
+                    }
+                    rooot->downleft->up = rooot->up;
+                    rooot->up = rooot->downleft;
+                }
             }
         }
     }
-    else if (x == 0){
-        //rotate left
+    else if (x == 0)
+    {
+        // rotate left
         if (rooot != nullptr)
         {
             if (rooot->downright != nullptr)
             {
-                if(rooot->downright->downleft != nullptr){
+                if (rooot->downright->downleft != nullptr)
+                {
                     rooot->downright->downleft->up = rooot;
-                } 
+                }
                 
-            }
-            rooot->downright = rooot->downright->downleft;
-  
-
-            if(rooot == root){
+                rooot->downleft = rooot->downleft->downright;
+            if (rooot == root)
+            {
                 rooot->downright->up = nullptr;
                 rooot->up = rooot->downright;
                 root = rooot->downright;
-            } else {
-                if(rooot->up->downleft == rooot){
+            }
+            else
+            {
+                if (rooot->up->downleft == rooot)
+                {
                     rooot->up->downleft = rooot->downright;
-                } 
-                if(rooot->up->downright == rooot){
+                }
+                if (rooot->up->downright == rooot)
+                {
                     rooot->up->downright = rooot->downright;
                 }
                 rooot->downright->up = rooot->up;
                 rooot->up = rooot->downright;
             }
+            }
+            
         }
     }
 }
