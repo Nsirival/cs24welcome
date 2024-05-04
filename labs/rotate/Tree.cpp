@@ -214,7 +214,8 @@ Node *Tree::finder(Node *rooot, size_t index)
 }
 void Tree::findmin(Node *rooot, int side)
 {
-    if (rooot ==nullptr){
+    if (rooot == nullptr)
+    {
         return;
     }
     size_t temp = -1;
@@ -233,6 +234,11 @@ void Tree::findmin(Node *rooot, int side)
                 {
                     temp += rooot->downright->downleft->weight;
                 }
+                if (temp < minsum)
+                {
+                    minsum = temp;
+                    best = rooot;
+                }
             }
         }
         else if (side == 0)
@@ -248,14 +254,13 @@ void Tree::findmin(Node *rooot, int side)
                 {
                     temp += rooot->downleft->downright->weight;
                 }
+                if (temp < minsum)
+                {
+                    minsum = temp;
+                    best = rooot;
+                }
             }
         }
-    }
-
-    if (temp < minsum)
-    {
-        minsum = temp;
-        best = rooot;
     }
 }
 
@@ -367,106 +372,105 @@ void Tree::print() const
     }
     std::cout << std::endl;
 };
-void Tree::remove(size_t index)
-{
-    Node *hi = finder(root, index);
-    if (hi == nullptr)
-    {
-        return;
-    }
-    if (hi->downright == nullptr && hi->downleft == nullptr)
-    {
-        if (hi == root)
-        {
-            delete root;
-            root = nullptr;
-        }
-        else
-        {
-            if (hi->up->downleft == hi)
-            {
-                hi->up->downleft = nullptr;
-            }
-            else
-            {
-                hi->up->downright = nullptr;
-            }
-            delete hi;
-        }
-        put(root, index);
-        findmin(root, 0);
-        findmin(root, 1);
-        rotate();
-    }
-    else if (hi->downleft == nullptr && hi->downright != nullptr)
-    {
-        if (hi == root)
-        {
-            root = hi->downright;
-            hi->downright->up = nullptr;
-        }
-        else
-        {
-            hi->downright->up = hi->up;
-            if (hi->up->downleft == hi)
-            {
-                hi->up->downleft = hi->downright;
-            }
-            else
-            {
-                hi->up->downright = hi->downright;
-            }
-        }
+void Tree::remove(size_t index){
+    // Node *hi = finder(root, index);
+    // if (hi == nullptr)
+    // {
+    //     return;
+    // }
+    // if (hi->downright == nullptr && hi->downleft == nullptr)
+    // {
+    //     if (hi == root)
+    //     {
+    //         delete root;
+    //         root = nullptr;
+    //     }
+    //     else
+    //     {
+    //         if (hi->up->downleft == hi)
+    //         {
+    //             hi->up->downleft = nullptr;
+    //         }
+    //         else
+    //         {
+    //             hi->up->downright = nullptr;
+    //         }
+    //         delete hi;
+    //     }
+    //     put(root, index);
+    //     findmin(root, 0);
+    //     findmin(root, 1);
+    //     rotate();
+    // }
+    // else if (hi->downleft == nullptr && hi->downright != nullptr)
+    // {
+    //     if (hi == root)
+    //     {
+    //         root = hi->downright;
+    //         hi->downright->up = nullptr;
+    //     }
+    //     else
+    //     {
+    //         hi->downright->up = hi->up;
+    //         if (hi->up->downleft == hi)
+    //         {
+    //             hi->up->downleft = hi->downright;
+    //         }
+    //         else
+    //         {
+    //             hi->up->downright = hi->downright;
+    //         }
+    //     }
 
-        delete hi;
-        put(root, index);
-        findmin(root, 0);
-        findmin(root, 1);
-        rotate();
-    }
-    else if (hi->downleft != nullptr && hi->downright == nullptr)
-    {
-        if (hi == root)
-        {
-            root = hi->downleft;
-            hi->downleft->up = nullptr;
-        }
-        else
-        {
-            hi->downleft->up = hi->up;
-            if (hi->up->downleft == hi)
-            {
-                hi->up->downleft = hi->downleft;
-            }
-            else
-            {
-                hi->up->downright = hi->downleft;
-            }
-        }
+    //     delete hi;
+    //     put(root, index);
+    //     findmin(root, 0);
+    //     findmin(root, 1);
+    //     rotate();
+    // }
+    // else if (hi->downleft != nullptr && hi->downright == nullptr)
+    // {
+    //     if (hi == root)
+    //     {
+    //         root = hi->downleft;
+    //         hi->downleft->up = nullptr;
+    //     }
+    //     else
+    //     {
+    //         hi->downleft->up = hi->up;
+    //         if (hi->up->downleft == hi)
+    //         {
+    //             hi->up->downleft = hi->downleft;
+    //         }
+    //         else
+    //         {
+    //             hi->up->downright = hi->downleft;
+    //         }
+    //     }
 
-        delete hi;
-        put(root, index);
-        findmin(root, 0);
-        findmin(root, 1);
-        rotate();
-    }
-    else
-    {
-        Node *n = finder(root, index + 1);
+    //     delete hi;
+    //     put(root, index);
+    //     findmin(root, 0);
+    //     findmin(root, 1);
+    //     rotate();
+    // }
+    // else
+    // {
+    //     Node *n = finder(root, index + 1);
 
-        if (n->downright != nullptr)
-        {
-            n->downright->up = n->up;
-            n->up->downleft = n->downright;
-        }
+    //     if (n->downright != nullptr)
+    //     {
+    //         n->downright->up = n->up;
+    //         n->up->downleft = n->downright;
+    //     }
 
-        n->downright = hi->downright;
-        n->up = hi->up;
-        n->downleft = hi->downleft;
-        delete hi;
-        put(root, index);
-        findmin(root, 0);
-        findmin(root, 1);
-        rotate();
-    }
+    //     n->downright = hi->downright;
+    //     n->up = hi->up;
+    //     n->downleft = hi->downleft;
+    //     delete hi;
+    //     put(root, index);
+    //     findmin(root, 0);
+    //     findmin(root, 1);
+    //     rotate();
+    // }
 };
