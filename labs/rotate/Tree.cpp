@@ -296,6 +296,39 @@ void Tree::rotate(Node *rooot, int LR)
         }
     }
 }
+void Tree::recursiveinsert(Node *rooot, Node *newnode)
+{
+    if (newnode->data <= rooot->data && rooot->downleft != nullptr)
+    {
+        rooot->index += 1;
+        incrementing(rooot->downright);
+        recursiveinsert(rooot->downleft, newnode);
+        // rotate(rooot, 1);
+    }
+    else if (newnode->data > rooot->data && rooot->downright != nullptr)
+    {
+        recursiveinsert(rooot->downright, newnode);
+        // rotate(rooot, 0);
+    }
+    else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
+    {
+        int temp = rooot->index;
+        rooot->index += 1;
+        incrementing(rooot->downright);
+        newnode->index = temp;
+        newnode->up = rooot;
+        rooot->downleft = newnode;
+        // rotate(rooot, 1);
+    }
+    else if (newnode->data > rooot->data && rooot->downright == nullptr)
+    {
+        size_t temp = rooot->index;
+        newnode->index = temp + 1;
+        newnode->up = rooot;
+        rooot->downright = newnode;
+        // rotate(rooot, 0);
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
