@@ -263,13 +263,12 @@ void Tree::rotate(Node *rooot, int LR)
                 {
                     rooot->downleft->downright->up = rooot;
                     rooot->downleft = rooot->downleft->downright;
-                rooot->downleft->downright = rooot;
+                    rooot->downleft->downright = rooot;
                 }
 
-                
                 if (rooot == root)
                 {
-                    // rooot->downleft->up = nullptr;
+                    rooot->downleft->up = nullptr;
                     rooot->up = rooot->downleft;
                     root = rooot->downleft;
                 }
@@ -300,31 +299,29 @@ void Tree::rotate(Node *rooot, int LR)
                 {
                     rooot->downright->downleft->up = rooot;
                     rooot->downright = rooot->downright->downleft;
-                rooot->downright->downleft = rooot;
+                    rooot->downright->downleft = rooot;
                 }
-                
-                
-            if (rooot == root)
-            {
-                // rooot->downright->up = nullptr;
-                rooot->up = rooot->downright;
-                root = rooot->downright;
-            }
-            else
-            {
-                if (rooot->up->downleft == rooot)
+
+                if (rooot == root)
                 {
-                    rooot->up->downleft = rooot->downright;
+                    rooot->downright->up = nullptr;
+                    rooot->up = rooot->downright;
+                    root = rooot->downright;
                 }
-                if (rooot->up->downright == rooot)
+                else
                 {
-                    rooot->up->downright = rooot->downright;
+                    if (rooot->up->downleft == rooot)
+                    {
+                        rooot->up->downleft = rooot->downright;
+                    }
+                    if (rooot->up->downright == rooot)
+                    {
+                        rooot->up->downright = rooot->downright;
+                    }
+                    rooot->downright->up = rooot->up;
+                    rooot->up = rooot->downright;
                 }
-                rooot->downright->up = rooot->up;
-                rooot->up = rooot->downright;
             }
-            }
-            
         }
     }
 }
