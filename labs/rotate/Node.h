@@ -4,6 +4,7 @@
 #include <string>
 
 struct Node {
+  size_t weight;
   size_t index;
   std::string data;
   Node* up;

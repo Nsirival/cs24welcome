@@ -92,16 +92,19 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     if (newnode->data <= rooot->data && rooot->downleft != nullptr)
     {
         rooot->index += 1;
+        rooot->weight += 1;
         incrementing(rooot->downright);
         recursiveinsert(rooot->downleft, newnode);
     }
     else if (newnode->data > rooot->data && rooot->downright != nullptr)
     {
+        rooot->weight += 1;
         recursiveinsert(rooot->downright, newnode);
     }
     else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
     {
         int temp = rooot->index;
+        rooot->weight += 1;
         rooot->index += 1;
         incrementing(rooot->downright);
         newnode->index = temp;
@@ -110,6 +113,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
+        rooot->weight += 1;
         size_t temp = rooot->index;
         newnode->index = temp + 1;
         newnode->up = rooot;
@@ -155,6 +159,25 @@ void Tree::incrementing(Node *rooot)
         }
     }
 }
+void Tree::put(Node *rooot, size_t index)
+{
+    if (rooot != nullptr)
+    {
+
+        if (rooot->downleft != nullptr)
+        {
+            put(rooot->downleft, index);
+        }
+        if (rooot->downright != nullptr)
+        {
+            put(rooot->downright, index);
+        }
+        if (rooot->index > index)
+        {
+            rooot->index -= 1;
+        }
+    }
+}
 
 Node *Tree::finder(Node *rooot, size_t index)
 {
@@ -189,44 +212,81 @@ Node *Tree::finder(Node *rooot, size_t index)
         }
     }
 }
-// Node *Tree::rebalance(Node *rooot)
-// {
-//     if (rooot != nullptr)
-//     {
-//         if (rooot->downleft != nullptr)
-//         {
-//             leftweight = 1 + imbalance(rooot->downleft);
-//         }
-//         if (rooot->downright != nullptr)
-//         {
-//             rightweight = 1 + imbalance(rooot->downright);
-//         }
-//     }
-//     if(abs(leftweight-rightweight)< minsum){
-//         minsum = leftweight-rightweight;
-//     }
-//     if()
-
-// }
-size_t Tree::imbalance(Node *rooot)
+void Tree::findmin(Node *rooot, int side)
 {
-    if (rooot->downleft != nullptr && rooot->downright != nullptr)
+    size_t temp;
+    if (rooot != nullptr)
     {
-        return 2 + imbalance(rooot->downleft) + imbalance(rooot->downright);
+        if (side == 1)
+        {
+            if (rooot->downright != nullptr)
+            {
+                temp = rooot->weight - rooot->downright->weight;
+                if (rooot->downright->downright != nullptr)
+                {
+                    temp -= rooot->downright->downright->weight;
+                }
+                if (rooot->downright->downleft != nullptr)
+                {
+                    temp += rooot->downright->downleft->weight;
+                }
+            }
+        }
+        else if (side == 0)
+        {
+            if (rooot->downleft != nullptr)
+            {
+                temp = rooot->weight - rooot->downleft->weight;
+                if (rooot->downleft->downleft != nullptr)
+                {
+                    temp -= rooot->downleft->downleft->weight;
+                }
+                if (rooot->downleft->downright != nullptr)
+                {
+                    temp += rooot->downleft->downright->weight;
+                }
+            }
+        }
     }
-    else if (rooot->downleft == nullptr && rooot->downright != nullptr)
+
+    if (temp < minsum)
     {
-        return 1 + imbalance(rooot->downright);
-    }
-    else if (rooot->downleft != nullptr && rooot->downright == nullptr)
-    {
-        return 1 + imbalance(rooot->downleft);
-    }
-    else
-    {
-        return 0;
+        minsum = temp;
+        best = rooot;
     }
 }
+
+void Tree::rotate()
+{
+    if (best != root)
+    {
+        if (root->downleft != nullptr)
+        {
+            if (root->downleft == best)
+            {
+                root->downleft = root->downleft->downright;
+                root->up = best;
+
+                best->up = nullptr;
+                best->downright = root;
+                root = best;
+            }
+        }
+        else if (root->downright != nullptr)
+        {
+            if (root->downright == best)
+            {
+                root->downright = root->downright->downleft;
+                root->up = best;
+
+                best->up = nullptr;
+                best->downleft = root;
+                root = best;
+            }
+        }
+    }
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,11 +335,15 @@ void Tree::insert(const std::string &s)
     {
         root = hi;
         root->index = 0;
+        best = root;
     }
     else if (root != nullptr)
     {
         recursiveinsert(root, hi);
     }
+    findmin(root, 0);
+    findmin(root, 1);
+    rotate();
 };
 std::string Tree::lookup(size_t index) const
 {
@@ -324,6 +388,10 @@ void Tree::remove(size_t index)
             }
             delete hi;
         }
+        put(root, index);
+        findmin(root, 0);
+        findmin(root, 1);
+        rotate();
     }
     else if (hi->downleft == nullptr && hi->downright != nullptr)
     {
@@ -344,7 +412,12 @@ void Tree::remove(size_t index)
                 hi->up->downright = hi->downright;
             }
         }
+
         delete hi;
+        put(root, index);
+        findmin(root, 0);
+        findmin(root, 1);
+        rotate();
     }
     else if (hi->downleft != nullptr && hi->downright == nullptr)
     {
@@ -365,9 +438,30 @@ void Tree::remove(size_t index)
                 hi->up->downright = hi->downleft;
             }
         }
+
         delete hi;
+        put(root, index);
+        findmin(root, 0);
+        findmin(root, 1);
+        rotate();
     }
     else
     {
+        Node *n = finder(root, index + 1);
+
+        if (n->downright != nullptr)
+        {
+            n->downright->up = n->up;
+            n->up->downleft = n->downright;
+        }
+
+        n->downright = hi->downright;
+        n->up = hi->up;
+        n->downleft = hi->downleft;
+        delete hi;
+        put(root, index);
+        findmin(root, 0);
+        findmin(root, 1);
+        rotate();
     }
 };

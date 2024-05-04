@@ -7,6 +7,7 @@ class Tree
 {
   // Member Variables
   Node *root;
+  Node* best;
   size_t num = 0;
   size_t leftweight = 0;
   size_t rightweight = 0;
@@ -19,9 +20,10 @@ class Tree
   void recursiveinsert(Node* rooot, Node* newnode);
   std::string recursivelookup(Node* rooot, size_t index) const;
   void incrementing (Node*rooot);
+  void put(Node*rooot, size_t index);
   Node* finder (Node* rooot, size_t index);
-  // Node* rebalance(Node* rooot);
-  size_t imbalance(Node* rooot);
+  void findmin(Node* rooot, int side);
+  void rotate();
 public:
   Tree();
   ~Tree();
