@@ -30,12 +30,15 @@ size_t Tree::recursivefind(Node *rooot, std::string s) const
     }
     int index = 0;
     int x = 0;
-    while(x == 0){
-        if (recursivelookup(rooot, index) == s){
+    while (x == 0)
+    {
+        if (recursivelookup(rooot, index) == s)
+        {
             x += 1;
         }
+        index += 1;
     }
-    return index;
+    return index-1;
 }
 void Tree::recursiveprint(Node *rooot) const
 {
