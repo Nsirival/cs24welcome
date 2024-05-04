@@ -266,7 +266,6 @@ void Tree::rotate(Node *rooot, int x)
                 
             }
             rooot->downleft = rooot->downleft->downright;
-            rooot->downleft->downright = rooot;
 
             if(rooot == root){
                 rooot->downleft->up = nullptr;
@@ -296,7 +295,7 @@ void Tree::rotate(Node *rooot, int x)
                 
             }
             rooot->downright = rooot->downright->downleft;
-            rooot->downright->downleft = rooot;
+  
 
             if(rooot == root){
                 rooot->downright->up = nullptr;
