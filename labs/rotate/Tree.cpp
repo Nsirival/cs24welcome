@@ -255,6 +255,7 @@ size_t Tree::weighting(Node *rooot)
             return 0;
         }
     }
+    return 0;
 }
 
 Node *Tree::balance(Node *rooot, size_t rotation)
@@ -293,6 +294,7 @@ Node *Tree::balance(Node *rooot, size_t rotation)
             }
         }
     }
+    return rooot;
 }
 
 void Tree::rotate(Node *rooot, size_t x)
