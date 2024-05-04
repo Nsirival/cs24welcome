@@ -43,7 +43,7 @@ std::string Tree::recursivefind(Node *rooot, size_t x) const
 {
     if (rooot == nullptr)
     {
-        return;
+        return "----------------";
     }
     if (x == rooot->index)
     {
@@ -59,7 +59,7 @@ std::string Tree::recursivefind(Node *rooot, size_t x) const
     }
     else
     {
-        return;
+        return "-----------------";
     }
 }
 void Tree::recursiveprint(Node *rooot) const
