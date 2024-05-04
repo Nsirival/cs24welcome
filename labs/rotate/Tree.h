@@ -23,8 +23,8 @@ class Tree
   Node* finder (Node* rooot, size_t index);
   size_t getbalance(Node* rooot);
   size_t imbalance(Node* rooot);
-  Node* balance (Node*rooot, size_t rotation);
-  void rotate(Node* rooot, int x); // 1 = right 0 = left
+  Node* balance (Node*rooot, int rotation);
+  void rotate(Node* rooot, int LR); // 1 = right 0 = left
 public:
   Tree();
   ~Tree();

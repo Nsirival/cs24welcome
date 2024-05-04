@@ -95,12 +95,12 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         rooot->index += 1;
         incrementing(rooot->downright);
         recursiveinsert(rooot->downleft, newnode);
-        rotate(rooot, "right");
+        rotate(rooot, 1);
     }
     else if (newnode->data > rooot->data && rooot->downright != nullptr)
     {
         recursiveinsert(rooot->downright, newnode);
-        rotate(rooot, "left");
+        rotate(rooot, 0);
     }
     else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
     {
@@ -110,7 +110,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         newnode->index = temp;
         newnode->up = rooot;
         rooot->downleft = newnode;
-        rotate(rooot, "right");
+        rotate(rooot, 1);
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
@@ -118,7 +118,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         newnode->index = temp + 1;
         newnode->up = rooot;
         rooot->downright = newnode;
-        rotate(rooot, "left");
+        rotate(rooot, 0);
     }
 }
 
@@ -220,39 +220,39 @@ size_t Tree::getbalance(Node *rooot)
     return abs(imbalance(rooot->downleft) - imbalance(rooot->downright));
 }
 
-Node *Tree::balance(Node *rooot, std::string rotation)
+Node *Tree::balance(Node *rooot, int rotation)
 {
 
     if (rooot != nullptr)
     {
         size_t diff = getbalance(rooot);
-        if (rooot->downleft != nullptr && rotation == "right")
+        if (rooot->downleft != nullptr && rotation == 1)
         {
-            rotate(rooot, "right");
+            rotate(rooot, 1);
             if (getbalance(rooot->downleft) >= diff) // not sure if >= or <
             {
-                rotate(rooot->downleft, "left");
+                rotate(rooot->downleft, 0);
             }
             else
             {
                 diff = getbalance(rooot->downleft);
             }
         }
-        if (rooot->downright != nullptr && rotation == "left")
+        if (rooot->downright != nullptr && rotation == 0)
         {
-            rotate(rooot, "left");
+            rotate(rooot, 0);
             if (getbalance(rooot->downright) >= diff)
             {
-                rotate(rooot->downright, "right");
+                rotate(rooot->downright, 1);
             }
         }
     }
     return rooot;
 }
 
-void Tree::rotate(Node *rooot, std::string LR)
+void Tree::rotate(Node *rooot, int LR)
 {
-    if (LR == "right")
+    if (LR == 1)
     {
         // rotate right
         if (rooot != nullptr)
@@ -288,7 +288,7 @@ void Tree::rotate(Node *rooot, std::string LR)
             }
         }
     }
-    else if (LR == "left")
+    else if (LR == 0)
     {
         // rotate left
         if (rooot != nullptr)
