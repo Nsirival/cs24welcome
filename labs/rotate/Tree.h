@@ -21,8 +21,10 @@ class Tree
   void incrementing (Node*rooot);
   void put(Node*rooot, size_t index);
   Node* finder (Node* rooot, size_t index);
-  Node* balance(size_t index);
-  void rotate(Node* child);
+  Node* balance(Node* rooot, size_t rotation);
+  void rotate(Node* rooot, size_t x);
+  size_t weighting(Node* rooot);
+  void goup(Node* rooot);
 public:
   Tree();
   ~Tree();

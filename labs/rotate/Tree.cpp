@@ -92,32 +92,53 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     if (newnode->data <= rooot->data && rooot->downleft != nullptr)
     {
         rooot->index += 1;
-        rooot->weight += 1;
+
         incrementing(rooot->downright);
         recursiveinsert(rooot->downleft, newnode);
+        balance(rooot,0);
     }
     else if (newnode->data > rooot->data && rooot->downright != nullptr)
     {
-        rooot->weight += 1;
+
         recursiveinsert(rooot->downright, newnode);
+        balance(rooot,1);
     }
     else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
     {
         int temp = rooot->index;
-        rooot->weight += 1;
+
         rooot->index += 1;
         incrementing(rooot->downright);
         newnode->index = temp;
         newnode->up = rooot;
         rooot->downleft = newnode;
+        balance(rooot,0);
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
-        rooot->weight += 1;
+
         size_t temp = rooot->index;
         newnode->index = temp + 1;
         newnode->up = rooot;
         rooot->downright = newnode;
+        balance(rooot,1);
+    }
+}
+// call rooot->up
+void Tree::goup(Node *rooot)
+{
+    if (rooot->up == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        if (rooot->up->downleft == rooot)
+        {
+        }
+        else if (rooot->up->downright == rooot)
+        {
+        }
     }
 }
 
@@ -212,93 +233,143 @@ Node *Tree::finder(Node *rooot, size_t index)
         }
     }
 }
-Node* Tree::balance(size_t index)
+
+size_t Tree::weighting(Node *rooot)
 {
-    size_t lefth = -1;
-    size_t righth = -1;
-    size_t current = -1;
-    size_t otherside = 0;
-    
-    if(root != nullptr){
-        if(root->downright != nullptr && root->downleft != nullptr){
-            current = abs(root->downright->weight - root->downleft->weight);
-        } else if(root->downright == nullptr && root->downleft != nullptr){
-            current = root->downleft->weight;
-        } else if(root->downright != nullptr && root->downleft == nullptr){
-            current = root->downright->weight;
-        } 
-
-        if(index > root->index){
-            if(root->downright != nullptr){
-                if(root->downright->downright != nullptr){
-                    otherside = root->downright->downright->weight;
-                }
-                if(root->downright->downleft != nullptr){
-                    righth = abs((root->weight - root->downright->weight + root->downright->downleft->weight) - otherside);
-                } else {
-                    righth = abs((root->weight - root->downright->weight) - otherside);
-                }
-            } else {
-                righth= abs(otherside);
-            }
-            if(root->downright != nullptr && righth < current){
-                return root->downright;
-            }
-        } else if(index < root->index){
-            if(root->downleft != nullptr){
-                if(root->downleft->downleft != nullptr){
-                    otherside = root->downleft->downleft->weight;
-                }
-                if(root->downleft->downright != nullptr){
-                    lefth = abs((root->weight - root->downleft->weight + root->downleft->downright->weight) - otherside);
-                } else {
-                    lefth = abs((root->weight - root->downleft->weight) - otherside);
-                }
-            } else {
-                lefth = abs(otherside);
-            }
-            if(root->downleft != nullptr && lefth < current){
-                return root->downleft;
-            }
-        }   
-    }
-    return root;
-}
-
-
-void Tree::rotate(Node*child)
-{
-    if (child != root)
+    if (rooot != nullptr)
     {
-        if (root->downleft != nullptr)
+        if (rooot->downleft != nullptr && rooot->downright != nullptr)
         {
-            if (root->downleft == child)
-            {
-                root->downleft = root->downleft->downright;
-                root->up = child;
+            return 2 + weighting(rooot->downleft) + weighting(rooot->downright);
+        }
+        else if (rooot->downleft == nullptr && rooot->downright != nullptr)
+        {
+            return 1 + weighting(rooot->downright);
+        }
+        else if (rooot->downleft != nullptr && rooot->downright == nullptr)
+        {
+            return 1 + weighting(rooot->downleft);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
 
-                child->up = nullptr;
-                child->downright = root;
-                root = child;
+Node *Tree::balance(Node *rooot, size_t rotation)
+{
+    size_t left = 0;
+    size_t right = 0;
+    if (rooot != nullptr)
+    {
+        if (rooot->downleft != nullptr)
+        {
+            left = weighting(rooot->downleft);
+        }
+        if (rooot->downright != nullptr)
+        {
+            right = weighting(rooot->downright);
+        }
+        size_t diff = abs(left - right);
+        if (rooot->downleft != nullptr && rotation == 1)
+        {
+            rotate(rooot, 0);
+            if (weighting(rooot->downleft->downleft) - weighting(rooot->downleft->downright) < diff)
+            {
+                rotate(rooot->downleft, 1);
+            }
+            else
+            {
+                diff = weighting(rooot->downleft->downleft) - weighting(rooot->downleft->downright);
             }
         }
-        else if (root->downright != nullptr)
+        if (rooot->downright != nullptr && rotation == 0)
         {
-            if (root->downright == child)
+            rotate(rooot, 1);
+            if (weighting(rooot->downright->downleft) - weighting(rooot->downright->downright) < diff)
             {
-                root->downright = root->downright->downleft;
-                root->up = child;
-
-                child->up = nullptr;
-                child->downleft = root;
-                root = child;
+                rotate(rooot->downright, 1);
             }
         }
     }
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
+void Tree::rotate(Node *rooot, size_t x)
+{
+    if (rooot != nullptr)
+    {
+        if (x == 1)
+        {
+            // totate left
+            Node *right = rooot->downright;
+            if (rooot->downleft != nullptr)
+            {
+                Node *rightleft = rooot->downright->downleft;
+                rightleft->up = rooot;
+            }
+            rooot->downright = right->downleft;
+            right->downleft = rooot;
+
+            if (root == rooot)
+            {
+                right->up = nullptr;
+                rooot->up = right;
+                root = right;
+            }
+            else
+            {
+                Node *temp = rooot->up;
+                if (temp->downleft == rooot)
+                {
+                    temp->downleft = right;
+                }
+                else if (temp->downright == rooot)
+                {
+                    temp->downright = right;
+                }
+                right->up = temp;
+                rooot->up = right;
+            }
+        }
+        else
+        {
+            // rotate right
+            Node *left = rooot->downleft;
+            if (rooot->downright != nullptr)
+            {
+                Node *leftright = rooot->downleft->downright;
+                leftright->up = rooot;
+            }
+            rooot->downleft = left->downright;
+            left->downright = rooot;
+
+            if (root == rooot)
+            {
+                left->up = nullptr;
+                rooot->up = left;
+                root = left;
+            }
+            else
+            {
+                Node *temp = rooot->up;
+                if (temp->downright == rooot)
+                {
+                    temp->downright = left;
+                }
+                else if (temp->downleft == rooot)
+                {
+                    temp->downleft = left;
+                }
+                left->up = temp;
+                rooot->up = left;
+            }
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////// rotate in rebalnce
+//////////////////////////////////////////////////////////////////////////////////////////////// rebalance in rotate
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -350,7 +421,6 @@ void Tree::insert(const std::string &s)
     {
         recursiveinsert(root, hi);
     }
-    rotate(balance(hi->index));
 };
 std::string Tree::lookup(size_t index) const
 {
