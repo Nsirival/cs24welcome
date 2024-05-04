@@ -95,10 +95,12 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         rooot->index += 1;
         incrementing(rooot->downright);
         recursiveinsert(rooot->downleft, newnode);
+        rotate(rooot, 1);
     }
     else if (newnode->data > rooot->data && rooot->downright != nullptr)
     {
         recursiveinsert(rooot->downright, newnode);
+        rotate(rooot, 0);
     }
     else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
     {
@@ -108,6 +110,7 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         newnode->index = temp;
         newnode->up = rooot;
         rooot->downleft = newnode;
+        rotate(rooot, 1);
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
@@ -115,7 +118,9 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
         newnode->index = temp + 1;
         newnode->up = rooot;
         rooot->downright = newnode;
+        rotate(rooot, 0);
     }
+    
 }
 
 std::string Tree::recursivelookup(Node *rooot, size_t x) const
