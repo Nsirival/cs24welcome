@@ -214,6 +214,9 @@ Node *Tree::finder(Node *rooot, size_t index)
 }
 void Tree::findmin(Node *rooot, int side)
 {
+    if (rooot ==nullptr){
+        return;
+    }
     size_t temp = -1;
     if (rooot != nullptr)
     {
@@ -297,6 +300,8 @@ void Tree::rotate()
 Tree::Tree()
 {
     root = nullptr;
+    best = root;
+    minsum = -1;
 }
 Tree::~Tree()
 {
