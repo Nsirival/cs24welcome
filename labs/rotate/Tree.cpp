@@ -212,84 +212,86 @@ Node *Tree::finder(Node *rooot, size_t index)
         }
     }
 }
-void Tree::findmin(Node *rooot, int side)
+Node* Tree::balance(size_t index)
 {
-    if (rooot == nullptr)
-    {
-        return;
-    }
-    size_t temp = -1;
-    if (rooot != nullptr)
-    {
-        if (side == 1)
-        {
-            if (rooot->downright != nullptr)
-            {
-                temp = rooot->weight - rooot->downright->weight;
-                if (rooot->downright->downright != nullptr)
-                {
-                    temp -= rooot->downright->downright->weight;
+    size_t lefth = -1;
+    size_t righth = -1;
+    size_t current = -1;
+    size_t otherside = 0;
+    
+    if(root != nullptr){
+        if(root->downright != nullptr && root->downleft != nullptr){
+            current = abs(root->downright->weight - root->downleft->weight);
+        } else if(root->downright == nullptr && root->downleft != nullptr){
+            current = root->downleft->weight;
+        } else if(root->downright != nullptr && root->downleft == nullptr){
+            current = root->downright->weight;
+        } 
+
+        if(index > root->index){
+            if(root->downright != nullptr){
+                if(root->downright->downright != nullptr){
+                    otherside = root->downright->downright->weight;
                 }
-                if (rooot->downright->downleft != nullptr)
-                {
-                    temp += rooot->downright->downleft->weight;
+                if(root->downright->downleft != nullptr){
+                    righth = abs((root->weight - root->downright->weight + root->downright->downleft->weight) - otherside);
+                } else {
+                    righth = abs((root->weight - root->downright->weight) - otherside);
                 }
-                if (temp < minsum)
-                {
-                    minsum = temp;
-                    best = rooot;
-                }
+            } else {
+                righth= abs(otherside);
             }
-        }
-        else if (side == 0)
-        {
-            if (rooot->downleft != nullptr)
-            {
-                temp = rooot->weight - rooot->downleft->weight;
-                if (rooot->downleft->downleft != nullptr)
-                {
-                    temp -= rooot->downleft->downleft->weight;
-                }
-                if (rooot->downleft->downright != nullptr)
-                {
-                    temp += rooot->downleft->downright->weight;
-                }
-                if (temp < minsum)
-                {
-                    minsum = temp;
-                    best = rooot;
-                }
+            if(root->downright != nullptr && righth < current){
+                return root->downright;
             }
-        }
+        } else if(index < root->index){
+            if(root->downleft != nullptr){
+                if(root->downleft->downleft != nullptr){
+                    otherside = root->downleft->downleft->weight;
+                }
+                if(root->downleft->downright != nullptr){
+                    lefth = abs((root->weight - root->downleft->weight + root->downleft->downright->weight) - otherside);
+                } else {
+                    lefth = abs((root->weight - root->downleft->weight) - otherside);
+                }
+            } else {
+                lefth = abs(otherside);
+            }
+            if(root->downleft != nullptr && lefth < current){
+                return root->downleft;
+            }
+        }   
     }
+    return root;
 }
 
-void Tree::rotate()
+
+void Tree::rotate(Node*child)
 {
-    if (best != root)
+    if (child != root)
     {
         if (root->downleft != nullptr)
         {
-            if (root->downleft == best)
+            if (root->downleft == child)
             {
                 root->downleft = root->downleft->downright;
-                root->up = best;
+                root->up = child;
 
-                best->up = nullptr;
-                best->downright = root;
-                root = best;
+                child->up = nullptr;
+                child->downright = root;
+                root = child;
             }
         }
         else if (root->downright != nullptr)
         {
-            if (root->downright == best)
+            if (root->downright == child)
             {
                 root->downright = root->downright->downleft;
-                root->up = best;
+                root->up = child;
 
-                best->up = nullptr;
-                best->downleft = root;
-                root = best;
+                child->up = nullptr;
+                child->downleft = root;
+                root = child;
             }
         }
     }
@@ -305,8 +307,6 @@ void Tree::rotate()
 Tree::Tree()
 {
     root = nullptr;
-    best = root;
-    minsum = -1;
 }
 Tree::~Tree()
 {
@@ -345,15 +345,12 @@ void Tree::insert(const std::string &s)
     {
         root = hi;
         root->index = 0;
-        best = root;
     }
     else if (root != nullptr)
     {
         recursiveinsert(root, hi);
     }
-    findmin(root, 0);
-    findmin(root, 1);
-    rotate();
+    rotate(balance(hi->index));
 };
 std::string Tree::lookup(size_t index) const
 {

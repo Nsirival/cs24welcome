@@ -7,7 +7,6 @@ class Tree
 {
   // Member Variables
   Node *root;
-  Node* best;
   size_t num = 0;
   size_t leftweight = 0;
   size_t rightweight = 0;
@@ -22,8 +21,8 @@ class Tree
   void incrementing (Node*rooot);
   void put(Node*rooot, size_t index);
   Node* finder (Node* rooot, size_t index);
-  void findmin(Node* rooot, int side);
-  void rotate();
+  Node* balance(size_t index);
+  void rotate(Node* child);
 public:
   Tree();
   ~Tree();
