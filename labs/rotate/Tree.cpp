@@ -1,3 +1,4 @@
+
 #include "Tree.h"
 #include "Node.h"
 #include "iostream"
@@ -92,53 +93,28 @@ void Tree::recursiveinsert(Node *rooot, Node *newnode)
     if (newnode->data <= rooot->data && rooot->downleft != nullptr)
     {
         rooot->index += 1;
-
         incrementing(rooot->downright);
         recursiveinsert(rooot->downleft, newnode);
-        balance(rooot,0);
     }
     else if (newnode->data > rooot->data && rooot->downright != nullptr)
     {
-
         recursiveinsert(rooot->downright, newnode);
-        balance(rooot,1);
     }
     else if (newnode->data <= rooot->data && rooot->downleft == nullptr)
     {
         int temp = rooot->index;
-
         rooot->index += 1;
         incrementing(rooot->downright);
         newnode->index = temp;
         newnode->up = rooot;
         rooot->downleft = newnode;
-        balance(rooot,0);
     }
     else if (newnode->data > rooot->data && rooot->downright == nullptr)
     {
-
         size_t temp = rooot->index;
         newnode->index = temp + 1;
         newnode->up = rooot;
         rooot->downright = newnode;
-        balance(rooot,1);
-    }
-}
-// call rooot->up
-void Tree::goup(Node *rooot)
-{
-    if (rooot->up == nullptr)
-    {
-        return;
-    }
-    else
-    {
-        if (rooot->up->downleft == rooot)
-        {
-        }
-        else if (rooot->up->downright == rooot)
-        {
-        }
     }
 }
 
@@ -180,25 +156,6 @@ void Tree::incrementing(Node *rooot)
         }
     }
 }
-void Tree::put(Node *rooot, size_t index)
-{
-    if (rooot != nullptr)
-    {
-
-        if (rooot->downleft != nullptr)
-        {
-            put(rooot->downleft, index);
-        }
-        if (rooot->downright != nullptr)
-        {
-            put(rooot->downright, index);
-        }
-        if (rooot->index > index)
-        {
-            rooot->index -= 1;
-        }
-    }
-}
 
 Node *Tree::finder(Node *rooot, size_t index)
 {
@@ -234,61 +191,53 @@ Node *Tree::finder(Node *rooot, size_t index)
     }
 }
 
-size_t Tree::weighting(Node *rooot)
+size_t Tree::imbalance(Node *rooot)
 {
-    if (rooot != nullptr)
+    if (rooot->downleft != nullptr && rooot->downright != nullptr)
     {
-        if (rooot->downleft != nullptr && rooot->downright != nullptr)
-        {
-            return 2 + weighting(rooot->downleft) + weighting(rooot->downright);
-        }
-        else if (rooot->downleft == nullptr && rooot->downright != nullptr)
-        {
-            return 1 + weighting(rooot->downright);
-        }
-        else if (rooot->downleft != nullptr && rooot->downright == nullptr)
-        {
-            return 1 + weighting(rooot->downleft);
-        }
-        else
-        {
-            return 0;
-        }
+        return 2 + imbalance(rooot->downleft) + imbalance(rooot->downright);
     }
-    return 0;
+    else if (rooot->downleft == nullptr && rooot->downright != nullptr)
+    {
+        return 1 + imbalance(rooot->downright);
+    }
+    else if (rooot->downleft != nullptr && rooot->downright == nullptr)
+    {
+        return 1 + imbalance(rooot->downleft);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+size_t Tree::getbalance(Node *rooot)
+{
+    return abs(imbalance(rooot->downleft) - imbalance(rooot->downright));
 }
 
 Node *Tree::balance(Node *rooot, size_t rotation)
 {
-    size_t left = 0;
-    size_t right = 0;
+
     if (rooot != nullptr)
     {
-        if (rooot->downleft != nullptr)
-        {
-            left = weighting(rooot->downleft);
-        }
-        if (rooot->downright != nullptr)
-        {
-            right = weighting(rooot->downright);
-        }
-        size_t diff = abs(left - right);
+        size_t diff = getbalance(rooot);
         if (rooot->downleft != nullptr && rotation == 1)
         {
-            rotate(rooot, 0);
-            if (weighting(rooot->downleft->downleft) - weighting(rooot->downleft->downright) < diff)
+            rotate(rooot, 1);
+            if (getbalance(rooot->downleft) >= diff) // not sure if >= or <
             {
-                rotate(rooot->downleft, 1);
+                rotate(rooot->downleft, 0);
             }
             else
             {
-                diff = weighting(rooot->downleft->downleft) - weighting(rooot->downleft->downright);
+                diff = getbalance(rooot->downleft);
             }
         }
         if (rooot->downright != nullptr && rotation == 0)
         {
-            rotate(rooot, 1);
-            if (weighting(rooot->downright->downleft) - weighting(rooot->downright->downright) < diff)
+            rotate(rooot, 0);
+            if (getbalance(rooot->downright) >= diff)
             {
                 rotate(rooot->downright, 1);
             }
@@ -297,81 +246,72 @@ Node *Tree::balance(Node *rooot, size_t rotation)
     return rooot;
 }
 
-void Tree::rotate(Node *rooot, size_t x)
+void Tree::rotate(Node *rooot, int x)
 {
-    if (rooot != nullptr)
+    if (x == 1)
     {
-        if (x == 1)
+        // rotate right
+        if (rooot != nullptr)
         {
-            // totate left
-            Node *right = rooot->downright;
             if (rooot->downleft != nullptr)
             {
-                Node *rightleft = rooot->downright->downleft;
-                rightleft->up = rooot;
+                if(rooot->downleft->downright != nullptr){
+                    rooot->downleft->downright->up = rooot;
+                } 
+                
             }
-            rooot->downright = right->downleft;
-            right->downleft = rooot;
+            rooot->downleft = rooot->downleft->downright;
+            rooot->downleft->downright = rooot;
 
-            if (root == rooot)
-            {
-                right->up = nullptr;
-                rooot->up = right;
-                root = right;
-            }
-            else
-            {
-                Node *temp = rooot->up;
-                if (temp->downleft == rooot)
-                {
-                    temp->downleft = right;
+            if(rooot == root){
+                rooot->downleft->up = nullptr;
+                rooot->up = rooot->downleft;
+                root = rooot->downleft;
+            } else {
+                if(rooot->up->downleft == rooot){
+                    rooot->up->downleft = rooot->downleft;
+                } 
+                if(rooot->up->downright == rooot){
+                    rooot->up->downright = rooot->downleft;
                 }
-                else if (temp->downright == rooot)
-                {
-                    temp->downright = right;
-                }
-                right->up = temp;
-                rooot->up = right;
+                rooot->downleft->up = rooot->up;
+                rooot->up = rooot->downleft;
             }
         }
-        else
+    }
+    else if (x == 0){
+        //rotate left
+        if (rooot != nullptr)
         {
-            // rotate right
-            Node *left = rooot->downleft;
             if (rooot->downright != nullptr)
             {
-                Node *leftright = rooot->downleft->downright;
-                leftright->up = rooot;
+                if(rooot->downright->downleft != nullptr){
+                    rooot->downright->downleft->up = rooot;
+                } 
+                
             }
-            rooot->downleft = left->downright;
-            left->downright = rooot;
+            rooot->downright = rooot->downright->downleft;
+            rooot->downright->downleft = rooot;
 
-            if (root == rooot)
-            {
-                left->up = nullptr;
-                rooot->up = left;
-                root = left;
-            }
-            else
-            {
-                Node *temp = rooot->up;
-                if (temp->downright == rooot)
-                {
-                    temp->downright = left;
+            if(rooot == root){
+                rooot->downright->up = nullptr;
+                rooot->up = rooot->downright;
+                root = rooot->downright;
+            } else {
+                if(rooot->up->downleft == rooot){
+                    rooot->up->downleft = rooot->downright;
+                } 
+                if(rooot->up->downright == rooot){
+                    rooot->up->downright = rooot->downright;
                 }
-                else if (temp->downleft == rooot)
-                {
-                    temp->downleft = left;
-                }
-                left->up = temp;
-                rooot->up = left;
+                rooot->downright->up = rooot->up;
+                rooot->up = rooot->downright;
             }
         }
     }
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////////// rotate in rebalnce
-//////////////////////////////////////////////////////////////////////////////////////////////// rebalance in rotate
+////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -441,105 +381,76 @@ void Tree::print() const
     }
     std::cout << std::endl;
 };
-void Tree::remove(size_t index){
-    // Node *hi = finder(root, index);
-    // if (hi == nullptr)
-    // {
-    //     return;
-    // }
-    // if (hi->downright == nullptr && hi->downleft == nullptr)
-    // {
-    //     if (hi == root)
-    //     {
-    //         delete root;
-    //         root = nullptr;
-    //     }
-    //     else
-    //     {
-    //         if (hi->up->downleft == hi)
-    //         {
-    //             hi->up->downleft = nullptr;
-    //         }
-    //         else
-    //         {
-    //             hi->up->downright = nullptr;
-    //         }
-    //         delete hi;
-    //     }
-    //     put(root, index);
-    //     findmin(root, 0);
-    //     findmin(root, 1);
-    //     rotate();
-    // }
-    // else if (hi->downleft == nullptr && hi->downright != nullptr)
-    // {
-    //     if (hi == root)
-    //     {
-    //         root = hi->downright;
-    //         hi->downright->up = nullptr;
-    //     }
-    //     else
-    //     {
-    //         hi->downright->up = hi->up;
-    //         if (hi->up->downleft == hi)
-    //         {
-    //             hi->up->downleft = hi->downright;
-    //         }
-    //         else
-    //         {
-    //             hi->up->downright = hi->downright;
-    //         }
-    //     }
-
-    //     delete hi;
-    //     put(root, index);
-    //     findmin(root, 0);
-    //     findmin(root, 1);
-    //     rotate();
-    // }
-    // else if (hi->downleft != nullptr && hi->downright == nullptr)
-    // {
-    //     if (hi == root)
-    //     {
-    //         root = hi->downleft;
-    //         hi->downleft->up = nullptr;
-    //     }
-    //     else
-    //     {
-    //         hi->downleft->up = hi->up;
-    //         if (hi->up->downleft == hi)
-    //         {
-    //             hi->up->downleft = hi->downleft;
-    //         }
-    //         else
-    //         {
-    //             hi->up->downright = hi->downleft;
-    //         }
-    //     }
-
-    //     delete hi;
-    //     put(root, index);
-    //     findmin(root, 0);
-    //     findmin(root, 1);
-    //     rotate();
-    // }
-    // else
-    // {
-    //     Node *n = finder(root, index + 1);
-
-    //     if (n->downright != nullptr)
-    //     {
-    //         n->downright->up = n->up;
-    //         n->up->downleft = n->downright;
-    //     }
-
-    //     n->downright = hi->downright;
-    //     n->up = hi->up;
-    //     n->downleft = hi->downleft;
-    //     delete hi;
-    //     put(root, index);
-    //     findmin(root, 0);
-    //     findmin(root, 1);
-    //     rotate();
-    // }
+void Tree::remove(size_t index)
+{
+    Node *hi = finder(root, index);
+    if (hi == nullptr)
+    {
+        return;
+    }
+    if (hi->downright == nullptr && hi->downleft == nullptr)
+    {
+        if (hi == root)
+        {
+            delete root;
+            root = nullptr;
+        }
+        else
+        {
+            if (hi->up->downleft == hi)
+            {
+                hi->up->downleft = nullptr;
+            }
+            else
+            {
+                hi->up->downright = nullptr;
+            }
+            delete hi;
+        }
+    }
+    else if (hi->downleft == nullptr && hi->downright != nullptr)
+    {
+        if (hi == root)
+        {
+            root = hi->downright;
+            hi->downright->up = nullptr;
+        }
+        else
+        {
+            hi->downright->up = hi->up;
+            if (hi->up->downleft == hi)
+            {
+                hi->up->downleft = hi->downright;
+            }
+            else
+            {
+                hi->up->downright = hi->downright;
+            }
+        }
+        delete hi;
+    }
+    else if (hi->downleft != nullptr && hi->downright == nullptr)
+    {
+        if (hi == root)
+        {
+            root = hi->downleft;
+            hi->downleft->up = nullptr;
+        }
+        else
+        {
+            hi->downleft->up = hi->up;
+            if (hi->up->downleft == hi)
+            {
+                hi->up->downleft = hi->downleft;
+            }
+            else
+            {
+                hi->up->downright = hi->downleft;
+            }
+        }
+        delete hi;
+    }
+    else
+    {
+    }
 };

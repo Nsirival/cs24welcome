@@ -1,3 +1,4 @@
+
 #ifndef TREE_H
 #define TREE_H
 
@@ -19,12 +20,11 @@ class Tree
   void recursiveinsert(Node* rooot, Node* newnode);
   std::string recursivelookup(Node* rooot, size_t index) const;
   void incrementing (Node*rooot);
-  void put(Node*rooot, size_t index);
   Node* finder (Node* rooot, size_t index);
-  Node* balance(Node* rooot, size_t rotation);
-  void rotate(Node* rooot, size_t x);
-  size_t weighting(Node* rooot);
-  void goup(Node* rooot);
+  size_t getbalance(Node* rooot);
+  size_t imbalance(Node* rooot);
+  Node* balance (Node*rooot, size_t rotation);
+  void rotate(Node* rooot, int x); // 1 = right 0 = left
 public:
   Tree();
   ~Tree();
