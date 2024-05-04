@@ -341,9 +341,9 @@ void Tree::insert(const std::string &s)
     {
         recursiveinsert(root, hi);
     }
-    findmin(root, 0);
-    findmin(root, 1);
-    rotate();
+    // findmin(root, 0);
+    // findmin(root, 1);
+    // rotate();
 };
 std::string Tree::lookup(size_t index) const
 {
