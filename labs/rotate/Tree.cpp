@@ -28,32 +28,14 @@ size_t Tree::recursivefind(Node *rooot, std::string s) const
     {
         return -1;
     }
-    if (s == rooot->data)
-    { // find index
-        if (rooot->downleft != nullptr)
-        {
-            if (rooot->downleft->data == s)
-            {
-                return recursivefind(rooot->downleft, s);
-            }
-            else
-            {
-                return rooot->index;
-            }
-        }
-        else
-        {
-            return rooot->index;
+    int index = 0;
+    int x = 0;
+    while(x == 0){
+        if (recursivelookup(rooot, index) == s){
+            x += 1;
         }
     }
-    if (s < rooot->data)
-    {
-        return recursivefind(rooot->downleft, s);
-    }
-    else
-    {
-        return recursivefind(rooot->downright, s);
-    }
+    return index;
 }
 void Tree::recursiveprint(Node *rooot) const
 {
