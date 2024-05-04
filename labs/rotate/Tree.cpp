@@ -300,7 +300,7 @@ void Tree::rotate(Node *rooot, int x)
                     rooot->downright->downleft->up = rooot;
                 }
                 
-                rooot->downleft = rooot->downleft->downright;
+                rooot->downright = rooot->downright->downleft;
             if (rooot == root)
             {
                 rooot->downright->up = nullptr;
