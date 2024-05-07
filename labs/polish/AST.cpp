@@ -58,10 +58,10 @@ AST *AST::parse(const std::string &expression)
         {
             char *end;
             double result = strtod(token.c_str(), &end);
-            // if ( *end != '\0')
-            // {
-            //     throw std::runtime_error("Invalid token: " + token);
-            // }
+            if ( *end != '\0')
+            {
+                throw std::runtime_error("Invalid token: " + token);
+            }
             stack.push(new nodes(result));
         }
     }
