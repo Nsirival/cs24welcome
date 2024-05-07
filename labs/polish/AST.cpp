@@ -20,6 +20,7 @@ AST *AST::parse(const std::string &expression)
             AST *right = stack.pop();
             if (stack.root == nullptr)
             {
+                delete right;
                 throw std::runtime_error("Not enough operands.");
             }
             AST *left = stack.pop();
@@ -77,15 +78,8 @@ AST *AST::parse(const std::string &expression)
 
     if (stack.root != nullptr)
     {
-        while (stack.root != nullptr)
-        {
-            auto temp = stack.root;
-            stack.root = stack.root->prev;
-            delete temp->data;
-            delete temp; // Delete the node
-        }
         throw std::runtime_error("Too many operands.");
     }
-
+    
     return root;
 }
