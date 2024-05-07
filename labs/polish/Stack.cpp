@@ -6,7 +6,12 @@ Stack::Stack(){
     root = nullptr;
 }
 Stack::~Stack(){
-
+     while (root) {
+        Node* temp = root;
+        root = root->prev;
+        delete temp->daata; // Delete the AST object
+        delete temp;       // Delete the node
+    }
 }
 
 

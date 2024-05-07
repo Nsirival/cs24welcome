@@ -16,10 +16,11 @@ AST *AST::parse(const std::string &expression)
         {
             char *end;
             double result = strtod(token.c_str(), &end);
-            if (end == token.c_str() || *end != '\0')
+            if ( *end != '\0')
             {
-                stack.push(new nodes(result));
+                throw std::runtime_error("Invalid token: " + token);
             }
+            stack.push(new nodes(result));
         }
         else if (token == "+")
         {
