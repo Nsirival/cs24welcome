@@ -80,7 +80,6 @@ AST *AST::parse(const std::string &expression)
         while (stack.root != nullptr)
         {
             auto temp = stack.root;
-            AST *data = temp->daata;
             stack.root = stack.root->prev;
             delete temp; // Delete the node
         }
