@@ -78,8 +78,15 @@ AST *AST::parse(const std::string &expression)
 
     if (stack.root != nullptr)
     {
+        while (stack.root)
+        {
+            auto temp = stack.root;
+            stack.root = stack.root->prev;
+            delete temp->data; // Delete the AST object
+            delete temp;       // Delete the node
+        }
         throw std::runtime_error("Too many operands.");
     }
-    
+
     return root;
 }
