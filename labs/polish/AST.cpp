@@ -63,6 +63,9 @@ AST *AST::parse(const std::string &expression)
                 throw std::runtime_error("Invalid token: " + token);
             }
             stack.push(new nodes(result));
+        } 
+        else{
+            throw std::runtime_error("Invalid token: " + token);
         }
     }
     if (stack.root == nullptr)
