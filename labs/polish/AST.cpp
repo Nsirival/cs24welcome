@@ -15,12 +15,12 @@ AST *AST::parse(const std::string &expression)
         {
             if (stack.root == nullptr)
             {
-                throw std::runtime_error("Not enough operands");
+                throw std::runtime_error("Not enough operands.");
             }
             AST *right = stack.pop();
             if (stack.root == nullptr)
             {
-                throw std::runtime_error("Not enough operands");
+                throw std::runtime_error("Not enough operands.");
             }
             AST *left = stack.pop();
             if (token == "+")
@@ -48,7 +48,7 @@ AST *AST::parse(const std::string &expression)
         {
             if (stack.root == nullptr)
             {
-                throw std::runtime_error("Not enough operands");
+                throw std::runtime_error("Not enough operands.");
             }
             AST *right = stack.pop();
             stack.push(new neg(right));
@@ -67,7 +67,7 @@ AST *AST::parse(const std::string &expression)
     }
     if (stack.root == nullptr)
     {
-        throw std::runtime_error("No input");
+        throw std::runtime_error("No input.");
     }
     AST *root = stack.pop();
     return root;
