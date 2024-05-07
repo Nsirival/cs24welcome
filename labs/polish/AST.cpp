@@ -58,13 +58,14 @@ AST *AST::parse(const std::string &expression)
         {
             char *end;
             double result = strtod(token.c_str(), &end);
-            if ( *end != '\0')
+            if (*end != '\0')
             {
                 throw std::runtime_error("Invalid token: " + token);
             }
             stack.push(new nodes(result));
-        } 
-        else{
+        }
+        else
+        {
             throw std::runtime_error("Invalid token: " + token);
         }
     }
@@ -74,10 +75,17 @@ AST *AST::parse(const std::string &expression)
     }
     AST *root = stack.pop();
 
-    if (stack.root != nullptr){
-        stack.~Stack();
+    if (stack.root != nullptr)
+    {
+        while (stack.root != nullptr)
+        {
+            auto temp = stack.root;
+            AST *data = temp->daata;
+            stack.root = stack.root->prev;
+            delete temp; // Delete the node
+        }
         throw std::runtime_error("Too many operands.");
     }
-    
+
     return root;
 }
