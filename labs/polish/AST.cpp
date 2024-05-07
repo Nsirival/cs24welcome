@@ -12,7 +12,7 @@ AST *AST::parse(const std::string &expression)
 
     while (stream >> token)
     {
-        if (stod(token))
+        if (isdigit(token[0]) || token[0] == '-' || token[0] == '+')
         {
             char *end;
             double result = strtod(token.c_str(), &end);
@@ -102,10 +102,7 @@ AST *AST::parse(const std::string &expression)
         }
     }
 
-    if (stack.root == nullptr)
-    {
-        throw std::runtime_error("No input");
-    }
+    
 
     AST *root = stack.pop();
     return root;
