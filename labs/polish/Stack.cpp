@@ -6,10 +6,10 @@ Stack::Stack(){
     root = nullptr;
 }
 Stack::~Stack(){
-     while (root) {
+    while (root) {
         Node* temp = root;
         root = root->prev;
-        delete temp->daata; // Delete the AST object
+        delete temp->data; // Delete the AST object
         delete temp;       // Delete the node
     }
 }
@@ -22,10 +22,10 @@ void Stack::push(AST* data){
 
 AST* Stack::pop(){
     if(root == nullptr){
-        throw std::runtime_error("No Input");
+        throw std::runtime_error("No input.");
     }
     Node*temp = root;
-    AST* data = temp->daata;
+    AST* data = temp->data;
     root = root->prev;
     delete temp;
     return data;

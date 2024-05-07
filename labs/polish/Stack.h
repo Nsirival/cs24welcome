@@ -6,7 +6,7 @@
 
 struct Stack{
     struct Node {
-        AST* daata;
+        AST* data;
         Node* prev;
     };
     Node* root;
