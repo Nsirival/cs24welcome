@@ -73,5 +73,9 @@ AST *AST::parse(const std::string &expression)
         throw std::runtime_error("No input.");
     }
     AST *root = stack.pop();
+
+    if (stack.root != nullptr){
+        throw std::runtime_error("Too many operands.");
+    }
     return root;
 }
