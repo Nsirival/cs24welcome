@@ -77,5 +77,6 @@ AST *AST::parse(const std::string &expression)
     if (stack.root != nullptr){
         throw std::runtime_error("Too many operands.");
     }
+    stack.~Stack();
     return root;
 }
