@@ -30,16 +30,17 @@ double nodes::value() const
 }
 
 neg::neg(AST *single) { one = single; }
-neg::~neg(){
+neg::~neg()
+{
   delete one;
 }
 std::string neg::prefix() const
 {
-  return "- " + one->prefix();
+  return "~ " + one->prefix();
 }
 std::string neg::postfix() const
 {
-  return one->prefix() + " -";
+  return one->prefix() + " ~";
 }
 double neg::value() const
 {
@@ -61,7 +62,8 @@ std::string add::prefix() const
   return "+ " + leftt->prefix() + " " + rightt->prefix();
 }
 std::string add::postfix() const
-{return leftt->postfix() + " " + rightt->postfix() + " +";
+{
+  return leftt->postfix() + " " + rightt->postfix() + " +";
 }
 double add::value() const
 {
@@ -79,10 +81,12 @@ sub::~sub()
   delete rightt;
 }
 std::string sub::prefix() const
-{return "- " + leftt->prefix() + " " + rightt->prefix();
+{
+  return "- " + leftt->prefix() + " " + rightt->prefix();
 }
 std::string sub::postfix() const
-{return leftt->postfix() + " " + rightt->postfix() + " -";
+{
+  return leftt->postfix() + " " + rightt->postfix() + " -";
 }
 double sub::value() const
 {
@@ -99,13 +103,16 @@ mult::~mult()
   delete rightt;
 }
 std::string mult::prefix() const
-{return "* " + leftt->prefix() + " " + rightt->prefix();
+{
+  return "* " + leftt->prefix() + " " + rightt->prefix();
 }
 std::string mult::postfix() const
-{return leftt->postfix() + " " + rightt->postfix() + " *";
+{
+  return leftt->postfix() + " " + rightt->postfix() + " *";
 }
 double mult::value() const
-{return leftt->value() * rightt->value();
+{
+  return leftt->value() * rightt->value();
 }
 divd::divd(AST *left, AST *right)
 {
@@ -118,14 +125,17 @@ divd::~divd()
   delete rightt;
 }
 std::string divd::prefix() const
-{return "/ " + leftt->prefix() + " " + rightt->prefix();
+{
+  return "/ " + leftt->prefix() + " " + rightt->prefix();
 }
 std::string divd::postfix() const
-{return leftt->postfix() + " " + rightt->postfix() + " /";
+{
+  return leftt->postfix() + " " + rightt->postfix() + " /";
 }
 double divd::value() const
 {
-  if (rightt->value() == 0){
+  if (rightt->value() == 0)
+  {
     throw std::runtime_error("Division by zero.");
   }
   return leftt->value() / rightt->value();
@@ -141,14 +151,17 @@ mod::~mod()
   delete rightt;
 }
 std::string mod::prefix() const
-{return "% " + leftt->prefix() + " " + rightt->prefix();
+{
+  return "% " + leftt->prefix() + " " + rightt->prefix();
 }
 std::string mod::postfix() const
-{return leftt->postfix() + " " + rightt->postfix() + " %";
+{
+  return leftt->postfix() + " " + rightt->postfix() + " %";
 }
 double mod::value() const
 {
-  if(rightt->value() == 0){
+  if (rightt->value() == 0)
+  {
     throw std::runtime_error("Division by zero.");
   }
   return fmod(leftt->value(), rightt->value());
