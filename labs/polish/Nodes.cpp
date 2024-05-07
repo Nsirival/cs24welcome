@@ -126,7 +126,7 @@ std::string divd::postfix() const
 double divd::value() const
 {
   if (rightt->value() == 0){
-    throw std::runtime_error("Division by zero");
+    throw std::runtime_error("Division by zero.");
   }
   return leftt->value() / rightt->value();
 }
@@ -149,7 +149,7 @@ std::string mod::postfix() const
 double mod::value() const
 {
   if(rightt->value() == 0){
-    throw std::runtime_error("Division by zero");
+    throw std::runtime_error("Division by zero.");
   }
   return fmod(leftt->value(), rightt->value());
 }
