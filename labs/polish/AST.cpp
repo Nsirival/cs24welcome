@@ -11,7 +11,16 @@ AST *AST::parse(const std::string &expression)
 
     while (stream >> token)
     {
-        if (token == "+" || token == "-" || token == "*" || token == "/" || token == "%")
+        if (token == "~")
+        {
+            if (stack.root == nullptr)
+            {
+                throw std::runtime_error("Not enough operands.");
+            }
+            AST *right = stack.pop();
+            stack.push(new neg(right));
+        }
+        else if (token == "+" || token == "-" || token == "*" || token == "/" || token == "%")
         {
             if (stack.root == nullptr)
             {
@@ -45,15 +54,6 @@ AST *AST::parse(const std::string &expression)
                 stack.push(new mod(left, right));
             }
         }
-        else if (token == "~")
-        {
-            if (stack.root == nullptr)
-            {
-                throw std::runtime_error("Not enough operands.");
-            }
-            AST *right = stack.pop();
-            stack.push(new neg(right));
-        }
 
         else if (isdigit(token[0]) || token[0] == '-' || token[0] == '+')
         {
@@ -78,13 +78,7 @@ AST *AST::parse(const std::string &expression)
 
     if (stack.root != nullptr)
     {
-        while (stack.root)
-        {
-            auto temp = stack.root;
-            stack.root = stack.root->prev;
-            delete temp->data; // Delete the AST object
-            delete temp;       // Delete the node
-        }
+
         throw std::runtime_error("Too many operands.");
     }
 
