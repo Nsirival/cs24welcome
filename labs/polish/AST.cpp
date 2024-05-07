@@ -28,7 +28,7 @@ AST *AST::parse(const std::string &expression)
             } else if (token == "-"){
                 stack.push(new sub(left, right));
             } else if (token == "*"){
-                stack.push(new divd(left, right));
+                stack.push(new mult(left, right));
             } else if (token == "/"){
                 stack.push(new divd(left, right));
             } else if (token == "%"){
