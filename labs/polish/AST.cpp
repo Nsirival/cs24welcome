@@ -29,7 +29,7 @@ AST *AST::parse(const std::string &expression)
             AST *right = stack.pop();
             if (stack.root == nullptr)
             {
-                delete right;
+                // delete right;
                 throw std::runtime_error("Not enough operands.");
             }
             AST *left = stack.pop();
