@@ -7,7 +7,7 @@ AST *AST::parse(const std::string &expression)
 {
     std::string token;
     std::istringstream stream(expression);
-    Stack* stack;
+    Stack* stack= new Stack();
 
     while (stream >> token)
     {
