@@ -24,11 +24,13 @@ AST *AST::parse(const std::string &expression)
         {
             if (stack.root == nullptr)
             {
+                stack.~Stack();
                 throw std::runtime_error("Not enough operands.");
             }
             AST *right = stack.pop();
             if (stack.root == nullptr)
             {
+                stack.~Stack();
                 delete right;
                 throw std::runtime_error("Not enough operands.");
             }
@@ -61,24 +63,27 @@ AST *AST::parse(const std::string &expression)
             double result = strtod(token.c_str(), &end);
             if (*end != '\0')
             {
+                stack.~Stack();
                 throw std::runtime_error("Invalid token: " + token);
             }
             stack.push(new nodes(result));
         }
         else
         {
+            stack.~Stack();
             throw std::runtime_error("Invalid token: " + token);
         }
     }
     if (stack.root == nullptr)
     {
+        stack.~Stack();
         throw std::runtime_error("No input.");
     }
     AST *root = stack.pop();
 
     if (stack.root != nullptr)
     {
-
+        stack.~Stack();
         throw std::runtime_error("Too many operands.");
     }
 
