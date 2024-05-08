@@ -29,7 +29,7 @@ AST *AST::parse(const std::string &expression)
             AST *right = stack.pop();
             if (stack.root == nullptr)
             {
-                // delete right;
+                delete right;
                 throw std::runtime_error("Not enough operands.");
             }
             AST *left = stack.pop();
@@ -57,13 +57,6 @@ AST *AST::parse(const std::string &expression)
 
         else if (isdigit(token[0]) )
         {
-            // int count = 1;
-            // for (int i = 0; i < token.length(); i++)
-            // {
-            //     if (!isdigit(token[i]) && token[i] != '.'&& count == 1){
-                    
-            //     }
-            // }
             char *end;
             double result = strtod(token.c_str(), &end);
             if (*end != '\0')
@@ -74,7 +67,6 @@ AST *AST::parse(const std::string &expression)
         }
         else if (token[0] == '-' || token[0] == '+')
         {
-            // for(int i = 0)
             char *end;
             double result = strtod(token.c_str(), &end);
             if (*end != '\0')
