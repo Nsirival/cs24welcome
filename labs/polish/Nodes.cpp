@@ -1,7 +1,7 @@
+
 #include "Nodes.h"
 #include <cmath>
 #include <sstream>
-#include <iostream>
 #include <string>
 
 // This creates the number format the autograder expects:
@@ -9,14 +9,13 @@ std::string format(double number)
 {
   std::ostringstream stream;
   stream << number;
-  // std::cout << stream.str();
   return stream.str();
 }
 
 // Implement your AST subclasses' member functions here.
 nodes::nodes(double info)
 {
-data = info;
+  data = info;
 }
 std::string nodes::prefix() const
 {

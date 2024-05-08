@@ -1,3 +1,4 @@
+
 #ifndef STACK_H
 #define STACK_H
 #include "Nodes.h"
@@ -5,8 +6,11 @@
 // Implement its member functions in Stack.cpp.
 
 struct Stack{
-    AST* data[20];
-    int index;
+    struct Node {
+        AST* data;
+        Node* prev;
+    };
+    Node* root;
 
     Stack();
     ~Stack();

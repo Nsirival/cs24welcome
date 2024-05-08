@@ -3,32 +3,30 @@
 // Implement your Stack member functions here.
 
 Stack::Stack(){
-    
-    
-    index = -1;
+    root = nullptr;
 }
 Stack::~Stack(){
-    for (int i = 0; i <= index; ++i)
-    {
-        delete data[i];
+    while (root != nullptr) {
+        Node* temp = root;
+        root = root->prev;
+        delete temp->data; // Delete the AST object
+        delete temp;       // Delete the node
     }
 }
 
-void Stack::push(AST* node){
-    if (index >= 20)
-    {
-        throw std::runtime_error("Stack overflow.");
-    }
-    index ++;
-    data[index] = node;
+
+void Stack::push(AST* data){
+    Node* current = new Node{data, root};
+    root = current;
 }
 
 AST* Stack::pop(){
-    if (index <= 0)
-    {
+    if(root == nullptr){
         throw std::runtime_error("No input.");
     }
-    index --;
-    return data[index+1];
-    
+    Node*temp = root;
+    AST* data = temp->data;
+    root = root->prev;
+    delete temp;
+    return data;
 }
