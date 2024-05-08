@@ -3,7 +3,6 @@
 #include "Stack.h"
 #include <sstream>
 #include <iostream>
-#include <stdexcept>
 
 AST *AST::parse(const std::string &expression)
 {
@@ -11,90 +10,86 @@ AST *AST::parse(const std::string &expression)
     std::istringstream stream(expression);
     Stack stack;
 
-    try
+    while (stream >> token)
     {
-        while (stream >> token)
+        if (token == "~")
         {
-            if (token == "~")
+            if (stack.index < 0)
             {
-                if (stack.root == nullptr)
-                {
-                    throw std::runtime_error("Not enough operands.");
-                }
-                AST *right = stack.pop();
-                stack.push(new neg(right));
+                throw std::runtime_error("Not enough operands.");
             }
-            else if (token == "+" || token == "-" || token == "*" || token == "/" || token == "%")
+            AST *right = stack.pop();
+            stack.push(new neg(right));
+        }
+        else if (token == "+" || token == "-" || token == "*" || token == "/" || token == "%")
+        {
+            if (stack.index < 0)
             {
-                if (stack.root == nullptr)
-                {
-                    throw std::runtime_error("Not enough operands.");
-                }
-                AST *right = stack.pop();
-                if (stack.root == nullptr)
-                {
-                    delete right;
-                    throw std::runtime_error("Not enough operands.");
-                }
-                AST *left = stack.pop();
-                if (token == "+")
-                {
-                    stack.push(new add(left, right));
-                }
-                else if (token == "-")
-                {
-                    stack.push(new sub(left, right));
-                }
-                else if (token == "*")
-                {
-                    stack.push(new mult(left, right));
-                }
-                else if (token == "/")
-                {
-                    stack.push(new divd(left, right));
-                }
-                else if (token == "%")
-                {
-                    stack.push(new mod(left, right));
-                }
+                throw std::runtime_error("Not enough operands.");
             }
-            else if (isdigit(token[0]) || token[0] == '-' || token[0] == '+')
+            AST *right = stack.pop();
+            if (stack.index < 0)
             {
-                char *end;
-                double result = strtod(token.c_str(), &end);
-                if (*end != '\0')
-                {
-                    throw std::runtime_error("Invalid token: " + token);
-                }
-                stack.push(new nodes(result));
+                delete right;
+                throw std::runtime_error("Not enough operands.");
             }
-            else
+            AST *left = stack.pop();
+            if (token == "+")
+            {
+                stack.push(new add(left, right));
+            }
+            else if (token == "-")
+            {
+                stack.push(new sub(left, right));
+            }
+            else if (token == "*")
+            {
+                stack.push(new mult(left, right));
+            }
+            else if (token == "/")
+            {
+                stack.push(new divd(left, right));
+            }
+            else if (token == "%")
+            {
+                stack.push(new mod(left, right));
+            }
+        }
+
+        else if (isdigit(token[0]) || token[0] == '-' || token[0] == '+')
+        {
+            char *end;
+            double result;
+            try{
+            result = strtod(token.c_str(), &end);
+            }
+            catch (const std::invalid_argument& error){
+                std::cout << "Here" << '\n';
+                throw std::invalid_argument(error.what());
+            }
+
+            if (*end != '\0')
             {
                 throw std::runtime_error("Invalid token: " + token);
             }
+            stack.push(new nodes(result));
         }
-
-        if (stack.root == nullptr)
+        else
         {
-            throw std::runtime_error("No input.");
+            throw std::runtime_error("Invalid token: " + token);
         }
-        AST *root = stack.pop();
-
-        if (stack.root != nullptr)
-        {
-            delete root;
-            throw std::runtime_error("Too many operands.");
-        }
-
-        return root;
     }
-    catch (const std::runtime_error &e)
+    if (stack.data[stack.index] == nullptr)
     {
-        // Clean up all remaining nodes in the stack.
-        while (stack.root != nullptr)
-        {
-            delete stack.pop();
-        }
-        throw; // Rethrow the exception after cleanup.
+        throw std::runtime_error("No input.");
     }
+    AST *root = stack.pop();
+
+    if (stack.data[stack.index] != nullptr)
+    {
+
+        throw std::runtime_error("Too many operands.");
+    }
+
+    return root;
 }
