@@ -55,7 +55,7 @@ AST *AST::parse(const std::string &expression)
             }
         }
 
-        else if (isdigit(token[0]) ||token[0] == '-' || token[0] == '+')
+        else if (isdigit(token[0]))
         {
             char *end;
             double result = strtod(token.c_str(), &end);
