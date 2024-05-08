@@ -55,7 +55,7 @@ AST *AST::parse(const std::string &expression)
             }
         }
 
-        else if (isdigit(token[0]) )
+        else if (isdigit(token[0]) ||token[0] == '-' || token[0] == '+')
         {
             char *end;
             double result = strtod(token.c_str(), &end);
@@ -65,17 +65,6 @@ AST *AST::parse(const std::string &expression)
             }
             stack.push(new nodes(result));
         }
-        else if (token[0] == '-' || token[0] == '+')
-        {
-            char *end;
-            double result = strtod(token.c_str(), &end);
-            if (*end != '\0')
-            {
-                throw std::runtime_error("Invalid token: " + token);
-            }
-            stack.push(new nodes(result));
-        }
-
         else
         {
             throw std::runtime_error("Invalid token: " + token);
