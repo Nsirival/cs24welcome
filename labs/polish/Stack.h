@@ -5,11 +5,8 @@
 // Implement its member functions in Stack.cpp.
 
 struct Stack{
-    struct Node {
-        AST* data;
-        Node* prev;
-    };
-    Node* root;
+    AST* data[20];
+    int index;
 
     Stack();
     ~Stack();
