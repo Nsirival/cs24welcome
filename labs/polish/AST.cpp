@@ -57,13 +57,13 @@ AST *AST::parse(const std::string &expression)
 
         else if (isdigit(token[0]) ||token[0] == '-' || token[0] == '+')
         {
-            char *end;
-            double result = strtod(token.c_str(), &end);
-            if (*end != '\0')
+            char *last;
+            double fin = strtod(token.c_str(), &last);
+            if (*last != '\0')
             {
                 throw std::runtime_error("Invalid token: " + token);
             }
-            stack.push(new nodes(result));
+            stack.push(new nodes(fin));
         }
         else
         {
