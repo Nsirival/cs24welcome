@@ -59,11 +59,11 @@ std::set<Person *> Person::ancestors(PMod pmod)
     std::set<Person *> fin;
     if (pmod == PMod::MATERNAL || pmod == PMod::ANY)
     {
-        getancestors(mother(), fin);
+        getancestors(father(), fin);
     }
     if (pmod == PMod::PATERNAL || pmod == PMod::ANY)
     {
-        getancestors(father(), fin);
+        getancestors(mother(), fin);
     }
     return fin;
 };
