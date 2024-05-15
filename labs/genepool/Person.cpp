@@ -29,8 +29,6 @@ Gender Person::gender() const { return thegender; }
 Person *Person::mother() { return themother; }
 Person *Person::father() { return thefather; }
 
-
-
 void Person::getancestors(Person *person, std::set<Person *> &ancestors) const
 {
     if (person != nullptr)
@@ -273,11 +271,17 @@ std::set<Person *> Person::parents(PMod pmod)
     std::set<Person *> fin;
     if (pmod == PMod::ANY || pmod == PMod::MATERNAL)
     {
-        fin.insert(themother);
+        if (themother != nullptr)
+        {
+            fin.insert(themother);
+        }
     }
     if (pmod == PMod::ANY || pmod == PMod::PATERNAL)
     {
-        fin.insert(thefather);
+        if (themother != nullptr)
+        {
+            fin.insert(thefather);
+        }
     }
     return fin;
 };
