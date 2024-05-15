@@ -23,10 +23,10 @@ GenePool::GenePool(std::istream& line){
         index = tab + 1;
 
         tab = temp.find('\t' , index);
-        dadname = temp.substr(index, tab - index);
+        momname = temp.substr(index, tab - index);
         index = tab + 1;
 
-        momname = temp.substr(index);
+        dadname = temp.substr(index);
 
         Gender gender;
         if(mf == "male"){

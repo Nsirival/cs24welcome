@@ -278,7 +278,7 @@ std::set<Person *> Person::parents(PMod pmod)
     }
     if (pmod == PMod::ANY || pmod == PMod::PATERNAL)
     {
-        if (themother != nullptr)
+        if (thefather != nullptr)
         {
             fin.insert(thefather);
         }
