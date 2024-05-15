@@ -24,25 +24,18 @@ class Person
 public:
   // Constructor
   Person(const std::string &name, Gender gender);
-
   // Destructor?
   ~Person();
 
   // Required Getter Functions
-  const std::string& name() const { return thename; }
-  Gender gender() const { return thegender; }
-  Person* mother() { return themother; }
-  Person* father() { return thefather; }
+  const std::string& name() const;
+  Gender gender() const;
+  Person* mother();
+  Person* father();
 
-  void setmother(Person*mother){
-    themother = mother;
-  }
-  void setfather(Person*father){
-    thefather = father;
-  }
-  void setchild(Person*child){
-    thechildren.insert(child);
-  }
+  void setmother(Person*mother);
+  void setfather(Person*father);
+  void setchild(Person*child);
 
   void getancestors(Person* person, std::set<Person*>& ancestors) const;
   void getdescendants(Person* person, std::set<Person*>& ancestors) const;

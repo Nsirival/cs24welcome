@@ -1,5 +1,4 @@
 #include "Person.h"
-
 Person::Person(const std::string &name, Gender gender)
 {
     thename = name;
@@ -8,9 +7,24 @@ Person::Person(const std::string &name, Gender gender)
     thefather = nullptr;
 }
 
-Person::~Person(){
-    
+Person::~Person()
+{
 }
+
+const std::string &Person::name() const { return thename; }
+Gender Person::gender() const { return thegender; }
+Person *Person::mother() { return themother; }
+Person *Person::father() { return thefather; }
+
+void Person::setmother(Person*mother){
+    themother = mother;
+  }
+  void Person::setfather(Person*father){
+    thefather = father;
+  }
+  void Person::setchild(Person*child){
+    thechildren.insert(child);
+  }
 
 void Person::getancestors(Person *person, std::set<Person *> &ancestors) const
 {
