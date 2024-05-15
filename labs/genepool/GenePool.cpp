@@ -44,9 +44,10 @@ GenePool::GenePool(std::istream& line){
             family[momname]->setchild(person);
         }
         if (dadname != "???"){
-            person->setmother(family[dadname]);
+            person->setfather(family[dadname]);
             family[dadname]->setchild(person);
         }
+
     }
 }
 
