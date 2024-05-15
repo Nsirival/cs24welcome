@@ -31,7 +31,7 @@ Person *Person::father() { return thefather; }
 
 void Person::getancestors(Person *person, std::set<Person *> &ancestors) const
 {
-    if (person != nullptr&& ancestors.find(person) == ancestors.end())
+    if (person != nullptr && ancestors.find(person) == ancestors.end())
     {
         ancestors.insert(person);
         getancestors(person->mother(), ancestors);
@@ -91,24 +91,23 @@ std::set<Person *> Person::aunts(PMod pmod, SMod smod)
 std::set<Person *> Person::brothers(PMod pmod, SMod smod)
 {
     std::set<Person *> fin;
-    std::set<Person *> p = parents(pmod);
-    for (Person *pa : p)
+    for (Person *p : parents(pmod))
     {
-        for (Person *s : pa->children())
+        if (p != nullptr)
         {
-            if (s != this && s->gender() == Gender::MALE)
+            for (Person *s : p->children())
             {
-                if ((s->mother() == mother() && s->father() == father()) && smod == SMod::FULL)
+                if (s != this)
                 {
-                    fin.insert(s);
-                }
-                else if ((s->mother() == mother() || s->father() == father()) && smod == SMod::HALF)
-                {
-                    fin.insert(s);
-                }
-                else
-                {
-                    fin.insert(s);
+                    if ((s->mother() == mother() && s->father() == father() && (s->father() != nullptr) && (s->mother() != nullptr) && smod == SMod::FULL) ||
+                        ((s->mother() == mother() || s->father() == father()) && !(s->mother() == mother() && s->father() == father()) && smod == SMod::HALF) ||
+                        smod == SMod::ANY)
+                    {
+                        if (s->gender() == Gender::MALE)
+                        {
+                            fin.insert(s);
+                        }
+                    }
                 }
             }
         }
@@ -297,7 +296,7 @@ std::set<Person *> Person::siblings(PMod pmod, SMod smod)
                 if (s != this)
                 {
                     if ((s->mother() == mother() && s->father() == father() && (s->father() != nullptr) && (s->mother() != nullptr) && smod == SMod::FULL) ||
-                        ((s->mother() == mother() ||  s->father() == father()) && !(s->mother() == mother() &&  s->father() == father()) && smod == SMod::HALF) ||
+                        ((s->mother() == mother() || s->father() == father()) && !(s->mother() == mother() && s->father() == father()) && smod == SMod::HALF) ||
                         smod == SMod::ANY)
                     {
                         fin.insert(s);
@@ -311,24 +310,23 @@ std::set<Person *> Person::siblings(PMod pmod, SMod smod)
 std::set<Person *> Person::sisters(PMod pmod, SMod smod)
 {
     std::set<Person *> fin;
-    std::set<Person *> p = parents(pmod);
-    for (Person *pa : p)
+    for (Person *p : parents(pmod))
     {
-        for (Person *s : pa->children())
+        if (p != nullptr)
         {
-            if (s != this && s->gender() == Gender::FEMALE)
+            for (Person *s : p->children())
             {
-                if ((s->mother() == mother() && s->father() == father()) && smod == SMod::FULL)
+                if (s != this)
                 {
-                    fin.insert(s);
-                }
-                else if ((s->mother() == mother() || s->father() == father()) && smod == SMod::HALF)
-                {
-                    fin.insert(s);
-                }
-                else
-                {
-                    fin.insert(s);
+                    if ((s->mother() == mother() && s->father() == father() && (s->father() != nullptr) && (s->mother() != nullptr) && smod == SMod::FULL) ||
+                        ((s->mother() == mother() || s->father() == father()) && !(s->mother() == mother() && s->father() == father()) && smod == SMod::HALF) ||
+                        smod == SMod::ANY)
+                    {
+                        if (s->gender() == Gender::FEMALE)
+                        {
+                            fin.insert(s);
+                        }
+                    }
                 }
             }
         }
