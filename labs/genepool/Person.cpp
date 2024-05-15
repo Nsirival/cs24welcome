@@ -121,11 +121,15 @@ std::set<Person *> Person::children()
 std::set<Person *> Person::cousins(PMod pmod, SMod smod)
 {
     std::set<Person *> fin;
-    for (Person *s : siblings(pmod, smod))
+
+    for (Person *s : parents(pmod))
     {
-        for (Person *k : s->children())
+        for (Person *j : s->siblings())
         {
-            fin.insert(k);
+            for (Person *k : j->children())
+            {
+                fin.insert(k);
+            }
         }
     }
     return fin;
