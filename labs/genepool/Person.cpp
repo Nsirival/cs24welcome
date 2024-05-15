@@ -31,7 +31,7 @@ Person *Person::father() { return thefather; }
 
 void Person::getancestors(Person *person, std::set<Person *> &ancestors) const
 {
-    if (person != nullptr)
+    if (person != nullptr&& ancestors.find(person) == ancestors.end())
     {
         ancestors.insert(person);
         getancestors(person->mother(), ancestors);
