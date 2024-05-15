@@ -288,24 +288,21 @@ std::set<Person *> Person::parents(PMod pmod)
 std::set<Person *> Person::siblings(PMod pmod, SMod smod)
 {
     std::set<Person *> fin;
-    std::set<Person *> p = parents(pmod);
-    for (Person *pa : p)
+    std::set<Person *> parents_set = parents(pmod);
+    for (Person *parent : parents_set)
     {
-        for (Person *s : pa->children())
+        if (parent != nullptr)
         {
-            if (s != this)
+            for (Person *sibling : parent->children())
             {
-                if ((s->mother() == mother() && s->father() == father()) && smod == SMod::FULL)
+                if (sibling != this)
                 {
-                    fin.insert(s);
-                }
-                else if ((s->mother() == mother() || s->father() == father()) && smod == SMod::HALF)
-                {
-                    fin.insert(s);
-                }
-                else
-                {
-                    fin.insert(s);
+                    if ((sibling->mother() == mother() && sibling->father() == father() && smod == SMod::FULL) ||
+                        ((sibling->mother() == mother() || sibling->father() == father()) && smod == SMod::HALF) ||
+                        smod == SMod::ANY)
+                    {
+                        fin.insert(sibling);
+                    }
                 }
             }
         }
