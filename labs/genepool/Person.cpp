@@ -16,15 +16,18 @@ Gender Person::gender() const { return thegender; }
 Person *Person::mother() { return themother; }
 Person *Person::father() { return thefather; }
 
-void Person::setmother(Person*mother){
+void Person::setmother(Person *mother)
+{
     themother = mother;
-  }
-  void Person::setfather(Person*father){
+}
+void Person::setfather(Person *father)
+{
     thefather = father;
-  }
-  void Person::setchild(Person*child){
+}
+void Person::setchild(Person *child)
+{
     thechildren.insert(child);
-  }
+}
 
 void Person::getancestors(Person *person, std::set<Person *> &ancestors) const
 {
@@ -40,7 +43,10 @@ void Person::getdescendants(Person *person, std::set<Person *> &descendants) con
 {
     if (person != nullptr)
     {
-        descendants.insert(person);
+        if (person != this)
+        {
+            descendants.insert(person);
+        }
         for (Person *child : person->children())
         {
             getdescendants(child, descendants);
@@ -66,11 +72,17 @@ std::set<Person *> Person::aunts(PMod pmod, SMod smod)
     std::set<Person *> fin;
     for (Person *i : parents(pmod))
     {
-        for (Person *j : i->siblings(PMod::ANY, smod))
+        if (i != nullptr)
         {
-            if (j->gender() == Gender::FEMALE)
+            for (Person *j : i->siblings(PMod::ANY, smod))
             {
-                fin.insert(j);
+                if (j != nullptr)
+                {
+                    if (j->gender() == Gender::FEMALE)
+                    {
+                        fin.insert(j);
+                    }
+                }
             }
         }
     }
@@ -338,11 +350,17 @@ std::set<Person *> Person::uncles(PMod pmod, SMod smod)
     std::set<Person *> fin;
     for (Person *i : parents(pmod))
     {
-        for (Person *j : i->siblings(PMod::ANY, smod))
+        if (i != nullptr)
         {
-            if (j->gender() == Gender::MALE)
+            for (Person *j : i->siblings(PMod::ANY, smod))
             {
-                fin.insert(j);
+                if (j != nullptr)
+                {
+                    if (j->gender() == Gender::MALE)
+                    {
+                        fin.insert(j);
+                    }
+                }
             }
         }
     }
