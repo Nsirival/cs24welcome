@@ -124,7 +124,7 @@ std::set<Person *> Person::cousins(PMod pmod, SMod smod)
 
     for (Person *s : parents(pmod))
     {
-        for (Person *j : s->siblings())
+        for (Person *j : s->siblings(pmod, smod))
         {
             for (Person *k : j->children())
             {
