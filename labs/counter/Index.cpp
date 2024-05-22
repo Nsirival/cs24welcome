@@ -1,110 +1,111 @@
 #include "Index.h"
-#include <functional>
+#include <cstring> // For memset
 
-static const size_t FNV_PRIME = 16777619u;
-static const size_t OFFSET_BASIS = 2166136261u;
-
-Index::Index(size_t cap) : capacity(cap)
+Index::Index(size_t size) : cap(size), cnt(0)
 {
-    table = new listitem *[capacity]();
-    load = 0.75;
-    size = 0;
+    tab = new Listitem[cap];
+    for (size_t i = 0; i < cap; ++i)
+    {
+        tab[i].clear();
+    }
 }
 
 Index::~Index()
 {
-    for (size_t i = 0; i < capacity; i++)
-    {
-        listitem *curr = table[i];
-        while (curr != nullptr)
-        {
-            listitem *next = curr->next;
-            delete curr;
-            curr = next;
-        }
-    }
-    delete[] table;
+    delete[] tab;
 }
 
-size_t Index::fnvHash(const std::string &k) const
+size_t Index::hash(const std::string &k) const
 {
-    size_t hash = OFFSET_BASIS;
-    for (char c : k)
-    {
-        hash ^= (unsigned char)c;
-        hash *= FNV_PRIME;
-    }
-    return hash % capacity;
+    std::hash<std::string> hasher;
+    return hasher(k) % cap;
 }
 
-size_t Index::probe(size_t hash, size_t i) const
+void Index::add(const std::string &k, Node *n)
 {
-    size_t secondaryHash = 1 + (hash % (capacity - 2));
-    return (hash + i * secondaryHash) % capacity;
-}
-
-void Index::add(const std::string &k, Node *n) {
-    if (size >= capacity * 0.7) {
-        resize();
-    }
-    size_t index = fnvHash(k);
-    size_t i = 0;
-    size_t pos = probe(index, i);
-    while (table[pos]->occupied && i < capacity) {
-        pos = probe(index, ++i);
-    }
-    if (i < capacity) {
-        table[pos]->key = k;
-        table[pos]->node = n;
-        table[pos]->occupied = true;
-        size++;
-    }
-}
-
-void Index::resize() {
-    size_t newcap = capacity * 2; 
-    listitem** newtab = new listitem*[newcap]();
-
-    for (size_t i = 0; i < capacity; i++) {
-        listitem* curr = table[i];
-        while (curr != nullptr) {
-            size_t new_pos = fnvHash(curr->key) % newcap;
-            newtab[new_pos] = new listitem(curr->key, curr->node, newtab[new_pos]);
-            curr = curr->next;
-        }
-    }
-    delete[] table;
-    table = newtab;
-    capacity = newcap;
-}
-
-void Index::rem(const std::string &k)
-{
-    size_t x = fnvHash(k);
-    listitem *curr = table[x], *prev = nullptr;
-    while (curr != nullptr)
+    size_t x = hash(k);
+    while (tab[x].occupied && tab[x].isActive)
     {
-        if (curr->key == k)
-        {
-            if (prev)
-                prev->next = curr->next;
-            else
-                table[x] = curr->next;
-            delete curr;
-            return;
-        }
-        prev = curr;
-        curr = curr->next;
+        x = (x + 1) % cap;
+    }
+    tab[x].key = k;
+    tab[x].node = n;
+    tab[x].occupied = true;
+    tab[x].isActive = true;
+    cnt++;
+
+    if (cnt >= cap / 2)
+    {
+        grow();
     }
 }
 
 Node *Index::find(const std::string &k) const
 {
-    size_t x = fnvHash(k);
-    for (listitem *curr = table[x]; curr != nullptr; curr = curr->next)
+    size_t x = hash(k);
+    size_t start = x;
+
+    while (tab[x].occupied)
     {
-        if (curr->key == k)
-            return curr->node;
+        if (tab[x].isActive && tab[x].key == k)
+        {
+            return tab[x].node;
+        }
+        x = (x + 1) % cap;
+        if (x == start)
+            return nullptr;
     }
     return nullptr;
+}
+
+void Index::rem(const std::string &key)
+{
+    size_t x = hash(key);
+    while (tab[x].occupied)
+    {
+        if (tab[x].isActive && tab[x].key == key)
+        {
+            tab[x].isActive = false;
+            cnt--;
+            return;
+        }
+        x = (x + 1) % cap;
+    }
+}
+
+void Index::rehash()
+{
+    size_t oldcap = cap;
+    Listitem *oldtab = tab;
+
+    cap *= 2;
+    tab = new Listitem[cap];
+    for (size_t i = 0; i < cap; ++i)
+    {
+        tab[i].clear();
+    }
+    cnt = 0;
+
+    for (size_t i = 0; i < oldcap; i++)
+    {
+        if (oldtab[i].occupied && oldtab[i].isActive)
+        {
+            add(oldtab[i].key, oldtab[i].node);
+        }
+    }
+
+    delete[] oldtab;
+}
+
+void Index::grow()
+{
+    rehash();
+}
+
+void Index::Listitem::clear()
+{
+    key.clear();
+    node = nullptr;
+    occupied = false;
+    isActive = false;
 }

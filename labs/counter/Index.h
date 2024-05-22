@@ -3,34 +3,40 @@
 
 #include "List.h"
 #include <string>
+#include <functional> // For std::hash
 
-struct listitem {
-    std::string key;
-    Node* node;
-    listitem* next;
-    bool occupied;
-
-    listitem(const std::string& k, Node* n, listitem* nxt)
-        : key(k), node(n), next(nxt), occupied(false){}
-
-};
-
-class Index {
-private:
-    listitem** table;
-    size_t capacity;
-    size_t size;
-    float load;
-    size_t fnvHash(const std::string &k) const;
-    size_t probe(size_t hash, size_t i) const; 
+class Index
+{
 public:
-    Index(size_t cap = 1000003);
+    Index(size_t size = 100);
     ~Index();
 
-    void add(const std::string &k, Node *n);
-    void rem(const std::string &k);
     Node *find(const std::string &k) const;
-    void resize();
+
+    void add(const std::string &k, Node *n);
+
+    void rem(const std::string &k);
+
+    void rehash();
+
+private:
+    struct Listitem
+    {
+        std::string key;
+        Node *node = nullptr;
+        bool occupied = false;
+        bool isActive = true;
+        
+        Listitem() = default;
+        void clear();
+    };
+
+    Listitem *tab;
+    size_t cap;
+    size_t cnt;
+
+    size_t hash(const std::string &k) const;
+    void grow();
 };
 
 #endif
