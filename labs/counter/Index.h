@@ -4,11 +4,7 @@
 #include "List.h" 
 
 #include <string>
-
-class Index {
-    private:
-        
-        struct listitem {
+struct listitem {
             std::string key;
             Node* node;
             listitem* next;
@@ -17,13 +13,19 @@ class Index {
 
         };
 
+
+class Index {
+    private:
+        
+        
+
         listitem**table;
         size_t capacity;
 
         size_t hash(const std::string&k) const;
 
     public:
-        Index(size_t cap = 20);
+        Index(size_t cap = 40);
         ~Index();
 
 

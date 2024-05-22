@@ -14,7 +14,9 @@ public:
     // Member Variables
 
     friend class Counter;
-    Node* curr;
+    private:
+
+      Node* curr;
   public:
     Iterator(Node* n);
     

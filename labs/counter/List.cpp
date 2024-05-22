@@ -13,6 +13,7 @@ List::List()
 {
     head = nullptr;
     tail = nullptr;
+    nodeCount = 0;
 }
 
 List::~List()
@@ -34,10 +35,12 @@ void List::insert(const std::string &k, int d)
     {
         tail = y;
         head = y;
-    }
+    } else {
     tail->next = y;
     y->prev = tail;
     tail = y;
+    }
+    nodeCount ++;
 }
 
 Node *List::find(const std::string &k) const
@@ -77,6 +80,7 @@ void List::remove(Node *n)
         tail = n->prev;
     }
     delete n;
+    nodeCount --;
 }
 bool List::empty() const
 {

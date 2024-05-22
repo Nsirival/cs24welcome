@@ -25,8 +25,8 @@ size_t Counter::count() const {
 
 int Counter::total() const {
     int sum = 0;
-    for (auto it = begin(); it != end(); ++it) {
-        sum += it.value();
+    for (auto i = begin(); i != end(); ++i) {
+        sum += i.value();
     }
     return sum;
 }

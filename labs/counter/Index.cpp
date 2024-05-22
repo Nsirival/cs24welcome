@@ -18,7 +18,7 @@ Index::~Index()
             x = next;
         }
     }
-    delete table;
+    delete[] table;
 }
 size_t Index::hash(const std::string &k) const
 {
@@ -30,7 +30,8 @@ void Index::add(const std::string &k, Node *n)
 {
     size_t x = hash(k);
     listitem* item = new listitem(k, n, table[x]);
-    table[x] = item;
+
+
 }
 void Index::rem(const std::string &k)
 {
@@ -56,10 +57,11 @@ void Index::rem(const std::string &k)
     }
 }
 
+
 Node *Index::find(const std::string &k)
 {
     size_t x = hash(k);
-    listitem* curr = table[x];
+    // listitem* curr = table[x];
 
     while (curr != nullptr) {
         if (curr->key == k) {
