@@ -96,3 +96,9 @@ void List::updatevalue(Node* n, int d){
         n->data = n->data + d;
     }
 }
+
+void List::setvalue(Node* n, int d){
+    tot -= n->data;
+    tot += d;
+    n->data = d;
+}

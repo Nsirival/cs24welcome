@@ -89,11 +89,7 @@ void Counter::set(const std::string &k, int count)
     }
     else
     {
-        n->data = count;
-        if (n->data == 0)
-        {
-            list.remove(n);
-        }
+        list.updatevalue(k, count);
     }
 }
 
