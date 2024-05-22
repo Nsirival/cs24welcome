@@ -40,7 +40,7 @@ void Index::rem(const std::string &k)
 
 
     while (curr != nullptr) {
-        if (curr->node->key == k) {
+        if (curr->key == k) {
             if (prev) {
                 prev->next = curr->next;
             } else {
@@ -62,7 +62,7 @@ Node *Index::find(const std::string &k)
     listitem* curr = table[x];
 
     while (curr != nullptr) {
-        if (curr->node->key == k) {
+        if (curr->key == k) {
             return curr->node;
         }
         curr = curr->next;

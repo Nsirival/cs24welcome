@@ -9,7 +9,7 @@ class Index {
     private:
         
         struct listitem {
-            std::string k;
+            std::string key;
             Node* node;
             listitem* next;
 
