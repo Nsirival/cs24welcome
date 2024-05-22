@@ -16,10 +16,7 @@ public:
     friend class Counter;
     Node* curr;
   public:
-    const std::string& key() const;
-    int value() const;
-
-    Iterator(Node* node) : curr(node) {}
+    Iterator(Node* n);
     
 
     const std::string& key() const { return curr->key; }
