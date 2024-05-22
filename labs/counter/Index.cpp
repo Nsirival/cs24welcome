@@ -8,7 +8,7 @@ Index::Index(size_t cap)
 }
 Index::~Index()
 {
-    for (int i = 0; i < capacity; i++)
+    for (size_t i = 0; i < capacity; i++)
     {
         listitem *x = table[i];
         while (x != nullptr)
