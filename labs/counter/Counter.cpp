@@ -2,14 +2,6 @@
 
 Counter::Iterator::Iterator(Node* n) : curr(n) {}
 
-const std::string& Counter::Iterator::key() const {
-    return curr->key;
-}
-
-int Counter::Iterator::value() const {
-    return curr->data;
-}
-
 void Counter::Iterator::operator++() {
     curr = curr->next;
 }
