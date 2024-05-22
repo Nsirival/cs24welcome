@@ -42,14 +42,14 @@ void List::insert(const std::string &k, int d)
 
 Node *List::find(const std::string &k)
 {
-    Node *x = head;
-    while (x != nullptr)
+    Node *y = head;
+    while (y != nullptr)
     {
-        if (x->key == k)
+        if (y->key == k)
         {
-            return x;
+            return y;
         }
-        x = x->next;
+        y = y->next;
     }
     return nullptr;
 }

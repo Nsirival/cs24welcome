@@ -10,7 +10,7 @@ int Counter::total() const{
 void Counter::inc(const std::string &k, int p = 1){
     if(x.find(k) == nullptr){
         list.insert(k, p);
-
+        
     }
         
 }

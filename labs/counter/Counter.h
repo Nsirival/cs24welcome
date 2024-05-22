@@ -3,6 +3,8 @@
 
 #include <cstddef>
 #include <string>
+#include "List.h"
+#include <unordered_map>
 
 // This is the Counter class you need to implement.
 // It includes the Counter::Iterator as a nested class.
@@ -22,7 +24,8 @@ public:
   };
 
 private:
-  // Member Variables
+  List list;
+  std::unordered_map<std::string, Node*> x;
 
 private:
   // Helper Functions
