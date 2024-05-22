@@ -89,7 +89,7 @@ void Counter::set(const std::string &k, int count)
     }
     else
     {
-        list.updatevalue(k, count);
+        list.setvalue(n, count);
     }
 }
 
