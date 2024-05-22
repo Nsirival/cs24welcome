@@ -2,7 +2,7 @@
 #define INDEX_H
 
 #include "List.h" 
-#include <unordered_map>
+
 #include <string>
 
 class Index {
