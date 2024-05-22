@@ -24,7 +24,7 @@ size_t Counter::count() const {
 }
 
 int Counter::total() const {
-    return list.tot;
+    return list.total();
 }
 
 void Counter::inc(const std::string& k, int h) {
