@@ -30,13 +30,6 @@ size_t Counter::count() const
 int Counter::total() const
 {
     return list.gettot();
-
-    int sum = 0;
-    for (auto i = begin(); i != end(); ++i)
-    {
-        sum += i.value();
-    }
-    return sum;
 }
 
 void Counter::inc(const std::string &k, int h)
