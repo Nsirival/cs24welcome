@@ -13,7 +13,7 @@ class Index {
             Node* node;
             listitem* next;
 
-            listitem(const std::string& k, Node* n, listitem* next): key(k), node(n), next(n) {};
+            listitem(const std::string& k, Node* n, listitem* nxt): key(k), node(n), next(nxt) {};
 
         };
 
