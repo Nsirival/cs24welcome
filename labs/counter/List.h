@@ -17,7 +17,7 @@ class List {
         Node* head;
         Node* tail;
         size_t nodeCount;
-        int tot;
+        int tot = 0;
     public:
         List();
         ~List();
