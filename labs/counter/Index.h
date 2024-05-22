@@ -19,15 +19,18 @@ class Index {
 private:
     listitem** table;
     size_t capacity;
+    size_t size;
+    float load;
     size_t fnvHash(const std::string &k) const;
     size_t probe(size_t hash, size_t i) const; 
 public:
-    Index(size_t cap = 101);
+    Index(size_t cap = 1000003);
     ~Index();
 
     void add(const std::string &k, Node *n);
     void rem(const std::string &k);
     Node *find(const std::string &k) const;
+    void resize();
 };
 
 #endif
