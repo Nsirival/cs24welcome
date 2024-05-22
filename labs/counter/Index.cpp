@@ -4,6 +4,7 @@
 static const size_t FNV_PRIME = 16777619u;
 static const size_t OFFSET_BASIS = 2166136261u;
 
+
 Index::Index(size_t cap) : capacity(cap) {
     table = new listitem*[capacity]();
 }
@@ -29,9 +30,22 @@ size_t Index::fnvHash(const std::string &k) const {
     return hash % capacity;
 }
 
+size_t Index::probe(size_t hash, size_t i) const {
+    return (hash + i + i * i) % capacity; 
+}
+
 void Index::add(const std::string &k, Node *n) {
-    size_t x= fnvHash(k);
-    table[x] = new listitem(k, n, table[x]);
+    size_t index = fnvHash(k);
+    size_t i = 0;
+    size_t pos = probe(index, i);
+    while (table[pos]->occupied && i < capacity) {
+        pos = probe(index, ++i);
+    }
+    if (i < capacity) {
+        table[pos]->key = k;
+        table[pos]->node = n;
+        table[pos]->occupied = true;
+    }
 }
 
 void Index::rem(const std::string &k) {
