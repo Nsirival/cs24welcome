@@ -27,7 +27,7 @@ class List {
         size_t size() const { return nodeCount; }
         Node* getHead() const { return head; } 
         void updateNodeData(Node* n, int newData);
-        int total() const { return totalData; }
+        int total() const { return tot; }
 };
 
 #endif
