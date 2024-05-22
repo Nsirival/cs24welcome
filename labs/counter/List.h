@@ -1,3 +1,4 @@
+
 #ifndef LIST_H
 #define LIST_H
 #include <string>
@@ -16,7 +17,7 @@ class List {
         Node* head;
         Node* tail;
         size_t nodeCount;
-        int tot; 
+        int tot;
     public:
         List();
         ~List();
@@ -26,8 +27,8 @@ class List {
         bool empty() const;
         size_t size() const { return nodeCount; }
         Node* getHead() const { return head; } 
-        void updateNodeData(Node* n, int newData);
-        int total() const { return tot; }
+        int gettot()const {return tot;}
+        void updatevalue(Node* n, int d);
 };
 
 #endif

@@ -1,3 +1,4 @@
+
 #include "List.h"
 
 Node::Node(const std::string &k, int d)
@@ -55,9 +56,7 @@ Node *List::find(const std::string &k) const
         }
         y = y->next;
     }
-    
     return nullptr;
-
 }
 void List::remove(Node *n)
 {
@@ -91,9 +90,9 @@ bool List::empty() const
     return head == nullptr;
 }
 
-void List::updateNodeData(Node* n, int newData) {
+void List::updatevalue(Node* n, int d){
     if (n) {
-        tot += (newData - n->data);  // Adjust total by difference
-        n->data = newData;
+        tot += (d - n->data);  // Adjust total by difference
+        n->data = d;
     }
 }
