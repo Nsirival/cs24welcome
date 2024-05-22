@@ -24,7 +24,7 @@ Counter::~Counter() {}
 
 size_t Counter::count() const
 {
-    return list.size();
+    return list.getcnt();
 }
 
 int Counter::total() const

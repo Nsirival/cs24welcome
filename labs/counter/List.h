@@ -29,6 +29,7 @@ class List {
         Node* getHead() const { return head; } 
         int gettot()const {return tot;}
         void updatevalue(Node* n, int d);
+        size_t getcnt()const {return nodeCount;}
 };
 
 #endif
