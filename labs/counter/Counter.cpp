@@ -24,7 +24,7 @@ Counter::~Counter() {}
 
 size_t Counter::count() const
 {
-    return list.getcnt();
+    return list.size();
 }
 
 int Counter::total() const
@@ -52,10 +52,6 @@ void Counter::dec(const std::string &k, int h)
     if (n != nullptr)
     {
         list.updatevalue(n, h);
-        if (n->data <= 0)
-        {
-            list.remove(n);
-        }
     }
 }
 

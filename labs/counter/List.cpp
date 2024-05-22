@@ -92,7 +92,7 @@ bool List::empty() const
 
 void List::updatevalue(Node* n, int d){
     if (n) {
-        tot += (d - n->data);  // Adjust total by difference
-        n->data = d;
+        tot += d;  // Adjust total by difference
+        n->data = n->data + d;
     }
 }
