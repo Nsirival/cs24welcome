@@ -52,6 +52,8 @@ void Counter::dec(const std::string &k, int h)
     if (n != nullptr)
     {
         list.updatevalue(n, -h);
+    } else {
+        list.insert(k, -h);
     }
 }
 
@@ -61,7 +63,8 @@ void Counter::del(const std::string &k)
     if (n != nullptr)
     {
         list.remove(n);
-    }
+    } 
+
 }
 
 int Counter::get(const std::string &k) const
