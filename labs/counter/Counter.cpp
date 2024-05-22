@@ -24,11 +24,7 @@ size_t Counter::count() const {
 }
 
 int Counter::total() const {
-    int sum = 0;
-    for (auto i = begin(); i != end(); ++i) {
-        sum += i.value();
-    }
-    return sum;
+    return list.tot;
 }
 
 void Counter::inc(const std::string& k, int h) {
@@ -44,10 +40,11 @@ void Counter::dec(const std::string& k, int h) {
     Node* n = list.find(k);
     if (n != nullptr) {
         n->data -= h;
-        if (n->data <= 0) {
-            list.remove(n);
-        }
+        // if (n->data <= 0) {
+        //     list.remove(n);
+        // }
     }
+    
 }
 
 void Counter::del(const std::string& k) {
@@ -59,7 +56,11 @@ void Counter::del(const std::string& k) {
 
 int Counter::get(const std::string& k) const {
     Node* n = list.find(k);
-    return n ? n->data : 0;
+    if (n != nullptr) {
+    return n->data;
+} else {
+    return 0;
+}
 }
 
 void Counter::set(const std::string& k, int count) {

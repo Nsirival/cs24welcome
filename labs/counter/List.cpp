@@ -40,6 +40,7 @@ void List::insert(const std::string &k, int d)
     y->prev = tail;
     tail = y;
     }
+    tot += d;
     nodeCount ++;
 }
 
@@ -54,7 +55,9 @@ Node *List::find(const std::string &k) const
         }
         y = y->next;
     }
+    
     return nullptr;
+
 }
 void List::remove(Node *n)
 {
@@ -79,6 +82,7 @@ void List::remove(Node *n)
     {
         tail = n->prev;
     }
+    tot -= n->data;
     delete n;
     nodeCount --;
 }
