@@ -16,7 +16,7 @@ class List {
     private:
         Node* head;
         Node* tail;
-        size_t nodeCount;
+        size_t nodeCount = 0;
         int tot = 0;
     public:
         List();
@@ -29,7 +29,6 @@ class List {
         Node* getHead() const { return head; } 
         int gettot()const {return tot;}
         void updatevalue(Node* n, int d);
-        size_t getcnt()const {return nodeCount;}
 };
 
 #endif
