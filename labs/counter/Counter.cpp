@@ -51,7 +51,7 @@ void Counter::dec(const std::string &k, int h)
     Node *n = list.find(k);
     if (n != nullptr)
     {
-        list.updatevalue(n, h);
+        list.updatevalue(n, -h);
     }
 }
 
