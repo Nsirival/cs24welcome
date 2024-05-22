@@ -90,3 +90,10 @@ bool List::empty() const
 {
     return head == nullptr;
 }
+
+void List::updateNodeData(Node* n, int newData) {
+    if (n) {
+        totalData += (newData - n->data);  // Adjust total by difference
+        n->data = newData;
+    }
+}
