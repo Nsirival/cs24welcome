@@ -1,3 +1,91 @@
 #include "Counter.h"
 
-// Counter Member Functions
+Counter::Iterator::Iterator(Node* n) : curr(n) {}
+
+const std::string& Counter::Iterator::key() const {
+    return curr->key;
+}
+
+int Counter::Iterator::value() const {
+    return curr->data;
+}
+
+void Counter::Iterator::operator++() {
+    curr = curr->next;
+}
+
+bool Counter::Iterator::operator==(const Iterator& z) const {
+    return curr == z.curr;
+}
+
+bool Counter::Iterator::operator!=(const Iterator& z) const {
+    return curr != z.curr;
+}
+
+// Counter implementation
+Counter::Counter() {}
+
+Counter::~Counter() {}
+
+size_t Counter::count() const {
+    return list.size(); 
+}
+
+int Counter::total() const {
+    int sum = 0;
+    for (auto it = begin(); it != end(); ++it) {
+        sum += it.value();
+    }
+    return sum;
+}
+
+void Counter::inc(const std::string& k, int h) {
+    Node* n = list.find(k);
+    if (n == nullptr) {
+        list.insert(k, h);
+    } else {
+        n->data += h;
+    }
+}
+
+void Counter::dec(const std::string& k, int h) {
+    Node* n = list.find(k);
+    if (n != nullptr) {
+        n->data -= h;
+        if (n->data <= 0) {
+            list.remove(n);
+        }
+    }
+}
+
+void Counter::del(const std::string& k) {
+    Node* n = list.find(k);
+    if (n != nullptr) {
+        list.remove(n);
+    }
+}
+
+int Counter::get(const std::string& k) const {
+    Node* n = list.find(k);
+    return n ? n->data : 0;
+}
+
+void Counter::set(const std::string& k, int count) {
+    Node* n = list.find(k);
+    if (n == nullptr) {
+        list.insert(k, count);
+    } else {
+        n->data = count;
+        if (n->data == 0) {
+            list.remove(n);
+        }
+    }
+}
+
+Counter::Iterator Counter::begin() const {
+    return Iterator(list.getHead());  
+}
+
+Counter::Iterator Counter::end() const {
+    return Iterator(nullptr);
+}

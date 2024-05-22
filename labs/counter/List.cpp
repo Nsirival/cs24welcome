@@ -40,7 +40,7 @@ void List::insert(const std::string &k, int d)
     tail = y;
 }
 
-Node *List::find(const std::string &k)
+Node *List::find(const std::string &k) const
 {
     Node *y = head;
     while (y != nullptr)

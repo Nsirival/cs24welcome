@@ -15,6 +15,7 @@ class List {
     private:
         Node* head;
         Node* tail;
+        size_t nodeCount;
     public:
         List();
         ~List();
@@ -22,7 +23,7 @@ class List {
         Node* find (const std::string& k);
         void remove (Node* n);
         bool empty() const;
-
+        size_t size() const { return nodeCount; }
 };
 
 #endif
