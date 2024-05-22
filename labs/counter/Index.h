@@ -25,7 +25,7 @@ class Index {
         size_t hash(const std::string&k) const;
 
     public:
-        Index(size_t cap = 40);
+        Index(size_t cap = 999983);
         ~Index();
 
 
