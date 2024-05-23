@@ -37,8 +37,8 @@ int Counter::total() const
 void Counter::inc(const std::string &k, int h) {
     Node* n = index.find(k);
     if (n == nullptr) {
-        n = new Node(k, h); 
-        index.add(k, n);
+        Node *y = new Node(k, h);
+        index.add(k, y);
     } else {
         n-> data += h;
     }
@@ -48,8 +48,8 @@ void Counter::inc(const std::string &k, int h) {
 void Counter::dec(const std::string &k, int h) {
     Node* n = index.find(k);
     if (n == nullptr) {
-        n = new Node(k, h);
-        index.add(k, n);
+        Node *y = new Node(k, h);
+        index.add(k, y);
     } else {
         n-> data -= h;
     }
@@ -76,7 +76,7 @@ int Counter::get(const std::string &k) const {
 void Counter::set(const std::string &k, int h) {
     Node* n = index.find(k);
     if (n == nullptr) {
-        inc(k, h);
+            inc(k, h);
     } else {
         index.tottal += (h - n->data);
         n->data = h;
