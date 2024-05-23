@@ -1,10 +1,6 @@
 #include "Counter.h"
 #include <functional> // For std::hash
 #include "Index.h"
-#include <iostream>
-
-size_t totall;
-int countt;
 Counter::Iterator::Iterator(Node *n) : curr(n) {}
 
 void Counter::Iterator::operator++()
@@ -29,62 +25,71 @@ Counter::~Counter() {}
 
 size_t Counter::count() const
 {
-    return countt;
+    return index.couunt;
 }
+
 int Counter::total() const
 {
-    return totall;
+    return index.tottal;
 }
 
-void Counter::inc(const std::string &k, int h) {
-    Node* n = index.find(k);
-    if (n == nullptr) {
+void Counter::inc(const std::string &k, int h)
+{
+    Node *n = index.find(k);
+    if (n == nullptr)
+    {
         index.add(k, list.insert(k, h));
-        countt++;
-        totall += h;
-    } else {
-        n-> data += h;
-        totall += h;
+    }
+    if (n != nullptr){
+        n->data += h;
+        index.tottal += h;
+    }
+    
+}
+
+void Counter::dec(const std::string &k, int h)
+{
+    Node *n = index.find(k);
+    if (n == nullptr)
+    {
+        index.add(k, list.insert(k, -h));
+    }
+    if (n != nullptr){
+        n->data += -h;
+        index.tottal += -h;
     }
 }
 
-void Counter::dec(const std::string &k, int h) {
-    Node* n = index.find(k);
-    if (n == nullptr) {
-        index.add(k, list.insert(k, h));
-        countt ++;
-        totall -= h;
-    } else {
-        n-> data -= h;
-        totall -=h;
+void Counter::del(const std::string &k)
+{
+    Node *n = index.find(k);
+    if (n != nullptr)
+    {
+        list.remove(n);
+        index.rem(k);
     }
 }
 
-void Counter::del(const std::string &k) {
-    Node* n = index.find(k);
-    if (n != nullptr) {
-        countt --;
-        totall -= n->data;
-        index.rem(k); 
-    }
-}
-
-int Counter::get(const std::string &k) const {
-    Node* n = index.find(k);
-    if(n != nullptr){
-        return n-> data;
+int Counter::get(const std::string &k) const
+{
+    Node *n = index.find(k);
+    if (n != nullptr)
+    {
+        return n->data;
     }
     return 0;
 }
 
-void Counter::set(const std::string &k, int h) {
-    Node* n = index.find(k);
-    if (n == nullptr) {
-            inc(k, h);
-    } else {
-        totall -= n->data;
-        totall += h;
-        n->data = h;
+void Counter::set(const std::string &k, int count)
+{
+    Node *n = list.find(k);
+    if(n == nullptr){
+        inc(k, count);
+    }
+    if (n != nullptr)
+    {
+        index.tottal += (count - n->data);
+        n->data = count;
     }
 }
 
