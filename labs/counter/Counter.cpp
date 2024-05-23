@@ -65,8 +65,9 @@ void Counter::del(const std::string &k)
     Node *n = index.find(k);
     if (n != nullptr)
     {
-        list.remove(n);
         index.rem(k);
+        list.remove(n);
+        
     }
 }
 
