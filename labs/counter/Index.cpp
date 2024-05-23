@@ -1,5 +1,7 @@
 #include "Index.h"
-#include <cstring> // For memset
+static const size_t FNV_OFFSET_BASIS = 2166136261u;
+static const size_t FNV_PRIME = 16777619u;
+
 
 Index::Index(size_t size) : cap(size), cnt(0)
 {
@@ -8,6 +10,7 @@ Index::Index(size_t size) : cap(size), cnt(0)
     {
         tab[i].clear();
     }
+    
 }
 
 Index::~Index()
@@ -17,8 +20,12 @@ Index::~Index()
 
 size_t Index::hash(const std::string &k) const
 {
-    std::hash<std::string> hasher;
-    return hasher(k) & (cap - 1);
+    size_t hash = FNV_OFFSET_BASIS;
+    for (unsigned char c : k) {
+        hash ^= c;
+        hash *= FNV_PRIME;
+    }
+    return hash % cap;
 }
 
 void Index::add(const std::string &k, Node *n)

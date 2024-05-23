@@ -49,14 +49,12 @@ void Counter::inc(const std::string &k, int h)
 void Counter::dec(const std::string &k, int h)
 {
     Node *n = list.find(k);
-    if (n == nullptr)
-    {
-
-        list.insert(k, -h);
-    }
-    else
+    if (n != nullptr)
     {
         list.updatevalue(n, -h);
+        
+    } else {
+        list.insert(k, -h);
     }
 }
 
