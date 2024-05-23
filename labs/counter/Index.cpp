@@ -33,7 +33,6 @@ void Index::add(const std::string &k, Node *n)
     tab[x].node = n;
     tab[x].occupied = true;
     tab[x].isActive = true;
-    couunt++;
 }
 
 Node *Index::find(const std::string &k) const
@@ -59,7 +58,6 @@ void Index::rem(const std::string &key)
 {
     size_t x = hash(key);
     size_t a = 0;
-    couunt--;
     while (tab[x].occupied)
     {
         if (tab[x].isActive && tab[x].key == key)

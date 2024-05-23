@@ -64,7 +64,7 @@ void Counter::del(const std::string &k) {
     Node* n = index.find(k);
     if (n != nullptr) {
         countt --;
-        totall-n->data;
+        totall -= n->data;
         index.rem(k); 
     }
 }
