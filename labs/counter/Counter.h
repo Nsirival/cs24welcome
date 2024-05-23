@@ -44,8 +44,8 @@ public:
 
   size_t count() const;
   int    total() const;
-  void inc(const std::string& key, int by = 1);
-  void dec(const std::string& key, int by = 1);
+  void inc(const std::string& key, int h = 1);
+  void dec(const std::string& key, int h = 1);
   void del(const std::string& key);
   int  get(const std::string& key) const;
   void set(const std::string& key, int count);

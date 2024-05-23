@@ -41,10 +41,10 @@ void Counter::inc(const std::string &k, int h) {
     if (n == nullptr) {
         index.add(k, list.insert(k, h));
         countt++;
-        totall+= h;
+        totall += h;
     } else {
         n-> data += h;
-        totall+= h;
+        totall += h;
     }
 }
 
@@ -53,10 +53,10 @@ void Counter::dec(const std::string &k, int h) {
     if (n == nullptr) {
         index.add(k, list.insert(k, h));
         countt ++;
-        totall-= h;
+        totall -= h;
     } else {
         n-> data -= h;
-        totall-=h;
+        totall -=h;
     }
 }
 
