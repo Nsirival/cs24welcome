@@ -24,7 +24,6 @@ class List {
         void insert(const std::string& k, int d);
         Node* find (const std::string& k) const;
         void remove (Node* n);
-        bool empty() const;
         size_t size() const { return nodeCount; }
         Node* getHead() const { return head; } 
         int gettot()const {return tot;}

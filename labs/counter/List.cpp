@@ -88,7 +88,7 @@ void List::remove(Node *n)
 
 void List::updatevalue(Node* n, int d){
     if (n) {
-        tot += d;  
+        tot += d;  // Adjust total by difference
         n->data = n->data + d;
     }
 }
