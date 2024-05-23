@@ -24,9 +24,11 @@ size_t Index::hash(const std::string &k) const
 void Index::add(const std::string &k, Node *n)
 {
     size_t x = hash(k);
+    size_t a = 0;
     while (tab[x].occupied && tab[x].isActive)
     {
-        x = (x + 1) & (cap - 1);
+            a++;
+        x = (x + a * a) & (cap - 1);
     }
     tab[x].key = k;
     tab[x].node = n;
@@ -44,14 +46,15 @@ Node *Index::find(const std::string &k) const
 {
     size_t x = hash(k);
     size_t start = x;
-
+    size_t a = 0;
     while (tab[x].occupied)
     {
         if (tab[x].isActive && tab[x].key == k)
         {
             return tab[x].node;
         }
-        x = (x + 1) & (cap - 1);
+        a++;
+        x = (x + a * a) & (cap - 1);
         if (x == start)
             return nullptr;
     }
@@ -61,6 +64,7 @@ Node *Index::find(const std::string &k) const
 void Index::rem(const std::string &key)
 {
     size_t x = hash(key);
+    size_t a = 0;
     while (tab[x].occupied)
     {
         if (tab[x].isActive && tab[x].key == key)
@@ -69,7 +73,8 @@ void Index::rem(const std::string &key)
             cnt--;
             return;
         }
-        x = (x + 1) & (cap - 1);
+        a++;
+        x = (x + a * a) & (cap - 1);
     }
 }
 

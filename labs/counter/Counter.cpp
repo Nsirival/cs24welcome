@@ -52,6 +52,7 @@ void Counter::dec(const std::string &k, int h)
     if (n != nullptr)
     {
         list.updatevalue(n, -h);
+        
     } else {
         list.insert(k, -h);
     }
