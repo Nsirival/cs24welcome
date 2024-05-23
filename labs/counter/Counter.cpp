@@ -1,6 +1,7 @@
 #include "Counter.h"
 #include <functional> // For std::hash
 #include "Index.h"
+#include <iostream>
 Counter::Iterator::Iterator(Node *n) : curr(n) {}
 
 void Counter::Iterator::operator++()
@@ -33,59 +34,52 @@ int Counter::total() const
     return index.tottal;
 }
 
-void Counter::inc(const std::string &k, int h)
-{
-    Node *n = index.find(k);
-    if (n == nullptr)
-    {
-        index.add(k, list.insert(k, h));
+void Counter::inc(const std::string &k, int h) {
+    Node* n = index.find(k);
+    if (n == nullptr) {
+        n = new Node(k, h); 
+        index.add(k, n);
+    } else {
+        n-> data += h;
     }
-    if (n != nullptr){
-        n->data += h;
-        index.tottal += h;
-    }
-    
+    index.tottal += h;
 }
 
-void Counter::dec(const std::string &k, int h)
-{
-    Node *n = index.find(k);
-    if (n == nullptr)
-    {
-        index.add(k, list.insert(k, -h));
+void Counter::dec(const std::string &k, int h) {
+    Node* n = index.find(k);
+    if (n == nullptr) {
+        n = new Node(k, h);
+        index.add(k, n);
+    } else {
+        n-> data -= h;
     }
-    if (n != nullptr){
-        n->data -= h;
-        index.tottal -= h;
-    }
+    index.tottal -= h;
 }
 
-void Counter::del(const std::string &k)
-{
-    Node *n = index.find(k);
-    if (n != nullptr)
-    {
-        list.remove(n);
-        index.rem(k);
+void Counter::del(const std::string &k) {
+    Node* n = index.find(k);
+    if (n != nullptr) {
+        index.tottal -= n->data;
+        index.couunt--;
+        index.rem(k); 
     }
 }
 
-int Counter::get(const std::string &k) const
-{
-    Node *n = index.find(k);
-    if (n != nullptr)
-    {
-        return n->data;
+int Counter::get(const std::string &k) const {
+    Node* n = index.find(k);
+    if(n != nullptr){
+        return n-> data;
     }
     return 0;
 }
 
-void Counter::set(const std::string &k, int count)
-{
-    Node *n = list.find(k);
-    if (n != nullptr)
-    {
-        n->data = count;
+void Counter::set(const std::string &k, int h) {
+    Node* n = index.find(k);
+    if (n == nullptr) {
+        inc(k, h);
+    } else {
+        index.tottal += (h - n->data);
+        n->data = h;
     }
 }
 
