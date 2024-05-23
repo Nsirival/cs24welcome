@@ -8,7 +8,7 @@
 class Index
 {
 public:
-    Index(size_t size = 128);
+    Index(size_t size = 524288);
     ~Index();
 
     Node *find(const std::string &k) const;
