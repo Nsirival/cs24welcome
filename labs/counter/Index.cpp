@@ -20,12 +20,8 @@ Index::~Index()
 
 size_t Index::hash(const std::string &k) const
 {
-    size_t hash = FNV_OFFSET_BASIS;
-    for (unsigned char c : k) {
-        hash ^= c;
-        hash *= FNV_PRIME;
-    }
-    return hash % cap;
+    std::hash<std::string> hasher;
+    return hasher(k) & (cap - 1);
 }
 
 void Index::add(const std::string &k, Node *n)
