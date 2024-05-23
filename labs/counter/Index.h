@@ -8,7 +8,7 @@
 class Index
 {
 public:
-    Index(size_t size = 524288);
+    Index(size_t size = 262144);
     ~Index();
 
     Node *find(const std::string &k) const;
@@ -17,7 +17,6 @@ public:
 
     void rem(const std::string &k);
 
-    void rehash();
 
 private:
     struct Listitem
@@ -36,7 +35,6 @@ private:
     size_t cnt;
 
     size_t hash(const std::string &k) const;
-    void grow();
 };
 
 #endif

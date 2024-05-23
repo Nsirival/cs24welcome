@@ -35,11 +35,6 @@ void Index::add(const std::string &k, Node *n)
     tab[x].occupied = true;
     tab[x].isActive = true;
     cnt++;
-
-    if (cnt >= cap / 2)
-    {
-        grow();
-    }
 }
 
 Node *Index::find(const std::string &k) const
@@ -76,35 +71,6 @@ void Index::rem(const std::string &key)
         a++;
         x = (x + a * a) & (cap - 1);
     }
-}
-
-void Index::rehash()
-{
-    size_t oldcap = cap;
-    Listitem *oldtab = tab;
-
-    cap *= 2;
-    tab = new Listitem[cap];
-    for (size_t i = 0; i < cap; ++i)
-    {
-        tab[i].clear();
-    }
-    cnt = 0;
-
-    for (size_t i = 0; i < oldcap; i++)
-    {
-        if (oldtab[i].occupied && oldtab[i].isActive)
-        {
-            add(oldtab[i].key, oldtab[i].node);
-        }
-    }
-
-    delete[] oldtab;
-}
-
-void Index::grow()
-{
-    rehash();
 }
 
 void Index::Listitem::clear()
