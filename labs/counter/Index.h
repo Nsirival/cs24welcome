@@ -7,6 +7,25 @@
 
 class Index
 {
+private:
+    struct Listitem
+    {
+        std::string key;
+        Node *node = nullptr;
+        bool occupied = false;
+        bool isActive = true;
+
+        Listitem() = default;
+        void clear();
+    };
+
+    Listitem *tab;
+    size_t cap;
+    size_t couunt = 0;
+    int tottal = 0;
+
+    size_t hash(const std::string &k) const;
+
 public:
     Index(size_t size = 262144);
     ~Index();
@@ -16,26 +35,8 @@ public:
     void add(const std::string &k, Node *n);
 
     void rem(const std::string &k);
-    size_t getcouunt()const {return couunt;}
-    int gettottal()const {return tottal;}
-private:
-    struct Listitem
-    {
-        std::string key;
-        Node *node = nullptr;
-        bool occupied = false;
-        bool isActive = true;
-        
-        Listitem() = default;
-        void clear();
-    };
-    
-    Listitem *tab;
-    size_t cap;
-    size_t couunt = 0;
-    int tottal = 0;
-
-    size_t hash(const std::string &k) const;
+    size_t getcouunt() const { return couunt; }
+    int gettottal() const { return tottal; }
 };
 
 #endif

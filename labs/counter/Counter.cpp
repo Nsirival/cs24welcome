@@ -59,13 +59,20 @@ void Counter::del(const std::string &k)
 int Counter::get(const std::string &k) const
 {
     Node *n = index.find(k);
-    return n->data;
+    if (n != nullptr)
+    {
+        return n->data;
+    }
+    return 0;
 }
 
 void Counter::set(const std::string &k, int count)
 {
     Node *n = list.find(k);
-    n->data = count;
+    if (n != nullptr)
+    {
+        n->data = count;
+    }
 }
 
 Counter::Iterator Counter::begin() const
