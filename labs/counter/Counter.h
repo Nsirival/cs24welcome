@@ -3,8 +3,10 @@
 #define COUNTER_H
 
 #include "List.h"
+#include "Index.h"
 #include <cstddef>
 #include <string>
+
 
 // This is the Counter class you need to implement.
 // It includes the Counter::Iterator as a nested class.
@@ -32,7 +34,7 @@ public:
 
 private:
   List list;
-
+  Index index;
 private:
   // Helper Functions
 
@@ -42,13 +44,11 @@ public:
 
   size_t count() const;
   int    total() const;
-
   void inc(const std::string& key, int by = 1);
   void dec(const std::string& key, int by = 1);
   void del(const std::string& key);
   int  get(const std::string& key) const;
   void set(const std::string& key, int count);
-
   Iterator begin() const;
   Iterator end() const;
 };

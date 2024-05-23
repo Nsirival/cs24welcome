@@ -1,5 +1,5 @@
 #include "List.h"
-
+#include <functional> // For std::hash
 Node::Node(const std::string &k, int d)
 {
     key = k;
@@ -27,7 +27,7 @@ List::~List()
     }
 }
 
-void List::insert(const std::string &k, int d)
+Node* List::insert(const std::string &k, int d)
 {
 
     Node *y = new Node(k, d);
@@ -42,6 +42,7 @@ void List::insert(const std::string &k, int d)
     }
     tot += d;
     nodeCount ++;
+    return y;
 }
 
 Node *List::find(const std::string &k) const

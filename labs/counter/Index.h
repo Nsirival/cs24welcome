@@ -16,8 +16,8 @@ public:
     void add(const std::string &k, Node *n);
 
     void rem(const std::string &k);
-
-
+    size_t getcouunt()const {return couunt;}
+    int gettottal()const {return tottal;}
 private:
     struct Listitem
     {
@@ -29,9 +29,11 @@ private:
         Listitem() = default;
         void clear();
     };
-
+    
     Listitem *tab;
     size_t cap;
+    size_t couunt = 0;
+    int tottal = 0;
 
     size_t hash(const std::string &k) const;
 };

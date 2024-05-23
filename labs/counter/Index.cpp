@@ -33,6 +33,8 @@ void Index::add(const std::string &k, Node *n)
     tab[x].node = n;
     tab[x].occupied = true;
     tab[x].isActive = true;
+    couunt ++;
+    tottal += n->data;
 }
 
 Node *Index::find(const std::string &k) const
@@ -68,6 +70,8 @@ void Index::rem(const std::string &key)
         a++;
         x = (x + a * a) & (cap - 1);
     }
+    couunt--;
+    tottal -= tab[x].node->data;
 }
 
 void Index::Listitem::clear()

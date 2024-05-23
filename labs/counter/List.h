@@ -21,7 +21,7 @@ class List {
     public:
         List();
         ~List();
-        void insert(const std::string& k, int d);
+        Node* insert(const std::string& k, int d);
         Node* find (const std::string& k) const;
         void remove (Node* n);
         size_t size() const { return nodeCount; }

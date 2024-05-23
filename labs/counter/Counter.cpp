@@ -1,5 +1,6 @@
 #include "Counter.h"
-
+#include <functional> // For std::hash
+#include "Index.h"
 Counter::Iterator::Iterator(Node *n) : curr(n) {}
 
 void Counter::Iterator::operator++()
@@ -24,74 +25,47 @@ Counter::~Counter() {}
 
 size_t Counter::count() const
 {
-    return list.size();
+    return index.getcouunt();
 }
 
 int Counter::total() const
 {
-    return list.gettot();
+    return index.gettottal();
 }
 
 void Counter::inc(const std::string &k, int h)
 {
-    Node *n = list.find(k);
+    Node *n = index.find(k);
     if (n == nullptr)
-    {
-
-        list.insert(k, h);
-    }
-    else
-    {
-        list.updatevalue(n, h);
-    }
+        index.add(k, list.insert(k, h));
 }
 
 void Counter::dec(const std::string &k, int h)
 {
-    Node *n = list.find(k);
-    if (n != nullptr)
-    {
-        list.updatevalue(n, -h);
-        
-    } else {
-        list.insert(k, -h);
-    }
+    Node *n = index.find(k);
+    if (n == nullptr)
+        index.add(k, list.insert(k, h));
 }
 
 void Counter::del(const std::string &k)
 {
-    Node *n = list.find(k);
+    Node *n = index.find(k);
     if (n != nullptr)
     {
-        list.remove(n);
-    } 
-
+        index.rem(k);
+    }
 }
 
 int Counter::get(const std::string &k) const
 {
-    Node *n = list.find(k);
-    if (n != nullptr)
-    {
-        return n->data;
-    }
-    else
-    {
-        return 0;
-    }
+    Node *n = index.find(k);
+    return n->data;
 }
 
 void Counter::set(const std::string &k, int count)
 {
     Node *n = list.find(k);
-    if (n == nullptr)
-    {
-        list.insert(k, count);
-    }
-    else
-    {
-        list.setvalue(n, count);
-    }
+    n->data = count;
 }
 
 Counter::Iterator Counter::begin() const
