@@ -1,16 +1,12 @@
 #include "Index.h"
-static const size_t FNV_OFFSET_BASIS = 2166136261u;
-static const size_t FNV_PRIME = 16777619u;
 
-
-Index::Index(size_t size) : cap(size), cnt(0)
+Index::Index(size_t size) : cap(size)
 {
     tab = new Listitem[cap];
     for (size_t i = 0; i < cap; ++i)
     {
         tab[i].clear();
     }
-    
 }
 
 Index::~Index()
@@ -30,14 +26,13 @@ void Index::add(const std::string &k, Node *n)
     size_t a = 0;
     while (tab[x].occupied && tab[x].isActive)
     {
-            a++;
+        a++;
         x = (x + a * a) & (cap - 1);
     }
     tab[x].key = k;
     tab[x].node = n;
     tab[x].occupied = true;
     tab[x].isActive = true;
-    cnt++;
 }
 
 Node *Index::find(const std::string &k) const
@@ -68,7 +63,6 @@ void Index::rem(const std::string &key)
         if (tab[x].isActive && tab[x].key == key)
         {
             tab[x].isActive = false;
-            cnt--;
             return;
         }
         a++;

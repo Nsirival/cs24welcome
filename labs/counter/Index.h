@@ -32,7 +32,6 @@ private:
 
     Listitem *tab;
     size_t cap;
-    size_t cnt;
 
     size_t hash(const std::string &k) const;
 };
