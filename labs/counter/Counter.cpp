@@ -83,12 +83,8 @@ int Counter::get(const std::string &k) const
 void Counter::set(const std::string &k, int count)
 {
     Node *n = list.find(k);
-    if(n == nullptr){
-        inc(k, count);
-    }
     if (n != nullptr)
     {
-        index.tottal += (count - n->data);
         n->data = count;
     }
 }
