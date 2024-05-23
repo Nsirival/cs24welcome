@@ -21,12 +21,13 @@ private:
 
     Listitem *tab;
     size_t cap;
-    size_t couunt = 0;
-    int tottal = 0;
+    
 
     size_t hash(const std::string &k) const;
 
 public:
+    size_t couunt;
+    int tottal;
     Index(size_t size = 262144);
     ~Index();
 
