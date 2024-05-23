@@ -1,4 +1,3 @@
-
 #include "List.h"
 
 Node::Node(const std::string &k, int d)
