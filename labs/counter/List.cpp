@@ -85,14 +85,10 @@ void List::remove(Node *n)
     delete n;
     nodeCount --;
 }
-bool List::empty() const
-{
-    return head == nullptr;
-}
 
 void List::updatevalue(Node* n, int d){
     if (n) {
-        tot += d;  // Adjust total by difference
+        tot += d;  
         n->data = n->data + d;
     }
 }

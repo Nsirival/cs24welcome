@@ -27,7 +27,7 @@ void Index::add(const std::string &k, Node *n)
     size_t a = 0;
     while (tab[x].occupied && tab[x].isActive)
     {
-            a++;
+        a++;
         x = (x + a * a) & (cap - 1);
     }
     tab[x].key = k;
@@ -49,9 +49,11 @@ Node *Index::find(const std::string &k) const
             return tab[x].node;
         }
         a++;
-        x = (x + a * a) & (cap - 1);
         if (x == start)
+        {
             return nullptr;
+        }
+        x = (x + a * a) & (cap - 1);
     }
     return nullptr;
 }
