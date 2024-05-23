@@ -25,22 +25,26 @@ Counter::~Counter() {}
 
 size_t Counter::count() const
 {
-    return list.size();
+    return index.couunt;
 }
 
 int Counter::total() const
 {
-    return list.gettot();
+    return index.tottal;
 }
 
 void Counter::inc(const std::string &k, int h)
 {
     Node *n = index.find(k);
-
     if (n == nullptr)
     {
         index.add(k, list.insert(k, h));
     }
+    if (n != nullptr){
+        n->data += h;
+        index.tottal += h;
+    }
+    
 }
 
 void Counter::dec(const std::string &k, int h)
@@ -49,6 +53,10 @@ void Counter::dec(const std::string &k, int h)
     if (n == nullptr)
     {
         index.add(k, list.insert(k, -h));
+    }
+    if (n != nullptr){
+        n->data -= h;
+        index.tottal -= h;
     }
 }
 
