@@ -66,10 +66,10 @@ void Index::rem(const std::string &key)
     {
         if (tab[x].isActive && tab[x].key == key)
         {
-            tab[x].isActive = false;
-            tab[x].node = nullptr;
             couunt--;
             tottal -= tab[x].node->data;
+            tab[x].isActive = false;
+            tab[x].node = nullptr;
             return;
         }
         a++;
