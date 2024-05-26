@@ -105,8 +105,7 @@ Heap::Entry Heap::pushpop(const std::string &value, float score)
     Entry i = {value, score};
     if (mCount == 0)
     {
-        push(value, score);
-        return i;
+        throw std::underflow_error("Heap is empty");
     }
     Entry hi = mData[0];
 
