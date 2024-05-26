@@ -67,8 +67,9 @@ Heap::Entry Heap::pop()
     }
 
     Entry i = mData[0];
-
+    mCount--;
     mData[0] = mData[mCount];
+    
 
     size_t p = 0;
     while (true)
@@ -81,16 +82,13 @@ Heap::Entry Heap::pop()
         {
             x = lchild;
         }
-
         if (rchild < mCount && mData[rchild].score < mData[x].score)
         {
             x = rchild;
         }
         if (x != p)
         {
-            Heap::Entry temp = mData[p];
-            mData[p] = mData[x];
-            mData[x] = temp;
+            std::swap(mData[p], mData[x]);
             p = x;
         }
         else
@@ -110,40 +108,13 @@ Heap::Entry Heap::pushpop(const std::string &value, float score)
         return i;
     }
 
-    else if (score > mData[0].score)
+    if (score > mData[0].score)
     {
         Entry hi = mData[0];
         mData[0] = i;
 
-        size_t p = 0;
-        while (true)
-        {
-            size_t lchild = 2 * p + 1;
-            size_t rchild = 2 * p + 2;
-
-            size_t x = p;
-            if (lchild < mCount && mData[lchild].score < mData[x].score)
-            {
-                x = lchild;
-            }
-            if (rchild < mCount && mData[rchild].score < mData[x].score)
-
-            {
-                x = rchild;
-            }
-
-            if (x != p)
-            {
-                Heap::Entry temp = mData[p];
-                mData[p] = mData[x];
-                mData[x] = temp;
-                p = x;
-            }
-            else
-            {
-                break;
-            }
-        }
+        pop();
+        
         return hi;
     }
     return i;
