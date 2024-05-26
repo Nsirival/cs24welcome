@@ -3,6 +3,8 @@
 
 Heap::Heap(size_t capacity)
 {
+    mCapacity = capacity;
+    mCount = 0;
     mData = new Entry[capacity];
 }
 
@@ -39,7 +41,7 @@ void Heap::push(const std::string &value, float score)
     size_t x = mCount;
     mCount++;
     // percup mcount
-    
+
     while (x > 0)
     {
         size_t parent = (x - 1) / 2;
@@ -67,18 +69,19 @@ Heap::Entry Heap::pop()
     Entry i = mData[0];
     mData[0] = mData[mCount];
     mCount--;
+    
     size_t p = 0;
     while (true)
     {
         size_t lchild = 2 * p + 1;
         size_t rchild = 2 * p + 2;
+
         size_t x = p;
 
         if (lchild < mCount && mData[lchild].score < mData[x].score)
         {
             x = lchild;
         }
-
         if (rchild < mCount && mData[rchild].score < mData[x].score)
         {
             x = rchild;
@@ -89,6 +92,7 @@ Heap::Entry Heap::pop()
             Heap::Entry temp = mData[p];
             mData[p] = mData[x];
             mData[x] = temp;
+
             p = x;
         }
         else
@@ -102,21 +106,47 @@ Heap::Entry Heap::pop()
 Heap::Entry Heap::pushpop(const std::string &value, float score)
 {
     Entry i = {value, score};
-
-    if (mCount == 0 || score > mData[0].score)
+    if (mCount == 0)
     {
-        if (mCount < mCapacity)
+        push(value, score);
+        return i;
+    }
+    else if (score > mData[0].score)
+    {
+        Entry hi = mData[0];
+        mData[0] = hi;
+
+        size_t p = 0;
+        while (true)
         {
-            push(value, score);
-            return i;
+            size_t lchild = 2 * p + 1;
+            size_t rchild = 2 * p + 2;
+
+            size_t x = p;
+
+            if (lchild < mCount && mData[lchild].score < mData[x].score)
+            {
+                x = lchild;
+            }
+            if (rchild < mCount && mData[rchild].score < mData[x].score)
+            {
+                x = rchild;
+            }
+
+            if (x != p)
+            {
+                Heap::Entry temp = mData[p];
+                mData[p] = mData[x];
+                mData[x] = temp;
+
+                p = x;
+            }
+            else
+            {
+                break;
+            }
         }
-        else
-        {
-            Entry minItem = mData[0];
-            mData[0] = i;
-            // percdown
-            return minItem;
-        }
+        return hi;
     }
     return i;
 }
