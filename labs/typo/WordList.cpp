@@ -48,7 +48,7 @@ Heap WordList::correct(const std::vector<Point> &points, size_t maxcount, float 
             Point k = QWERTY[word[i] - 'a'];
             double len = distance(k, points[i]);
 
-            double finalscore = 1.0 / (10 * pow(len, 2) + 1);
+            double finalscore = 1.0 / (10 * pow(len, 1.5) + 1);
             if (finalscore < cutoff)
             {
                 valid = false;
