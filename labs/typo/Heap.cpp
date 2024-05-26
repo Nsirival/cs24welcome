@@ -1,3 +1,4 @@
+
 #include "Heap.h"
 #include <stdexcept>
 
@@ -98,50 +99,53 @@ Heap::Entry Heap::pop()
 
     return i;
 }
+
 Heap::Entry Heap::pushpop(const std::string &value, float score)
 {
+    Entry i = {value, score};
     if (mCount == 0)
     {
         push(value, score);
-        return {value, score};
+        return i;
     }
-
-    Entry i = mData[0]; 
-    if (score < i.score)
+    Entry hi = mData[0];
+    if (score < mData[0].score)
     {
-        // If the new score is smaller than the root's score, replace root and re-heapify.
-        mData[0] = {value, score};
-        size_t x = 0;
+
+        mData[0] = i;
+
+        size_t p = 0;
         while (true)
         {
-            size_t lchild = 2 * x + 1;
-            size_t rchild = 2 * x + 2;
-            size_t p = x;
+            size_t lchild = 2 * p + 1;
+            size_t rchild = 2 * p + 2;
 
-            if (lchild < mCount && mData[lchild].score < mData[p].score)
+            size_t x = p;
+
+            if (lchild < mCount && mData[lchild].score < mData[x].score)
             {
-                p = lchild;
+                x = lchild;
             }
-            if (rchild < mCount && mData[rchild].score < mData[p].score)
+            if (rchild < mCount && mData[rchild].score < mData[x].score)
             {
-                p = rchild;
+                x = rchild;
             }
 
-            if (p != x)
+            if (x != p)
             {
-                std::swap(mData[x], mData[p]);
-                x = p;
+                Heap::Entry temp = mData[p];
+                mData[p] = mData[x];
+                mData[x] = temp;
+
+                p = x;
             }
             else
             {
                 break;
             }
         }
-        return i;
     }
-
-    // If new score isn't better, don't modify heap and return new entry.
-    return {value, score};
+    return hi;
 }
 
 const Heap::Entry &Heap::top() const
