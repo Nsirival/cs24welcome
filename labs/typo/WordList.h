@@ -15,7 +15,7 @@
 
 
 class WordList {
-    std::vector<std::string> mWords;
+    std::vector<std::string> words;
 
 public:
     WordList(std::istream& stream);
