@@ -16,7 +16,7 @@ WordList::WordList(std::istream &input)
     while (std::getline(input, word))
     {
         bool alllower = true;
-        for (int i = 0; i < word.length(); i++)
+        for (size_t i = 0; i < word.length(); i++)
         {
             if (!islower(word[i]))
             {
