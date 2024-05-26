@@ -1,73 +1,121 @@
 #include "Heap.h"
+#include <stdexcept>
 
-Heap::Heap (int capacity){
-    cap = capacity;
-    data.reserve(capacity);
+Heap::Heap(size_t capacity)
+{
+    mData = new Entry[capacity];
 }
 
-int Heap::count() const{
-    return data.size();
+Heap::Heap(const Heap &other)
+{
+    mCapacity = other.mCapacity;
+    mCount = other.mCount;
+
+    mData = new Entry[mCapacity];
+    std::copy(other.mData, other.mData + other.mCount, mData);
 }
 
-int Heap::capacity() const{
-    return cap;
+Heap::~Heap() { delete[] mData; }
+size_t Heap::count() const { return mCount; }
+size_t Heap::capacity() const { return mCapacity; }
+
+const Heap::Entry &Heap::lookup(size_t index) const
+{
+    if (index >= mCount)
+    {
+        throw std::out_of_range("Index out of range");
+    }
+    return mData[index];
 }
 
-void Heap::push(const Entry& entry) {
-    if (data.size() >= cap) {
+void Heap::push(const std::string &value, float score)
+{
+    if (mCount >= mCapacity)
+    {
         throw std::overflow_error("Heap capacity exceeded");
     }
-    data.push_back(entry);
-    // Up(data.size() - 1);
-}
+    mCount++;
+    mData[mCount] = {value, score};
+    size_t x = mCount;
 
-Heap::Entry Heap::pop() {
-    if (data.empty()) {
+    // percup mcount
+    while (x > 0)
+    {
+        size_t parent = (x - 1) / 2;
+        if (mData[parent].score > mData[x].score)
+        {
+
+            std::swap(mData[parent], mData[x]);
+            x = parent;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    mCount++;
+}
+Heap::Entry Heap::pop()
+{
+    if (mCount = 0)
+    {
         throw std::underflow_error("Heap is empty");
     }
-    Entry min = data.front();
-    data[0] = data.back();
-    data.pop_back();
-    // Down(0);
-    return min;
+
+    mCount--;
+    Entry i = mData[0];
+    mData[0] = mData[mCount];
+
+    size_t x = 0;
+    size_t child = 2 * x + 1;
+    while (child < mCount)
+    {
+        if (child + 1 < mCount && mData[child + 1].score < mData[child].score)
+        {
+            child++;
+        }
+        if (mData[x].score > mData[child].score)
+        {
+            std::swap(mData[x], mData[child]);
+            x = child;
+            child = 2 * x + 1;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    return i;
+}
+Heap::Entry Heap::pushpop(const std::string &value, float score)
+{
+    Entry i = {value, score};
+
+    if (mCount == 0 || score > mData[0].score)
+    {
+        if (mCount < mCapacity)
+        {
+            push(value, score);
+            return i;
+        }
+        else
+        {
+            Entry minItem = mData[0];
+            mData[0] = i;
+            // percdown
+            return minItem;
+        }
+    }
+    return i;
 }
 
-Heap::Entry& Heap::top() {
-    if (data.empty()) {
+const Heap::Entry &Heap::top() const
+{
+    if (mCount == 0)
+    {
         throw std::underflow_error("Heap is empty");
     }
-    return data.at(0);
-}
-
-void Heap::percUp(int x) {
-    while (x > 0 && data[(x - 1) / 2].score > data[x].score) {
-        Entry temp = data[(x - 1) / 2];
-        data[(x - 1) / 2] = data[x];
-        data[x] = temp;
-
-
-        x = (x - 1) / 2;
-    }
-}
-
-void Heap::percDown(int x) {
-    int n = data.size();
-    while (true) {
-        int leftchild = 2 * x + 1;
-        int rightchild = 2 * x + 2;
-        int min = x;
-        if(leftchild < n){
-        if (data[leftchild].score < data[min].score) {
-            min = leftchild;
-        }}
-        if (rightchild < n){
-        if (data[rightchild].score < data[min].score) {
-            min = rightchild;
-        }}
-        if (min == x) break;
-        Entry temp = data[min];
-        data[min] = data[x];
-        data[x] = temp;
-        x = min;
-    }
+    return mData[0];
 }
