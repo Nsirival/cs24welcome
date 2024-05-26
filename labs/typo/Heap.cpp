@@ -44,8 +44,9 @@ void Heap::push(const std::string &value, float score)
         size_t parent = (x - 1) / 2;
         if (mData[parent].score > mData[x].score)
         {
-
-            std::swap(mData[parent], mData[x]);
+            Heap::Entry temp = mData[x];
+            mData[x] = mData[parent];
+            mData[parent] = temp;
             x = parent;
         }
         else
@@ -58,7 +59,7 @@ void Heap::push(const std::string &value, float score)
 }
 Heap::Entry Heap::pop()
 {
-    if (mCount = 0)
+    if (mCount == 0)
     {
         throw std::underflow_error("Heap is empty");
     }
@@ -69,15 +70,20 @@ Heap::Entry Heap::pop()
 
     size_t x = 0;
     size_t child = 2 * x + 1;
+
+
     while (child < mCount)
     {
         if (child + 1 < mCount && mData[child + 1].score < mData[child].score)
         {
             child++;
+
         }
         if (mData[x].score > mData[child].score)
         {
-            std::swap(mData[x], mData[child]);
+            Heap::Entry temp = mData[x];
+            mData[x] = mData[child];
+            mData[child] = mData[x];
             x = child;
             child = 2 * x + 1;
         }
