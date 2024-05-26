@@ -33,44 +33,25 @@ Heap WordList::correct(const std::vector<Point> &points, size_t maxcount, float 
 {
     Heap heap(maxcount);
 
-    for (const auto &word : mWords)
+    for (auto word : mWords)
     {
-        if (word.length() != points.size())
+        if (word.length() == points.size())
         {
-            continue;
-        }
+            double s = 0.0;
 
-        bool valid = true;
-        double total = 0;
-
-        for (size_t i = 0; i < word.length(); i++)
-        {
-            Point k = QWERTY[word[i] - 'a'];
-            double len = distance(k, points[i]);
-
-            double finalscore = 1.0 / (10 * pow(len, 1.5) + 1);
-            if (finalscore < cutoff)
+            for (size_t i = 0; i < word.length(); i++)
             {
-                valid = false;
-                break;
+                Point k = QWERTY[word[i] - 97];
+                double len = distance(k, points[i]);
+
+                s += 1.0 / (10 * pow(len, 2) + 1);
             }
-            total += finalscore;
-        }
-
-        if (valid)
-        {
-            double avg = total / word.length();
-            if (heap.count() < maxcount)
+            s = s / word.length();
+            if (s > cutoff)
             {
-                heap.push(word, avg);
-            }
-            else if (avg > heap.top().score)
-            {
-                heap.pop();
-                heap.push(word, avg);
+                heap.push(word, s);
             }
         }
     }
-
     return heap;
 }
