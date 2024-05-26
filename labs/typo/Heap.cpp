@@ -69,7 +69,7 @@ Heap::Entry Heap::pop()
     Entry i = mData[0];
     mData[0] = mData[mCount];
     mCount--;
-    
+
     size_t p = 0;
     while (true)
     {
@@ -111,10 +111,12 @@ Heap::Entry Heap::pushpop(const std::string &value, float score)
         push(value, score);
         return i;
     }
+
+
     else if (score > mData[0].score)
     {
         Entry hi = mData[0];
-        mData[0] = hi;
+        mData[0] = i;
 
         size_t p = 0;
         while (true)
