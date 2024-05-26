@@ -34,11 +34,12 @@ void Heap::push(const std::string &value, float score)
     {
         throw std::overflow_error("Heap capacity exceeded");
     }
-    mCount++;
+
     mData[mCount] = {value, score};
     size_t x = mCount;
-
+    mCount++;
     // percup mcount
+    
     while (x > 0)
     {
         size_t parent = (x - 1) / 2;
@@ -54,9 +55,8 @@ void Heap::push(const std::string &value, float score)
             break;
         }
     }
-
-    mCount++;
 }
+
 Heap::Entry Heap::pop()
 {
     if (mCount == 0)
@@ -64,28 +64,32 @@ Heap::Entry Heap::pop()
         throw std::underflow_error("Heap is empty");
     }
 
-    mCount--;
     Entry i = mData[0];
     mData[0] = mData[mCount];
-
-    size_t x = 0;
-    size_t child = 2 * x + 1;
-
-
-    while (child < mCount)
+    mCount--;
+    size_t p = 0;
+    while (true)
     {
-        if (child + 1 < mCount && mData[child + 1].score < mData[child].score)
-        {
-            child++;
+        size_t lchild = 2 * p + 1;
+        size_t rchild = 2 * p + 2;
+        size_t x = p;
 
-        }
-        if (mData[x].score > mData[child].score)
+        if (lchild < mCount && mData[lchild].score < mData[x].score)
         {
-            Heap::Entry temp = mData[x];
-            mData[x] = mData[child];
-            mData[child] = mData[x];
-            x = child;
-            child = 2 * x + 1;
+            x = lchild;
+        }
+
+        if (rchild < mCount && mData[rchild].score < mData[x].score)
+        {
+            x = rchild;
+        }
+
+        if (x != p)
+        {
+            Heap::Entry temp = mData[p];
+            mData[p] = mData[x];
+            mData[x] = temp;
+            p = x;
         }
         else
         {
