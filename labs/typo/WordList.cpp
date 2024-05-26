@@ -25,7 +25,7 @@ WordList::WordList(std::istream &input)
         }
         if (alllower)
         {
-            words.push_back(word);
+            mWords.push_back(word);
         }
     }
 }
@@ -35,7 +35,7 @@ Heap WordList::correct(const std::vector<Point> &points, size_t maxcount, float 
     Heap heap(maxcount);
     std::vector<Heap::Entry> result;
 
-    for (auto word : words)
+    for (auto word : mWords)
     {
         if (word.length() != points.size())
         {
@@ -69,7 +69,7 @@ Heap WordList::correct(const std::vector<Point> &points, size_t maxcount, float 
                 if(heap.count() == maxcount){
                 heap.pop();
             }
-            heap.push({word, avg});
+            heap.push(word, avg);
             }
             
         }
