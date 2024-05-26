@@ -1,4 +1,3 @@
-
 #include "Heap.h"
 #include <stdexcept>
 
@@ -70,7 +69,6 @@ Heap::Entry Heap::pop()
     Entry i = mData[0];
     mCount--;
     mData[0] = mData[mCount];
-    
 
     size_t p = 0;
     while (true)
@@ -102,51 +100,48 @@ Heap::Entry Heap::pop()
 }
 Heap::Entry Heap::pushpop(const std::string &value, float score)
 {
-    Entry i = {value, score};
     if (mCount == 0)
     {
         push(value, score);
-        return i;
+        return {value, score};
     }
 
-    if (score < mData[0].score)
+    Entry i = mData[0]; 
+    if (score < i.score)
     {
-        Entry hi = mData[0];
-        mData[0] = i;
-
-        size_t p = 0;
+        // If the new score is smaller than the root's score, replace root and re-heapify.
+        mData[0] = {value, score};
+        size_t x = 0;
         while (true)
         {
-            size_t lchild = 2 * p + 1;
-            size_t rchild = 2 * p + 2;
+            size_t lchild = 2 * x + 1;
+            size_t rchild = 2 * x + 2;
+            size_t p = x;
 
-            size_t x = p;
-
-            if (lchild < mCount && mData[lchild].score < mData[x].score)
+            if (lchild < mCount && mData[lchild].score < mData[p].score)
             {
-                x = lchild;
+                p = lchild;
             }
-            if (rchild < mCount && mData[rchild].score < mData[x].score)
+            if (rchild < mCount && mData[rchild].score < mData[p].score)
             {
-                x = rchild;
+                p = rchild;
             }
 
-            if (x != p)
+            if (p != x)
             {
-                Heap::Entry temp = mData[p];
-                mData[p] = mData[x];
-                mData[x] = temp;
-
-                p = x;
+                std::swap(mData[x], mData[p]);
+                x = p;
             }
             else
             {
                 break;
             }
         }
-        return hi;
+        return i;
     }
-    return i;
+
+    // If new score isn't better, don't modify heap and return new entry.
+    return {value, score};
 }
 
 const Heap::Entry &Heap::top() const
