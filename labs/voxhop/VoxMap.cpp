@@ -46,14 +46,17 @@ bool pointEqual(const Point &a, const Point &b)
 
 double h(const Point &a, const Point &b)
 {
-  return std::abs(a.x - b.x) + std::abs(a.y - b.y) + std::abs(a.z - b.z);
+  return abs(a.x - b.x) + abs(a.y - b.y) + abs(a.z - b.z);
 }
 
 struct Comparator
 {
   Point dst;
 
-  Comparator(Point destination) : dst(destination) {}
+  Comparator(Point destination)
+  {
+    dst = destination;
+  }
 
   bool operator()(const std::pair<Point, Route> &a, const std::pair<Point, Route> &b) const
   {
@@ -63,33 +66,42 @@ struct Comparator
 
 VoxMap::VoxMap(std::istream &stream)
 {
-  stream >> l;
-  stream >> w;
-  stream >> h;
-  voxmap.resize(h, std::vector<std::vector<bool>>(w, std::vector<bool>(l)));
 
-  for (int z = 0; z < h; ++z)
+  stream >> l ;
+  stream >> w ;
+  stream>> h;
+  
+  int zi = -1, yi = 0;
+  std::string line;
+  while (std::getline(stream, line))
   {
-    std::string line;
-    std::getline(stream, line);
-    for (int y = 0; y < w; ++y)
+    if (line.empty())
     {
-      std::getline(stream, line);
-      for (int x = 0; x < l / 4; ++x)
-      {
-        char hexChar = line[x];
-        int value;
-        if (std::isdigit(hexChar)){
-          value = hexChar - '0';
-        } else {
-          value = std::tolower(hexChar) - 'a' + 10;
-        }
-        for (int bit = 0; bit < 4; ++bit)
-        {
-          voxmap[z][y][x * 4 + (3 - bit)] = (value & (1 << bit)) != 0;
-        }
-      }
+      zi++;
+      yi = 0;
+      continue;
     }
+
+    int xi = 0;
+    for (size_t i = 0; i < line.length(); i++)
+    {
+      char hexChar = line[i];
+      int value;
+      if (std::isdigit(hexChar))
+      {
+        value = hexChar - '0';
+      }
+      else
+      {
+        value = std::tolower(hexChar) - 'a' + 10;
+      }
+      for (int bit = 0; bit < 4; bit++)
+      {
+        voxmap[zi][yi].push_back((value & (1 << bit)) != 0);
+      }
+      xi++;
+    }
+    yi++;
   }
 }
 
@@ -149,13 +161,13 @@ Route VoxMap::route(Point src, Point dst)
 
     int posmoves[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < 4; i++)
     {
       Point test = curpoint;
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
 
-      if (valid(test) && visited.find(test) == visited.end())
+      if (validmove(curpoint, test) && visited.find(test) == visited.end())
       {
         Route newRoute = currentRoute;
         if (test.y == curpoint.y - 1)
@@ -183,3 +195,26 @@ Route VoxMap::route(Point src, Point dst)
 
   throw NoRoute(src, dst);
 }
+
+// bool Voxhop::validmove(Point &a, Point &b)
+// {
+//   // 2block high no
+//   // headbang no
+//   // falling
+//   if (b.z + 1 >= 0 || b.z + 1 < h)
+//   {
+//     if (b.z + 2 >= 0 || b.z + 2 < h)
+//     {
+//       if (voxmap[z + 1][y][x] && voxmap[z + 2][][])
+//       {
+//         return true;
+//       }
+//     } else {
+//       int zed = b.z;
+//       int i = 0;
+//       while (i < 1 || z > -1) {
+//         z--
+//       }
+//     }
+//   }
+// }
