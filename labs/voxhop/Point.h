@@ -4,12 +4,12 @@
 #include <iostream>
 
 struct Point {
-  int x;
-  int y;
-  int z;
+  size_t x;
+  size_t y;
+  size_t z;
 
   Point() {}
-  Point(int x, int y, int z): x(x), y(y), z(z) {}
+  Point(size_t x, size_t y, size_t z): x(x), y(y), z(z) {}
 
   bool operator==(const Point& other) const {
         return x == other.x && y == other.y && z == other.z;
