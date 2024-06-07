@@ -28,7 +28,8 @@ bool VoxMap::valid(const Point pt)
   {
     return false;
   }
-  if(z != 0 && voxmap[z-1][y][x] == false){
+  if (z != 0 && voxmap[z - 1][y][x] == false)
+  {
     return false;
   }
   return true;
@@ -221,6 +222,53 @@ VoxMap::VoxMap(std::istream &stream)
   // std::cout << voxmap[0][0].size() << std::endl;
 }
 
+int VoxMap::validmove(Point &a, Point &b)
+{
+  // 2block high no
+  // headbang no
+  // falling
+  if (valid(b))
+  {
+    // headbang
+    if (b.z > 0 && b.z <= h)
+    {
+      // b exists
+      if (voxmap[b.z][b.y][b.x])
+      {
+        // 2block
+        if (b.z + 1 > 0 && b.z + 1 <= h)
+        {
+          if (voxmap[b.z + 1][b.y][b.x])
+          {
+            return 2;
+          }
+        }
+        // headbang
+        if (a.z + 1 > 0 && a.z + 1 < h)
+        {
+          if (!voxmap[a.z + 1][a.y][a.x])
+          {
+            return 2;
+          }
+        }
+        return 1;
+      }
+      
+    }
+    int cnt = 0;
+    while (cnt > 0 - b.z)
+    {
+      if (voxmap[b.z + cnt][b.y][b.x])
+      {
+        return cnt + 1;
+      }
+      cnt--;
+    }
+    return 2;
+  }
+  return 2;
+}
+
 Route VoxMap::route(Point src, Point dst)
 {
   if (!valid(src))
@@ -282,8 +330,9 @@ Route VoxMap::route(Point src, Point dst)
       Point test = curpoint;
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
+      test.z += validmove(curpoint, test);
 
-      if (valid(test) && visited.find(test) == visited.end())
+      if (validmove(curpoint, test) != 2 && visited.find(test) == visited.end())
       {
         Route newRoute = currentRoute;
         if (test.y == curpoint.y - 1)
@@ -311,26 +360,3 @@ Route VoxMap::route(Point src, Point dst)
 
   throw NoRoute(src, dst);
 }
-
-// bool Voxhop::validmove(Point &a, Point &b)
-// {
-//   // 2block high no
-//   // headbang no
-//   // falling
-//   if (b.z + 1 >= 0 || b.z + 1 < h)
-//   {
-//     if (b.z + 2 >= 0 || b.z + 2 < h)
-//     {
-//       if (voxmap[z + 1][y][x] && voxmap[z + 2][][])
-//       {
-//         return true;
-//       }
-//     } else {
-//       int zed = b.z;
-//       int i = 0;
-//       while (i < 1 || z > -1) {
-//         z--
-//       }
-//     }
-//   }
-// }

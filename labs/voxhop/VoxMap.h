@@ -14,7 +14,7 @@ private:
   int w = 0;
   int h = 0;
   std::vector<std::vector<std::vector<bool>>> voxmap;
-  bool validmove(Point &a, Point &b);
+  int validmove(Point &a, Point &b);
   bool canstand(Point pt);
 
 public:
