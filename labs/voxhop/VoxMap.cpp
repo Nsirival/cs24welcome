@@ -13,22 +13,25 @@
 #include <sstream>
 #include <cctype>
 
-
-
-bool VoxMap::valid(const Point &pt)
+bool VoxMap::valid(const Point pt)
 {
   if ((int)(pt.x) < 0 || (int)(pt.y) < 0 || (int)(pt.z) < 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
   {
+    // std::cout << "s";
     return false;
   }
+
   int x = pt.x;
   int y = pt.y;
   int z = pt.z;
-  if (voxmap[z][y][x])
+  if (voxmap[z][y][x] == true)
   {
-    return true;
+    return false;
   }
-  return false;
+  if(z != 0 && voxmap[z-1][y][x] == false){
+    return false;
+  }
+  return true;
 }
 
 std::size_t pointHash(const Point &p)
@@ -67,7 +70,7 @@ VoxMap::VoxMap(std::istream &stream)
   stream >> l;
   stream >> w;
   stream >> h;
-  
+
   std::string line;
   getline(stream, line);
 
@@ -79,9 +82,8 @@ VoxMap::VoxMap(std::istream &stream)
     for (int j = 0; j < w; j++)
     {
       getline(stream, line);
-    
-      std::vector<bool> xv;
 
+      std::vector<bool> xv;
 
       for (int k = 0; k < (int)(line.length()); k++)
       {
@@ -97,9 +99,8 @@ VoxMap::VoxMap(std::istream &stream)
           value = hexChar - 'a' + 10;
         }
 
-
-
-        if(value == 15){
+        if (value == 15)
+        {
           xv.push_back(true);
           xv.push_back(true);
           xv.push_back(true);
@@ -203,12 +204,21 @@ VoxMap::VoxMap(std::istream &stream)
           xv.push_back(false);
           xv.push_back(true);
         }
-
-        
+        if (value == 0)
+        {
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(false);
+        }
       }
-      voxmap.push_back(yv);
+      yv.push_back(xv);
     }
+    voxmap.push_back(yv);
   }
+  // std::cout << voxmap.size() << std::endl;
+  // std::cout << voxmap[0].size() << std::endl;
+  // std::cout << voxmap[0][0].size() << std::endl;
 }
 
 Route VoxMap::route(Point src, Point dst)
