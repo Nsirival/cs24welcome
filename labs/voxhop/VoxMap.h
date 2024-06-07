@@ -14,14 +14,14 @@ private:
   int w = 0;
   int h = 0;
   std::vector<std::vector<std::vector<bool>>> voxmap;
-
+  bool validmove(Point &a, Point &b);
   bool canstand(Point pt);
 
 public:
   VoxMap(std::istream &stream);
 
   Route route(Point src, Point dst);
-  bool valid(const Point &pt);
+  bool valid(const Point pt);
 };
 
 #endif
