@@ -71,7 +71,7 @@ VoxMap::VoxMap(std::istream &stream)
   stream >> w;
   stream >> h;
   std::string line;
-  
+
   for (int z = 0; z < h; ++z)
   {
     std::getline(stream, line);
@@ -95,9 +95,11 @@ VoxMap::VoxMap(std::istream &stream)
           {
             value = hexChar - 'a' + 10;
           }
+          const int bitMasks[4] = {1, 2, 4, 8};
+
           for (int bit = 0; bit < 4; ++bit)
           {
-            xv.push_back((value & (1 << bit)) != 0);
+            xv.push_back((value & bitMasks[bit]) != 0);
           }
         }
         yv.push_back(xv);
