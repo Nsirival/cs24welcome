@@ -32,13 +32,21 @@ bool VoxMap::valid(const Point &pt)
   return canstand(pt);
 }
 
-std::size_t pointHash(const Point &p) {
+struct PointHash
+{
+  std::size_t operator()(const Point &p) const
+  {
     return std::hash<int>()(p.x) ^ std::hash<int>()(p.y) ^ std::hash<int>()(p.z);
-}
+  }
+};
 
-bool pointEqual(const Point &a, const Point &b) {
-    return a.x == b.x && a.y == b.y && a.z == b.z;
-}
+struct PointEqual
+{
+  bool operator()(const Point &a, const Point &b) const
+  {
+    return a.x == b.x && a.y == b.y &&a.z ==  b.z;
+  }
+};
 
 double h(const Point &a, const Point &b)
 {
@@ -95,8 +103,8 @@ Route VoxMap::route(Point src, Point dst)
 
   auto comparator = Comparator(dst);
   std::priority_queue<QueueElement, std::vector<QueueElement>, Comparator> q(comparator);
-  std::unordered_set<Point, size_t, bool> visited;
-  std::unordered_map<Point, Point, size_t, bool> came_from;
+  std::unordered_set<Point, PointHash, PointEqual> visited;
+  std::unordered_map<Point, Point, PointHash, PointEqual> came_from;
 
   q.push({src, Route()});
   visited.insert(src);
@@ -109,8 +117,6 @@ Route VoxMap::route(Point src, Point dst)
     Point curpoint = currentElement.first;
     Route currentRoute = currentElement.second;
 
-
-    //FIND THE PATH
     if (curpoint.x == dst.x && curpoint.y == dst.y && curpoint.z == dst.z)
     {
       Route route;
@@ -142,9 +148,6 @@ Route VoxMap::route(Point src, Point dst)
 
     int posmoves[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
-
-
-    //FIND THE SURROUNDING TILES
     for (int i = 0; i < 4; i++)
     {
       Point test = curpoint;
