@@ -13,8 +13,14 @@
 #include <sstream>
 #include <cctype>
 
-bool VoxMap::canstand(Point pt)
+
+
+bool VoxMap::valid(const Point &pt)
 {
+  if ((int)(pt.x) < 0 || (int)(pt.y) < 0 || (int)(pt.z) < 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
+  {
+    return false;
+  }
   int x = pt.x;
   int y = pt.y;
   int z = pt.z;
@@ -23,15 +29,6 @@ bool VoxMap::canstand(Point pt)
     return true;
   }
   return false;
-}
-
-bool VoxMap::valid(const Point &pt)
-{
-  if ((int)(pt.x) < 0 || (int)(pt.y) < 0 || (int)(pt.z) < 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
-  {
-    return false;
-  }
-  return canstand(pt);
 }
 
 std::size_t pointHash(const Point &p)
