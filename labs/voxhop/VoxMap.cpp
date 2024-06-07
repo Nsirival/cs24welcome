@@ -67,41 +67,43 @@ struct Comparator
 VoxMap::VoxMap(std::istream &stream)
 {
 
-  stream >> l ;
-  stream >> w ;
-  stream>> h;
-  
-  int zi = -1, yi = 0;
+  stream >> l;
+  stream >> w;
+  stream >> h;
   std::string line;
-  while (std::getline(stream, line))
+  
+  for (int z = 0; z < h; ++z)
   {
-    if (line.empty())
-    {
-      zi++;
-      yi = 0;
-      continue;
-    }
+    std::getline(stream, line);
+    std::vector<std::vector<bool>> yv;
 
-    int xi = 0;
-    for (size_t i = 0; i < line.length(); i++)
+    for (int y = 0; y < w; ++y)
     {
-      char hexChar = line[i];
-      int value;
-      if (std::isdigit(hexChar))
+      if (line.length() != 0)
       {
-        value = hexChar - '0';
+        std::vector<bool> xv;
+        std::getline(stream, line);
+        for (int x = 0; x < l / 4; ++x)
+        {
+          char hexChar = line.at(x);
+          int value;
+          if (std::isdigit(hexChar))
+          {
+            value = hexChar - '0';
+          }
+          else
+          {
+            value = hexChar - 'a' + 10;
+          }
+          for (int bit = 0; bit < 4; ++bit)
+          {
+            xv.push_back((value & (1 << bit)) != 0);
+          }
+        }
+        yv.push_back(xv);
       }
-      else
-      {
-        value = std::tolower(hexChar) - 'a' + 10;
-      }
-      for (int bit = 0; bit < 4; bit++)
-      {
-        voxmap[zi][yi].push_back((value & (1 << bit)) != 0);
-      }
-      xi++;
+      voxmap.push_back(yv);
     }
-    yi++;
   }
 }
 
@@ -167,7 +169,7 @@ Route VoxMap::route(Point src, Point dst)
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
 
-      if (validmove(curpoint, test) && visited.find(test) == visited.end())
+      if (valid(test) && visited.find(test) == visited.end())
       {
         Route newRoute = currentRoute;
         if (test.y == curpoint.y - 1)
