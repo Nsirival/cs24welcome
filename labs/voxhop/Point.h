@@ -4,9 +4,9 @@
 #include <iostream>
 
 struct Point {
-  size_t x;
-  size_t y;
-  size_t z;
+  int x;
+  int y;
+  int z;
 
   Point() {}
   Point(size_t x, size_t y, size_t z): x(x), y(y), z(z) {}
