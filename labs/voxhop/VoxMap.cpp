@@ -17,7 +17,11 @@ bool VoxMap::valid(const Point pt)
 {
   if ((int)(pt.x) < 0 || (int)(pt.y) < 0 || (int)(pt.z) < 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
   {
+<<<<<<< HEAD
     // std::cout << "s";
+=======
+    std::cout << "s";
+>>>>>>> 483f644527c348f6f571abfce8e74d1fe92422f4
     return false;
   }
 
@@ -216,9 +220,15 @@ VoxMap::VoxMap(std::istream &stream)
     }
     voxmap.push_back(yv);
   }
+<<<<<<< HEAD
   // std::cout << voxmap.size() << std::endl;
   // std::cout << voxmap[0].size() << std::endl;
   // std::cout << voxmap[0][0].size() << std::endl;
+=======
+  std::cout << voxmap.size() << std::endl;
+  std::cout << voxmap[0].size() << std::endl;
+  std::cout << voxmap[0][0].size() << std::endl;
+>>>>>>> 483f644527c348f6f571abfce8e74d1fe92422f4
 }
 
 Route VoxMap::route(Point src, Point dst)
