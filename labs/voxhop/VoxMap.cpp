@@ -1,7 +1,7 @@
 #include "VoxMap.h"
 #include "Errors.h"
-#include "Route.h" // Ensure this is included
-#include "Point.h" // Ensure this is included
+#include "Route.h" 
+#include "Point.h" 
 #include <queue>
 #include <unordered_set>
 #include <cmath>
@@ -32,21 +32,13 @@ bool VoxMap::valid(const Point &pt)
   return canstand(pt);
 }
 
-struct PointHash
-{
-  std::size_t operator()(const Point &p) const
-  {
+std::size_t pointHash(const Point &p) {
     return std::hash<int>()(p.x) ^ std::hash<int>()(p.y) ^ std::hash<int>()(p.z);
-  }
-};
+}
 
-struct PointEqual
-{
-  bool operator()(const Point &lhs, const Point &rhs) const
-  {
-    return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
-  }
-};
+bool pointEqual(const Point &a, const Point &b) {
+    return a.x == b.x && a.y == b.y && a.z == b.z;
+}
 
 double h(const Point &a, const Point &b)
 {
@@ -75,7 +67,7 @@ VoxMap::VoxMap(std::istream &stream)
   for (int z = 0; z < h; z++)
   {
     std::string line;
-    std::getline(stream, line); // Skip empty line
+    std::getline(stream, line); 
     for (int y = 0; y < w; y++)
     {
       std::getline(stream, line);
@@ -103,8 +95,8 @@ Route VoxMap::route(Point src, Point dst)
 
   auto comparator = Comparator(dst);
   std::priority_queue<QueueElement, std::vector<QueueElement>, Comparator> q(comparator);
-  std::unordered_set<Point, PointHash, PointEqual> visited;
-  std::unordered_map<Point, Point, PointHash, PointEqual> came_from;
+  std::unordered_set<Point, size_t, bool> visited;
+  std::unordered_map<Point, Point, size_t, bool> came_from;
 
   q.push({src, Route()});
   visited.insert(src);
@@ -117,6 +109,8 @@ Route VoxMap::route(Point src, Point dst)
     Point curpoint = currentElement.first;
     Route currentRoute = currentElement.second;
 
+
+    //FIND THE PATH
     if (curpoint.x == dst.x && curpoint.y == dst.y && curpoint.z == dst.z)
     {
       Route route;
@@ -148,6 +142,9 @@ Route VoxMap::route(Point src, Point dst)
 
     int posmoves[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
+
+
+    //FIND THE SURROUNDING TILES
     for (int i = 0; i < 4; i++)
     {
       Point test = curpoint;
