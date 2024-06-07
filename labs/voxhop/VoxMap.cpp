@@ -1,7 +1,7 @@
 #include "VoxMap.h"
 #include "Errors.h"
-#include "Route.h" 
-#include "Point.h" 
+#include "Route.h"
+#include "Point.h"
 #include <queue>
 #include <unordered_set>
 #include <cmath>
@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 bool VoxMap::canstand(Point pt)
 {
@@ -44,7 +45,7 @@ struct PointEqual
 {
   bool operator()(const Point &a, const Point &b) const
   {
-    return a.x == b.x && a.y == b.y &&a.z ==  b.z;
+    return a.x == b.x && a.y == b.y && a.z == b.z;
   }
 };
 
@@ -75,13 +76,15 @@ VoxMap::VoxMap(std::istream &stream)
   for (int z = 0; z < h; z++)
   {
     std::string line;
-    std::getline(stream, line); 
+    std::getline(stream, line);
     for (int y = 0; y < w; y++)
     {
       std::getline(stream, line);
+      std::istringstream iss(line);
       for (int x = 0; x < l / 4; ++x)
       {
-        char hexChar = line[x];
+        char hexChar;
+        iss >> hexChar;
         int value = std::stoi(std::string(1, hexChar), nullptr, 16);
         for (int bit = 0; bit < 4; ++bit)
         {
