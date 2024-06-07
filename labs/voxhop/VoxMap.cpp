@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <cctype>
 
 bool VoxMap::canstand(Point pt)
 {
@@ -33,21 +34,15 @@ bool VoxMap::valid(const Point &pt)
   return canstand(pt);
 }
 
-struct PointHash
+std::size_t pointHash(const Point &p)
 {
-  std::size_t operator()(const Point &p) const
-  {
-    return std::hash<int>()(p.x) ^ std::hash<int>()(p.y) ^ std::hash<int>()(p.z);
-  }
-};
+  return std::hash<int>()(p.x) ^ std::hash<int>()(p.y) ^ std::hash<int>()(p.z);
+}
 
-struct PointEqual
+bool pointEqual(const Point &a, const Point &b)
 {
-  bool operator()(const Point &a, const Point &b) const
-  {
-    return a.x == b.x && a.y == b.y && a.z == b.z;
-  }
-};
+  return a.x == b.x && a.y == b.y && a.z == b.z;
+}
 
 double h(const Point &a, const Point &b)
 {
@@ -68,24 +63,25 @@ struct Comparator
 
 VoxMap::VoxMap(std::istream &stream)
 {
-  stream >> l;
-  stream >> w;
-  stream >> h;
+  stream >> l >> w >> h;
   voxmap.resize(h, std::vector<std::vector<bool>>(w, std::vector<bool>(l)));
 
-  for (int z = 0; z < h; z++)
+  for (int z = 0; z < h; ++z)
   {
     std::string line;
-    std::getline(stream, line);
-    for (int y = 0; y < w; y++)
+    std::getline(stream, line); // Skip empty line
+    for (int y = 0; y < w; ++y)
     {
       std::getline(stream, line);
-      std::istringstream iss(line);
       for (int x = 0; x < l / 4; ++x)
       {
-        char hexChar;
-        iss >> hexChar;
-        int value = std::stoi(std::string(1, hexChar), nullptr, 16);
+        char hexChar = line[x];
+        if (!std::isxdigit(hexChar))
+        {
+          std::cerr << "Invalid hex character: " << hexChar << " at z=" << z << ", y=" << y << ", x=" << x << std::endl;
+          throw std::runtime_error("Invalid map file format");
+        }
+        int value = std::isdigit(hexChar) ? hexChar - '0' : std::tolower(hexChar) - 'a' + 10;
         for (int bit = 0; bit < 4; ++bit)
         {
           voxmap[z][y][x * 4 + (3 - bit)] = (value & (1 << bit)) != 0;
@@ -106,8 +102,8 @@ Route VoxMap::route(Point src, Point dst)
 
   auto comparator = Comparator(dst);
   std::priority_queue<QueueElement, std::vector<QueueElement>, Comparator> q(comparator);
-  std::unordered_set<Point, PointHash, PointEqual> visited;
-  std::unordered_map<Point, Point, PointHash, PointEqual> came_from;
+  std::unordered_set<Point, decltype(&pointHash), decltype(&pointEqual)> visited(0, pointHash, pointEqual);
+  std::unordered_map<Point, Point, decltype(&pointHash), decltype(&pointEqual)> came_from(0, pointHash, pointEqual);
 
   q.push({src, Route()});
   visited.insert(src);
@@ -151,7 +147,7 @@ Route VoxMap::route(Point src, Point dst)
 
     int posmoves[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; ++i)
     {
       Point test = curpoint;
       test.x += posmoves[i][0];
