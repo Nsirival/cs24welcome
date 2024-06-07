@@ -27,7 +27,7 @@ bool VoxMap::canstand(Point pt)
 
 bool VoxMap::valid(const Point &pt)
 {
-  if (pt.x < 0 || pt.x >= l || pt.y < 0 || pt.y >= w || pt.z < 0 || pt.z >= h)
+  if ( (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
   {
     return false;
   }
