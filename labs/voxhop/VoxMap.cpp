@@ -63,7 +63,9 @@ struct Comparator
 
 VoxMap::VoxMap(std::istream &stream)
 {
-  stream >> l >> w >> h;
+  stream >> l;
+  stream >> w;
+  stream >> h;
   voxmap.resize(h, std::vector<std::vector<bool>>(w, std::vector<bool>(l)));
 
   for (int z = 0; z < h; ++z)
@@ -76,12 +78,12 @@ VoxMap::VoxMap(std::istream &stream)
       for (int x = 0; x < l / 4; ++x)
       {
         char hexChar = line[x];
-        if (!std::isxdigit(hexChar))
-        {
-          std::cerr << "Invalid hex character: " << hexChar << " at z=" << z << ", y=" << y << ", x=" << x << std::endl;
-          throw std::runtime_error("Invalid map file format");
+        int value;
+        if (std::isdigit(hexChar)){
+          value = hexChar - '0';
+        } else {
+          value = std::tolower(hexChar) - 'a' + 10;
         }
-        int value = std::isdigit(hexChar) ? hexChar - '0' : std::tolower(hexChar) - 'a' + 10;
         for (int bit = 0; bit < 4; ++bit)
         {
           voxmap[z][y][x * 4 + (3 - bit)] = (value & (1 << bit)) != 0;
