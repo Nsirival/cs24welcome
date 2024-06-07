@@ -27,7 +27,7 @@ bool VoxMap::canstand(Point pt)
 
 bool VoxMap::valid(const Point &pt)
 {
-  if ( (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
+  if ((int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
   {
     return false;
   }
@@ -70,39 +70,144 @@ VoxMap::VoxMap(std::istream &stream)
   stream >> l;
   stream >> w;
   stream >> h;
+  
   std::string line;
+  getline(stream, line);
 
-  for (int z = 0; z < h; ++z)
+  for (int i = 0; i < h; i++)
   {
-    std::getline(stream, line);
+    getline(stream, line);
+
     std::vector<std::vector<bool>> yv;
-
-    for (int y = 0; y < w; ++y)
+    for (int j = 0; j < w; j++)
     {
-      if (line.length() != 0)
-      {
-        std::vector<bool> xv;
-        std::getline(stream, line);
-        for (int x = 0; x < l / 4; ++x)
-        {
-          char hexChar = line.at(x);
-          int value;
-          if (std::isdigit(hexChar))
-          {
-            value = hexChar - '0';
-          }
-          else
-          {
-            value = hexChar - 'a' + 10;
-          }
-          const int bitMasks[4] = {1, 2, 4, 8};
+      getline(stream, line);
+    
+      std::vector<bool> xv;
 
-          for (int bit = 0; bit < 4; ++bit)
-          {
-            xv.push_back((value & bitMasks[bit]) != 0);
-          }
+
+      for (int k = 0; k < (int)(line.length()); k++)
+      {
+
+        char hexChar = line.at(k);
+        int value;
+        if (std::isdigit(hexChar))
+        {
+          value = hexChar - '0';
         }
-        yv.push_back(xv);
+        else
+        {
+          value = hexChar - 'a' + 10;
+        }
+
+
+
+        if(value == 15){
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(true);
+        }
+        if (value == 14)
+        {
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(false);
+        }
+        if (value == 13)
+        {
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(true);
+        }
+        if (value == 12)
+        {
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(false);
+        }
+        if (value == 11)
+        {
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(true);
+        }
+        if (value == 10)
+        {
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(false);
+        }
+        if (value == 9)
+        {
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(true);
+        }
+        if (value == 8)
+        {
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(false);
+        }
+        if (value == 7)
+        {
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(true);
+        }
+        if (value == 6)
+        {
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(true);
+          xv.push_back(false);
+        }
+        if (value == 5)
+        {
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(true);
+        }
+        if (value == 4)
+        {
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(false);
+          xv.push_back(false);
+        }
+        if (value == 3)
+        {
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(true);
+        }
+        if (value == 2)
+        {
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(true);
+          xv.push_back(false);
+        }
+        if (value == 1)
+        {
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(false);
+          xv.push_back(true);
+        }
+
+        
       }
       voxmap.push_back(yv);
     }
