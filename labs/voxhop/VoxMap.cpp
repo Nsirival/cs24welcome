@@ -69,7 +69,7 @@ VoxMap::VoxMap(std::istream &stream)
   for (int z = 0; z < h; ++z)
   {
     std::string line;
-    std::getline(stream, line); // Skip empty line
+    std::getline(stream, line);
     for (int y = 0; y < w; ++y)
     {
       std::getline(stream, line);
