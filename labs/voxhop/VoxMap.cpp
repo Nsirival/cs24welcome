@@ -15,9 +15,8 @@
 
 bool VoxMap::valid(const Point pt)
 {
-  if ((int)(pt.x) < 0 || (int)(pt.y) < 0 || (int)(pt.z) < 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
+  if ((int)(pt.x) <= 0 || (int)(pt.y) <= 0 || (int)(pt.z) <= 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
   {
-    // std::cout << "s";
     return false;
   }
 
@@ -240,7 +239,7 @@ int VoxMap::validmove(Point &a, Point &b)
         {
           if (voxmap[b.z + 1][b.y][b.x])
           {
-            // std::cout << "wall" << std::endl;
+            std::cout << "wall" << std::endl;
             return 2;
           }
         }
@@ -249,7 +248,7 @@ int VoxMap::validmove(Point &a, Point &b)
         {
           if (voxmap[a.z + 1][a.y][a.x])
           {
-            // std::cout << "head" << std::endl;
+            std::cout << "head" << std::endl;
             return 2;
           }
         }
@@ -262,16 +261,16 @@ int VoxMap::validmove(Point &a, Point &b)
     {
       if (voxmap[b.z + cnt][b.y][b.x])
       {
-        // std::cout << b.z<< " " << cnt << std::endl;
+        std::cout << b.z<< " " << cnt << std::endl;
 
         return cnt;
       }
       cnt--;
     }
-    // std::cout << "water" << std::endl;
+    std::cout << "Fuck u i wont return anything" << std::endl;
     return 2;
   }
-  // std::cout << "idfk" << std::endl;
+  std::cout << "idfk" << std::endl;
   return 2;
 }
 
