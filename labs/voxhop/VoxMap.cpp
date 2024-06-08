@@ -226,51 +226,47 @@ int VoxMap::validmove(Point &a, Point &b)
   // 2block high no
   // headbang no
   // falling
-  if (valid(b))
+  if (!valid(b))
   {
-    // headbang
-    if (b.z > 0 && b.z <= h)
-    {
-      // b exists
-      if (voxmap[b.z][b.y][b.x])
-      {
-        // 2block
-        if (b.z + 1 > 0 && b.z + 1 <= h)
-        {
-          if (voxmap[b.z + 1][b.y][b.x])
-          {
-            std::cout << "wall" << std::endl;
-            return 2;
-          }
-        }
-        // headbang
-        if (a.z + 1 > 0 && a.z + 1 < h)
-        {
-          if (voxmap[a.z + 1][a.y][a.x])
-          {
-            std::cout << "head" << std::endl;
-            return 2;
-          }
-        }
-        return 1;
-      }
-      
-    }
-    int cnt = 0;
-    while (cnt > 0 - b.z)
-    {
-      if (voxmap[b.z + cnt][b.y][b.x])
-      {
-        std::cout << b.z<< " " << cnt << std::endl;
-
-        return cnt;
-      }
-      cnt--;
-    }
-    std::cout << "Fuck u i wont return anything" << std::endl;
     return 2;
   }
-  std::cout << "idfk" << std::endl;
+  // headbang
+  if (b.z > 0 && b.z < h && voxmap[b.z][b.y][b.x])
+  {
+    // b exists
+
+    // 2block
+    if (b.z + 1 > 0 && b.z + 1 < h)
+    {
+      if (voxmap[b.z + 1][b.y][b.x])
+      {
+        // std::cout << "wall" << std::endl;
+        return 2;
+      }
+    }
+    // headbang
+    if (a.z + 1 > 0 && a.z + 1 < h)
+    {
+      if (voxmap[a.z + 1][a.y][a.x])
+      {
+        // std::cout << "head" << std::endl;
+        return 2;
+      }
+    }
+    return 1;
+  }
+  int cnt = 0;
+  while (cnt > 0 - b.z)
+  {
+    if (voxmap[b.z + cnt - 1][b.y][b.x])
+    {
+      // std::cout << b.z << " " << cnt << std::endl;
+
+      return cnt; // + 1?
+    }
+    cnt--;
+  }
+  // std::cout << b.x << " ss" << b.y << " " << b.z << std::endl;
   return 2;
 }
 
@@ -335,11 +331,17 @@ Route VoxMap::route(Point src, Point dst)
       Point test = curpoint;
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
-      
 
-      if (validmove(curpoint, test) != 2 && visited.find(test) == visited.end())
+      int moveType = validmove(curpoint, test);
+      if (moveType != 2 && visited.find(test) == visited.end())
       {
-        test.z += validmove(curpoint, test);
+        test.z += moveType;
+
+        if (test.z < 0 || test.z >= h)
+        {
+          continue; // Ignore invalid vertical positions
+        }
+
         Route newRoute = currentRoute;
         if (test.y == curpoint.y - 1)
         {
@@ -357,12 +359,13 @@ Route VoxMap::route(Point src, Point dst)
         {
           newRoute.push_back(Move::WEST);
         }
+
         q.push({test, newRoute});
         visited.insert(test);
         came_from[test] = curpoint;
       }
     }
   }
-
+  
   throw NoRoute(src, dst);
 }
