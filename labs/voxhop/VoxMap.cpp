@@ -240,14 +240,16 @@ int VoxMap::validmove(Point &a, Point &b)
         {
           if (voxmap[b.z + 1][b.y][b.x])
           {
+            // std::cout << "wall" << std::endl;
             return 2;
           }
         }
         // headbang
         if (a.z + 1 > 0 && a.z + 1 < h)
         {
-          if (!voxmap[a.z + 1][a.y][a.x])
+          if (voxmap[a.z + 1][a.y][a.x])
           {
+            // std::cout << "head" << std::endl;
             return 2;
           }
         }
@@ -260,12 +262,16 @@ int VoxMap::validmove(Point &a, Point &b)
     {
       if (voxmap[b.z + cnt][b.y][b.x])
       {
-        return cnt + 1;
+        // std::cout << b.z<< " " << cnt << std::endl;
+
+        return cnt;
       }
       cnt--;
     }
+    // std::cout << "water" << std::endl;
     return 2;
   }
+  // std::cout << "idfk" << std::endl;
   return 2;
 }
 
@@ -330,10 +336,11 @@ Route VoxMap::route(Point src, Point dst)
       Point test = curpoint;
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
-      test.z += validmove(curpoint, test);
+      
 
       if (validmove(curpoint, test) != 2 && visited.find(test) == visited.end())
       {
+        test.z += validmove(curpoint, test);
         Route newRoute = currentRoute;
         if (test.y == curpoint.y - 1)
         {
