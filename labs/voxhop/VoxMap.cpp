@@ -15,7 +15,7 @@
 
 bool VoxMap::valid(const Point pt)
 {
-  if ((int)(pt.x) <= 0 || (int)(pt.y) <= 0 || (int)(pt.z) <= 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
+  if ((int)(pt.x) <= 0 || (int)(pt.y) < 0 || (int)(pt.z) <= 0 || (int)(pt.x) >= l || (int)(pt.y) >= w || (int)(pt.z) >= h)
   {
     return false;
   }
