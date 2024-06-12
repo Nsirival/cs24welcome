@@ -223,24 +223,19 @@ VoxMap::VoxMap(std::istream &stream)
 
 int VoxMap::validmove(Point &a, Point &b)
 {
-  // 2block high no
-  // headbang no
-  // falling
-  Point check = b;
-  Point checkupa = a;
-  checkupa.z += 1;
-  Point checkupb = b;
-  checkupb.z += 1;
+  
 
-  if (!valid(checkupb) && !valid(checkupa) && valid(check))
+  if (b.z + 1 < h && voxmap[b.z + 1][b.y][b.x] == false && voxmap[a.z + 1][a.y][a.x] == false && voxmap[b.z][b.y][b.x] == true)
   {
     return 1;
   }
   int cnt = 0;
   while (cnt > 0 - b.z)
   {
-    Point zzzz = Point(b.x, b.y, cnt-1);
-    if (valid(zzzz))
+    if(cnt - 1 <= 0){
+      return 2;
+    }
+    if (voxmap[cnt-1 ][b.y][b.x])
     {
       // std::cout << b.z << " " << cnt << std::endl;
 
