@@ -20,17 +20,7 @@ bool VoxMap::valid(const Point pt)
     return false;
   }
 
-  int x = pt.x;
-  int y = pt.y;
-  int z = pt.z;
-  if (voxmap[z][y][x] == true)
-  {
-    return false;
-  }
-  if (z != 0 && voxmap[z - 1][y][x] == false)
-  {
-    return false;
-  }
+
   return true;
 }
 
@@ -226,22 +216,39 @@ int VoxMap::validmove(Point &a, Point &b)
   // 2block high no
   // headbang no
   // falling
-  Point check = b;
-  check.z += 1;
-  Point checkupa = a;
-  checkupa.z += 2;
-  Point checkupb = b;
-  checkupb.z += 2;
-
-  if (!valid(checkupb) && !valid(checkupa)&&valid(check))
+  if (!valid(b))
   {
-    return 1;
+    return 2;
   } 
+  // headbang
+  if (valid(b) && voxmap[b.z][b.y][b.x])
+  {
+    // b exists
+
+    // 2block
+    if (b.z + 1 > 0 && b.z + 1 < h)
+    {
+      if (voxmap[b.z + 1][b.y][b.x])
+      {
+        // std::cout << "wall" << std::endl;
+        return 2;
+      }
+    }
+    // headbang
+    if (a.z + 1 > 0 && a.z + 1 < h)
+    {
+      if (voxmap[a.z + 1][a.y][a.x])
+      {
+        // std::cout << "head" << std::endl;
+        return 2;
+      }
+    }
+    return 1;
+  }
   int cnt = 0;
   while (cnt > 0 - b.z)
   {
-    Point zzzz = Point(b.x, b.y, cnt);
-    if (valid(zzzz))
+    if (voxmap[b.z + cnt - 1][b.y][b.x])
     {
       // std::cout << b.z << " " << cnt << std::endl;
 
