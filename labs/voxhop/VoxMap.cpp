@@ -223,29 +223,50 @@ VoxMap::VoxMap(std::istream &stream)
 
 int VoxMap::validmove(Point &a, Point &b)
 {
-  
-
-  if (b.z + 1 < h && voxmap[b.z + 1][b.y][b.x] == false && voxmap[a.z + 1][a.y][a.x] == false && voxmap[b.z][b.y][b.x] == true)
+  // 2block high no
+  // headbang no
+  // falling
+  if (!valid(b))
   {
+    return 2;
+  }
+  // headbang
+  if (valid(b) && voxmap[b.z][b.y][b.x])
+  {
+    // b exists
+
+    // 2block
+    if (b.z + 1 > 0 && b.z + 1 < h)
+    {
+      if (voxmap[b.z + 1][b.y][b.x])
+      {
+        // std::cout << "wall" << std::endl;
+        return 2;
+      }
+    }
+    // headbang
+    if (a.z + 1 > 0 && a.z + 1 < h)
+    {
+      if (voxmap[a.z + 1][a.y][a.x])
+      {
+        // std::cout << "head" << std::endl;
+        return 2;
+      }
+    }
     return 1;
   }
   int cnt = 0;
   while (cnt > 0 - b.z)
   {
-    if(b.z + cnt - 1 < 0){
-            std::cout << b.z << "sdfsd " << cnt << std::endl;
-
-      return 2;
-    }
-    if (voxmap[b.z + cnt-1 ][b.y][b.x])
+    if (voxmap[b.z + cnt - 1][b.y][b.x])
     {
-      std::cout << b.z << " " << cnt << std::endl;
+      // std::cout << b.z << " " << cnt << std::endl;
 
       return cnt; // + 1?
     }
     cnt--;
   }
-  std::cout << b.x << " ss" << b.y << " " << b.z << std::endl;
+  // std::cout << b.x << " ss" << b.y << " " << b.z << std::endl;
   return 2;
 }
 
@@ -310,7 +331,7 @@ Route VoxMap::route(Point src, Point dst)
       Point test = curpoint;
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
-    //validmove z tester;
+      // validmove z tester;
       int moveType = validmove(curpoint, test);
       if (moveType != 2 && visited.find(test) == visited.end())
       {
@@ -345,6 +366,6 @@ Route VoxMap::route(Point src, Point dst)
       }
     }
   }
-  
+
   throw NoRoute(src, dst);
 }
