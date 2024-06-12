@@ -226,7 +226,7 @@ int VoxMap::validmove(Point &a, Point &b)
   // 2block high no
   // headbang no
   // falling
-  if (!valid(b))
+  if ((int)(b.x) <= 0 || (int)(b.y) < 0 || (int)(b.z) <= 0 || (int)(b.x) >= l || (int)(b.y) >= w || (int)(b.z) >= h)
   {
     return 2;
   }
