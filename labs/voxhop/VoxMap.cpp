@@ -231,7 +231,7 @@ int VoxMap::validmove(Point &a, Point &b)
     return 2;
   }
   // headbang
-  if (valid(b) && voxmap[b.z][b.y][b.x])
+  if (voxmap[b.z][b.y][b.x])
   {
     // b exists
 
