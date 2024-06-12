@@ -20,7 +20,17 @@ bool VoxMap::valid(const Point pt)
     return false;
   }
 
-
+  int x = pt.x;
+  int y = pt.y;
+  int z = pt.z;
+  if (voxmap[z][y][x] == true)
+  {
+    return false;
+  }
+  if (z != 0 && voxmap[z - 1][y][x] == false)
+  {
+    return false;
+  }
   return true;
 }
 
