@@ -227,7 +227,6 @@ int VoxMap::validmove(Point &a, Point &b)
   // headbang no
   // falling
   Point check = b;
-  check.z;
   Point checkupa = a;
   checkupa.z += 1;
   Point checkupb = b;
