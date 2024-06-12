@@ -226,39 +226,22 @@ int VoxMap::validmove(Point &a, Point &b)
   // 2block high no
   // headbang no
   // falling
-  if (!valid(b))
-  {
-    return 2;
-  }
-  // headbang
-  if (b.z > 0 && b.z < h && voxmap[b.z][b.y][b.x])
-  {
-    // b exists
+  Point check = b;
+  check.z += 1;
+  Point checkupa = a;
+  checkupa.z += 2;
+  Point checkupb = b;
+  checkupb.z += 2;
 
-    // 2block
-    if (b.z + 1 > 0 && b.z + 1 < h)
-    {
-      if (voxmap[b.z + 1][b.y][b.x])
-      {
-        // std::cout << "wall" << std::endl;
-        return 2;
-      }
-    }
-    // headbang
-    if (a.z + 1 > 0 && a.z + 1 < h)
-    {
-      if (voxmap[a.z + 1][a.y][a.x])
-      {
-        // std::cout << "head" << std::endl;
-        return 2;
-      }
-    }
+  if (!valid(checkupb) && !valid(checkupa)&&valid(check))
+  {
     return 1;
-  }
+  } 
   int cnt = 0;
   while (cnt > 0 - b.z)
   {
-    if (voxmap[b.z + cnt - 1][b.y][b.x])
+    Point zzzz = Point(b.x, b.y, cnt);
+    if (valid(zzzz))
     {
       // std::cout << b.z << " " << cnt << std::endl;
 
@@ -324,14 +307,14 @@ Route VoxMap::route(Point src, Point dst)
       return route;
     }
 
-    int posmoves[4][2] = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
+    int posmoves[4][3] = {{0, -1, 0}, {1, 0, 0}, {0, 1, 0}, {-1, 0, 0}};
 
     for (int i = 0; i < 4; i++)
     {
       Point test = curpoint;
       test.x += posmoves[i][0];
       test.y += posmoves[i][1];
-
+    //validmove z tester;
       int moveType = validmove(curpoint, test);
       if (moveType != 2 && visited.find(test) == visited.end())
       {
