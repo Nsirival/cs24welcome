@@ -232,18 +232,20 @@ int VoxMap::validmove(Point &a, Point &b)
   int cnt = 0;
   while (cnt > 0 - b.z)
   {
-    if(b.z + cnt - 1 <= 0){
+    if(b.z + cnt - 1 < 0){
+            std::cout << b.z << "sdfsd " << cnt << std::endl;
+
       return 2;
     }
     if (voxmap[b.z + cnt-1 ][b.y][b.x])
     {
-      // std::cout << b.z << " " << cnt << std::endl;
+      std::cout << b.z << " " << cnt << std::endl;
 
       return cnt; // + 1?
     }
     cnt--;
   }
-  // std::cout << b.x << " ss" << b.y << " " << b.z << std::endl;
+  std::cout << b.x << " ss" << b.y << " " << b.z << std::endl;
   return 2;
 }
 
